@@ -24,7 +24,8 @@ ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
 ctx.fillStyle="white";
 ctx.fillRect(stageProperties.left, stageProperties.top, stageProperties.width, stageProperties.height);
 
-const path = [];
+const shapes = [];
+let path = [];
 
 myCanvas.addEventListener('pointerdown', function(e){
 	const mousePosition = {
@@ -32,23 +33,34 @@ myCanvas.addEventListener('pointerdown', function(e){
 		y: e.offsetY
 	};
 	path.push(mousePosition);
-});
 
-myCanvas.addEventListener('pointermove', function(e){
-	const mousePosition = {
-		x: e.offsetX,
-		y: e.offsetY
+	const moveCallback = function(e){
+		const mousePosition = {
+			x: e.offsetX,
+			y: e.offsetY
+		};
+		console.log(mousePosition.x);
+		path.push(mousePosition);
 	};
-	console.log(mousePosition.x);
-	path.push(mousePosition);
+
+	const upCallback = function (e) {
+		myCanvas.removeEventListener('pointermove', moveCallback);
+		myCanvas.removeEventListener('pointerup', upCallback);
+
+		shapes.push(path);
+		path = [];
+
+		for(const shape of shapes){
+			ctx.beginPath();
+			ctx.moveTo(shape[0].x, shape[0].y);
+			for(let i = 1; i < shape.length; i++){
+				ctx.lineTo(shape[i].x, shape[i].y);
+			}
+			ctx.stroke();
+		};
+	}
+
+	myCanvas.addEventListener('pointermove', moveCallback);
+	myCanvas.addEventListener('pointerup', upCallback);
 });
 
-myCanvas.addEventListener('pointerup', function(e){
-	ctx.beginPath();
-	ctx.moveTo(path[0].x, path[0].y);
-	path.forEach((point)=>{
-		ctx.lineTo(point.x, point.y)
-	});
-	ctx.stroke();
-	//drawPath();
-});

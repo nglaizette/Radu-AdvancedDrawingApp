@@ -37,17 +37,9 @@ myCanvas.addEventListener('pointerdown', function(e){
 		};
 		console.log(mousePosition.x);
 		path.push(mousePosition);
-	};
-
-	const upCallback = function (e) {
-		myCanvas.removeEventListener('pointermove', moveCallback);
-		myCanvas.removeEventListener('pointerup', upCallback);
-
-		shapes.push(path);
-		path = [];
 
 		clearCanvas();
-		for(const shape of shapes){
+		for(const shape of [...shapes, path]){
 			ctx.beginPath();
 			ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
 			ctx.moveTo(shape[0].x, shape[0].y);
@@ -56,6 +48,14 @@ myCanvas.addEventListener('pointerdown', function(e){
 			}
 			ctx.stroke();
 		};
+	};
+
+	const upCallback = function (e) {
+		myCanvas.removeEventListener('pointermove', moveCallback);
+		myCanvas.removeEventListener('pointerup', upCallback);
+
+		shapes.push(path);
+		path = [];
 	}
 
 	myCanvas.addEventListener('pointermove', moveCallback);

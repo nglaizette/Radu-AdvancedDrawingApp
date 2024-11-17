@@ -22,7 +22,50 @@ clearCanvas();
 
 const shapes = [];
 let path = [];
+let rectangle = {};
 
+myCanvas.addEventListener('pointerdown', function(e){
+	const mousePosition = {
+		x: e.offsetX,
+		y: e.offsetY
+	};
+	rectangle.corner1 = mousePosition;
+
+	const moveCallback = function(e){
+		const mousePosition = {
+			x: e.offsetX,
+			y: e.offsetY
+		};
+		rectangle.corner2 = mousePosition
+
+		clearCanvas();
+		for(const shape of [...shapes, rectangle]){
+			ctx.beginPath();
+			ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
+			ctx.lineWidth = 5;
+			const rect = shape
+			const minX = Math.min(rect.corner1.x, rect.corner2.x);
+			const minY = Math.min(rect.corner1.y, rect.corner2.y);
+			const width = Math.abs(rect.corner1.x - rect.corner2.x);
+			const height = Math.abs(rect.corner1.y - rect.corner2.y);
+			ctx.rect(minX, minY, width, height);
+			ctx.stroke();
+		};
+	};
+
+	const upCallback = function (e) {
+		myCanvas.removeEventListener('pointermove', moveCallback);
+		myCanvas.removeEventListener('pointerup', upCallback);
+
+		shapes.push(rectangle);
+		rectangle = {};
+	}
+
+	myCanvas.addEventListener('pointermove', moveCallback);
+	myCanvas.addEventListener('pointerup', upCallback);
+});
+
+/*
 myCanvas.addEventListener('pointerdown', function(e){
 	const mousePosition = {
 		x: e.offsetX,
@@ -61,7 +104,7 @@ myCanvas.addEventListener('pointerdown', function(e){
 
 	myCanvas.addEventListener('pointermove', moveCallback);
 	myCanvas.addEventListener('pointerup', upCallback);
-});
+});*/
 
 function clearCanvas(){
 	ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);

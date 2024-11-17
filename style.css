@@ -9,3 +9,10 @@ body {
 	margin: 0;
 	overflow: hidden;
 }
+
+#toolBox {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	margin: 5px;
+}

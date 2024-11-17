@@ -88,7 +88,7 @@ const downCallbackForPath = function(e){
 }
 
 
-myCanvas.addEventListener('pointerdown', downCallbackForRect);
+myCanvas.addEventListener('pointerdown', downCallbackForPath);
 
 function changeTool(tool){
 	//console.log(info);

@@ -6,10 +6,19 @@
 	</head>
 	<body>
 		<canvas id="myCanvas"></canvas>
-		<select name="" id="toolBox" onchange="changeTool(this.value)">
-			<option value="path" selected> Path </option>
-			<option value="rect">Rect</option>
-		</select>
+		<div id="toolBox">
+			<select  onchange="changeTool(this.value)">
+				<option value="path" selected> Path </option>
+				<option value="rect">Rect</option>
+			</select>
+			<div>
+				<input type="color" id="fillColor" name="fillColor" value="#ff0000" />
+				<label for="fillColor"> Fill </label>
+				<input type="color" id="lineColor" name="lineColor" value="#0000ff" />
+				<label for="LineColor"> Line </label>
+			</div>
+		</div>
+
 
 		<script src="shapes/shape.js"></script>
 		<script src="shapes/rect.js"></script>

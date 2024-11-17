@@ -42,6 +42,7 @@ myCanvas.addEventListener('pointerdown', function(e){
 		for(const shape of [...shapes, path]){
 			ctx.beginPath();
 			ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
+			ctx.lineWidth = 5;
 			ctx.moveTo(shape[0].x, shape[0].y);
 			for(let i = 1; i < shape.length; i++){
 				ctx.lineTo(shape[i].x, shape[i].y);

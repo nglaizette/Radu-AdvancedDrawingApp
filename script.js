@@ -22,9 +22,10 @@ clearCanvas();
 
 const shapes = [];
 let path = [];
-let rectangle = {};
+path.type="path";
+let rectangle = {type: "rect"};
 
-myCanvas.addEventListener('pointerdown', function(e){
+const downCallbackForRect = function (e){
 	const mousePosition = {
 		x: e.offsetX,
 		y: e.offsetY
@@ -39,18 +40,7 @@ myCanvas.addEventListener('pointerdown', function(e){
 		rectangle.corner2 = mousePosition
 
 		clearCanvas();
-		for(const shape of [...shapes, rectangle]){
-			ctx.beginPath();
-			ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
-			ctx.lineWidth = 5;
-			const rect = shape
-			const minX = Math.min(rect.corner1.x, rect.corner2.x);
-			const minY = Math.min(rect.corner1.y, rect.corner2.y);
-			const width = Math.abs(rect.corner1.x - rect.corner2.x);
-			const height = Math.abs(rect.corner1.y - rect.corner2.y);
-			ctx.rect(minX, minY, width, height);
-			ctx.stroke();
-		};
+		drawShapes([...shapes, rectangle]);
 	};
 
 	const upCallback = function (e) {
@@ -58,15 +48,14 @@ myCanvas.addEventListener('pointerdown', function(e){
 		myCanvas.removeEventListener('pointerup', upCallback);
 
 		shapes.push(rectangle);
-		rectangle = {};
+		rectangle = {type: "rect"};
 	}
 
 	myCanvas.addEventListener('pointermove', moveCallback);
 	myCanvas.addEventListener('pointerup', upCallback);
-});
+}
 
-/*
-myCanvas.addEventListener('pointerdown', function(e){
+const downCallbackForPath = function(e){
 	const mousePosition = {
 		x: e.offsetX,
 		y: e.offsetY
@@ -78,20 +67,11 @@ myCanvas.addEventListener('pointerdown', function(e){
 			x: e.offsetX,
 			y: e.offsetY
 		};
-		console.log(mousePosition.x);
+		//console.log(mousePosition.x);
 		path.push(mousePosition);
 
 		clearCanvas();
-		for(const shape of [...shapes, path]){
-			ctx.beginPath();
-			ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
-			ctx.lineWidth = 5;
-			ctx.moveTo(shape[0].x, shape[0].y);
-			for(let i = 1; i < shape.length; i++){
-				ctx.lineTo(shape[i].x, shape[i].y);
-			}
-			ctx.stroke();
-		};
+		drawShapes([...shapes, path]);
 	};
 
 	const upCallback = function (e) {
@@ -100,11 +80,61 @@ myCanvas.addEventListener('pointerdown', function(e){
 
 		shapes.push(path);
 		path = [];
+		path.type="path";
 	}
 
 	myCanvas.addEventListener('pointermove', moveCallback);
 	myCanvas.addEventListener('pointerup', upCallback);
-});*/
+}
+
+
+myCanvas.addEventListener('pointerdown', downCallbackForRect);
+
+function changeTool(tool){
+	//console.log(info);
+	myCanvas.removeEventListener('pointerdown', downCallbackForPath);
+	myCanvas.removeEventListener('pointerdown', downCallbackForRect);
+
+	switch(tool){
+		case "rect":
+			myCanvas.addEventListener('pointerdown', downCallbackForRect);
+			break;
+		case "path":
+			myCanvas.addEventListener('pointerdown', downCallbackForPath);
+			break;		
+	}
+}
+
+function drawShapes(shapes){
+	for(const shape of shapes){
+
+		switch(shape.type){
+			case "rect":
+				ctx.beginPath();
+				ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
+				ctx.lineWidth = 5;
+				const rect = shape
+				const minX = Math.min(rect.corner1.x, rect.corner2.x);
+				const minY = Math.min(rect.corner1.y, rect.corner2.y);
+				const width = Math.abs(rect.corner1.x - rect.corner2.x);
+				const height = Math.abs(rect.corner1.y - rect.corner2.y);
+				ctx.rect(minX, minY, width, height);
+				ctx.stroke();
+				break;
+			
+			case "path":
+				ctx.beginPath();
+				ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
+				ctx.lineWidth = 5;
+				ctx.moveTo(shape[0].x, shape[0].y);
+				for(let i = 1; i < shape.length; i++){
+						ctx.lineTo(shape[i].x, shape[i].y);
+					}
+				ctx.stroke();
+				break;
+		}
+	};
+}
 
 function clearCanvas(){
 	ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);

@@ -1,5 +1,6 @@
-class Path{
+class Path extends Shape {
 	constructor(startPoint){
+		super();
 		this.points = [startPoint];
 	}
 

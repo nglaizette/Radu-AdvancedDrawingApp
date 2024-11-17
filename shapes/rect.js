@@ -1,5 +1,6 @@
-class Rect {
+class Rect extends Shape {
 	constructor(corner1){
+		super();
 		this.corner1 =  corner1;
 		this.corner2 =  corner1;
 	}

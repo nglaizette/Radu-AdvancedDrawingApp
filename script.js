@@ -28,11 +28,7 @@ const downCallbackForRect = function (e){
 		x: e.offsetX,
 		y: e.offsetY
 	};
-	currentShape = new Rect(mousePosition, 
-		{
-			fillColor: fillColor.value,
-			strokeColor: strokeColor.value
-		});
+	currentShape = new Rect(mousePosition, getOptions());
 
 	const moveCallback = function(e){
 		const mousePosition = {
@@ -61,11 +57,7 @@ const downCallbackForPath = function(e){
 		x: e.offsetX,
 		y: e.offsetY
 	};
-	currentShape =  new Path(mousePosition,
-		{
-			fillColor: fillColor.value,
-			strokeColor: strokeColor.value
-		});
+	currentShape =  new Path(mousePosition,getOptions());
 
 	const moveCallback = function(e){
 		const mousePosition = {
@@ -112,6 +104,16 @@ function drawShapes(shapes){
 	for(const shape of shapes){
 		shape.draw(ctx);
 	}
+}
+
+function getOptions(){
+	return {
+		fillColor: fillColor.value,
+		strokeColor: strokeColor.value,
+		fill: fill.checked,
+		stroke: stroke.checked,
+		strokeWidth: strokeWidth.value
+	};
 }
 
 function clearCanvas(){

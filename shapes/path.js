@@ -1,8 +1,7 @@
 class Path extends Shape {
 	constructor(startPoint, options){
-		super();
+		super(options);
 		this.points = [startPoint];
-		this.options =  options
 	}
 
 	addPoint(point){
@@ -11,12 +10,11 @@ class Path extends Shape {
 
 	draw(ctx){
 		ctx.beginPath();
-		ctx.strokeStyle = this.options.strokeColor;
-		ctx.lineWidth = 5;
+		this.initStyle();
 		ctx.moveTo(this.points[0].x, this.points[0].y);
 		for(let i = 1; i < this.points.length; i++){
 				ctx.lineTo(this.points[i].x, this.points[i].y);
 			}
-		ctx.stroke();
+		this.applyStyle();
 	}
 }

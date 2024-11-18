@@ -1,8 +1,8 @@
 const canvasProperties={
-	width: window.innerWidth,
+	width: window.innerWidth/2,
 	height: window.innerHeight,
 	center: {
-		x: window.innerWidth/2,
+		x: window.innerWidth/4,
 		y: window.innerHeight/2
 	}
 }
@@ -16,9 +16,15 @@ const stageProperties={
 
 myCanvas.width = canvasProperties.width;
 myCanvas.height = canvasProperties.height;
+helperCanvas.width = canvasProperties.width;
+helperCanvas.height = canvasProperties.height;
 
 const ctx = myCanvas.getContext('2d');
+const helperCtx = helperCanvas.getContext('2d')
 clearCanvas();
+
+helperCtx.fillStyle = "red";
+helperCtx.fillRect(0,0,canvasProperties.width, canvasProperties.height);
 
 const shapes = [];
 let currentShape = null;

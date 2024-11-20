@@ -123,7 +123,7 @@ function getOptions(){
 		strokeColor: strokeColor.value,
 		fill: fill.checked,
 		stroke: stroke.checked,
-		strokeWidth: strokeWidth.value
+		strokeWidth: Number(strokeWidth.value)
 	};
 }
 

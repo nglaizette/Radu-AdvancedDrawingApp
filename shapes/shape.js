@@ -11,7 +11,7 @@ class Shape{
 
 		ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
 		ctx.strokeStyle = `rgb(${red}, ${green}, ${blue})`;
-		ctx.lineWidth = this.options.strokeWidth;
+		ctx.lineWidth = this.options.strokeWidth + 10;
 		if(this.options.fill){
 			ctx.fill();
 		}

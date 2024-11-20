@@ -9,6 +9,16 @@ class Rect extends Shape {
 		this.corner2 = corner2;
 	}
 
+	drawHitRegion(ctx){
+		ctx.beginPath();
+		const minX = Math.min(this.corner1.x, this.corner2.x);
+		const minY = Math.min(this.corner1.y, this.corner2.y);
+		const width = Math.abs(this.corner1.x - this.corner2.x);
+		const height = Math.abs(this.corner1.y - this.corner2.y);
+		ctx.rect(minX, minY, width, height);
+		this.applyHitRegionStyle(ctx);
+	}
+
 	draw(ctx){
 		ctx.beginPath();
 		const minX = Math.min(this.corner1.x, this.corner2.x);
@@ -16,6 +26,6 @@ class Rect extends Shape {
 		const width = Math.abs(this.corner1.x - this.corner2.x);
 		const height = Math.abs(this.corner1.y - this.corner2.y);
 		ctx.rect(minX, minY, width, height);
-		this.applyStyle();
+		this.applyStyle(ctx);
 	}
 }

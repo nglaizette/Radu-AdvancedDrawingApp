@@ -43,7 +43,7 @@ const downCallbackForRect = function (e){
 		};
 		currentShape.setCorner2(mousePosition);
 
-		clearCanvas();
+		
 		drawShapes([...shapes, currentShape]);
 	};
 
@@ -73,7 +73,6 @@ const downCallbackForPath = function(e){
 		//console.log(mousePosition.x);
 		currentShape.addPoint(mousePosition);
 
-		clearCanvas();
 		drawShapes([...shapes, currentShape]);
 	};
 
@@ -106,9 +105,15 @@ function changeTool(tool){
 	}
 }
 
-function drawShapes(shapes){
+function drawShapes(shapes) {
+	clearCanvas();
+
 	for(const shape of shapes){
 		shape.draw(ctx);
+	}
+	helperCtx.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
+	for(const shape of shapes){
+		shape.drawHitRegion(helperCtx);
 	}
 }
 

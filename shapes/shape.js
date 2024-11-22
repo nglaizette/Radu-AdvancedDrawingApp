@@ -2,6 +2,7 @@ class Shape{
 	constructor(options){
 		this.id=Math.floor(16777216*Math.random());
 		this.options = options;
+		this.selected = false;
 	}
 
 	applyHitRegionStyle(ctx){
@@ -30,6 +31,10 @@ class Shape{
 		if(this.options.stroke){
 			ctx.stroke();
 		}
+	}
+
+	drawGizmo(){
+		throw new Error("draw method must be implemented");
 	}
 
 	drawHitRegion(ctx){

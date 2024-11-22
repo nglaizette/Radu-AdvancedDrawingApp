@@ -87,6 +87,23 @@ const downCallbackForPath = function(e){
 	myCanvas.addEventListener('pointerup', upCallback);
 }
 
+const downCallbackForSelect = function (e){
+	const mousePosition = {
+		x: e.offsetX,
+		y: e.offsetY
+	};
+
+	const [r, g, b, a ] = helperCtx.getImageData(mousePosition.x, mousePosition.y, 1, 1).data;
+	//console.log(r, g, b, a);
+	const id =  r << 16 | g << 8 | b;
+	console.log(id);
+	const shape = shapes.find(s=>s.id==id);
+	if(shape){
+		console.log(shape);
+		shape.selected=!shape.selected;
+		drawShapes([...shapes, currentShape]);
+	}
+}
 
 myCanvas.addEventListener('pointerdown', downCallbackForPath);
 
@@ -94,13 +111,16 @@ function changeTool(tool){
 	//console.log(info);
 	myCanvas.removeEventListener('pointerdown', downCallbackForPath);
 	myCanvas.removeEventListener('pointerdown', downCallbackForRect);
-
+	myCanvas.removeEventListener('pointerdown', downCallbackForSelect);
 	switch(tool){
 		case "rect":
 			myCanvas.addEventListener('pointerdown', downCallbackForRect);
 			break;
 		case "path":
 			myCanvas.addEventListener('pointerdown', downCallbackForPath);
+			break;
+		case "select":
+			myCanvas.addEventListener('pointerdown', downCallbackForSelect);
 			break;		
 	}
 }

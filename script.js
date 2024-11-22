@@ -96,10 +96,10 @@ const downCallbackForSelect = function (e){
 	const [r, g, b, a ] = helperCtx.getImageData(mousePosition.x, mousePosition.y, 1, 1).data;
 	//console.log(r, g, b, a);
 	const id =  r << 16 | g << 8 | b;
-	console.log(id);
+	//console.log(id);
 	const shape = shapes.find(s=>s.id==id);
 	if(shape){
-		console.log(shape);
+		//console.log(shape);
 		shape.selected=!shape.selected;
 		drawShapes([...shapes, currentShape]);
 	}

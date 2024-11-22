@@ -39,10 +39,12 @@ class Rect extends Shape {
 		const minY = Math.min(this.corner1.y, this.corner2.y);
 		const width = Math.abs(this.corner1.x - this.corner2.x);
 		const height = Math.abs(this.corner1.y - this.corner2.y);
+		ctx.save();
 		ctx.rect(minX, minY, width, height);
 		ctx.strokeStyle = "yellow";
 		ctx.lineWidth=3;
 		ctx.setLineDash([5, 5]);
 		ctx.stroke();
+		ctx.restore();
 	}
 }

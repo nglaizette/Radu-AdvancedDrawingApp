@@ -36,11 +36,13 @@ class Path extends Shape {
 		const maxX = Math.max(...this.points.map(p=>p.x));
 		const maxY = Math.max(...this.points.map(p=>p.y));
 
+		ctx.save();
 		ctx.beginPath();
 		ctx.rect(minX, minY, maxX-minX, maxY-minY);
 		ctx.strokeStyle = "yellow";
 		ctx.lineWidth=3;
 		ctx.setLineDash([5, 5]);
 		ctx.stroke();
+		ctx.restore();
 	}
 }

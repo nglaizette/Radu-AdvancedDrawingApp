@@ -22,6 +22,7 @@ class Shape{
 	}
 
 	applyStyle(ctx) {
+		ctx.save();
 		ctx.strokeStyle = this.options.strokeColor;
 		ctx.fillStyle = this.options.fillColor;
 		ctx.lineWidth = this.options.strokeWidth;
@@ -31,6 +32,7 @@ class Shape{
 		if(this.options.stroke){
 			ctx.stroke();
 		}
+		ctx.restore();
 	}
 
 	drawGizmo(){

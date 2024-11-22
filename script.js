@@ -156,3 +156,33 @@ function clearCanvas(){
 	ctx.fillRect(stageProperties.left, stageProperties.top, stageProperties.width, stageProperties.height);
 }
 
+function changeFillColor(value){
+	console.log(value);
+	shapes.filter(s=>s.selected).forEach(s=>s.options.fillColor=value);
+	drawShapes(shapes);
+}
+
+function changeFill(value){
+	console.log(value);
+	shapes.filter(s=>s.selected).forEach(s=>s.options.fill=value);
+	drawShapes(shapes);
+}
+
+function changeStrokeColor(value){
+	console.log(value);
+	shapes.filter(s=>s.selected).forEach(s=>s.options.strokeColor=value);
+	drawShapes(shapes);
+}
+
+function changeStroke(value){
+	console.log(value);
+	shapes.filter(s=>s.selected).forEach(s=>s.options.stroke=value);
+	drawShapes(shapes);
+}
+
+function changeStrokeWidth(value) {
+	console.log(Number(value));
+	shapes.filter(s=>s.selected).forEach(s=>s.options.strokeWidth=Number(value));
+	drawShapes(shapes);
+}
+

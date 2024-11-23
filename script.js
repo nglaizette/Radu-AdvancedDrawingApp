@@ -58,6 +58,7 @@ const downCallbackForRect = function (e){
 		myCanvas.removeEventListener('pointermove', moveCallback);
 		myCanvas.removeEventListener('pointerup', upCallback);
 
+		currentShape.recenter();
 		shapes.push(currentShape);
 	}
 
@@ -87,6 +88,7 @@ const downCallbackForPath = function(e){
 		myCanvas.removeEventListener('pointermove', moveCallback);
 		myCanvas.removeEventListener('pointerup', upCallback);
 
+		currentShape.recenter();
 		shapes.push(currentShape);
 	}
 

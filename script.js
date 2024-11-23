@@ -1,11 +1,16 @@
+const SHOW_HIT_REGION = false;
+if(!SHOW_HIT_REGION){
+	helperCanvas.style.display = "none";
+}
+
 const canvasProperties={
-	width: window.innerWidth/2,
+	width: SHOW_HIT_REGION ? window.innerWidth/2 : window.innerWidth,
 	height: window.innerHeight,
 	center: {
-		x: window.innerWidth/4,
+		x: SHOW_HIT_REGION ? window.innerWidth/4 : window.innerWidth/2,
 		y: window.innerHeight/2
 	}
-}
+};
 
 const stageProperties={
 	width: 600,

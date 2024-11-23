@@ -26,6 +26,8 @@ class Shape{
 		ctx.strokeStyle = this.options.strokeColor;
 		ctx.fillStyle = this.options.fillColor;
 		ctx.lineWidth = this.options.strokeWidth;
+		ctx.lineCap = "round";
+		ctx.lineJoin = "round";
 		if(this.options.fill){
 			ctx.fill();
 		}

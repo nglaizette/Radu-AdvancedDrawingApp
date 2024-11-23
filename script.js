@@ -3,6 +3,11 @@ if(!SHOW_HIT_REGION){
 	helperCanvas.style.display = "none";
 }
 
+const stageProperties={
+	width: 600,
+	height: 480
+}
+
 const canvasProperties={
 	width: SHOW_HIT_REGION ? window.innerWidth/2 : window.innerWidth,
 	height: window.innerHeight,
@@ -12,12 +17,9 @@ const canvasProperties={
 	}
 };
 
-const stageProperties={
-	width: 600,
-	height: 480,
-	left: canvasProperties.center.x-600/2,
-	top: canvasProperties.center.y - 480/2
-}
+stageProperties.left = canvasProperties.center.x - stageProperties.width/2;
+stageProperties.top = canvasProperties.center.y - stageProperties.height/2;
+
 
 myCanvas.width = canvasProperties.width;
 myCanvas.height = canvasProperties.height;

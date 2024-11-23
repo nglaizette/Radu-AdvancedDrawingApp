@@ -3,6 +3,15 @@ function averagePoints(points){
 	return {x: sum.x / points.length, y: sum.y / points.length };
 }
 
+function getMidPoint(points){
+	const minX = Math.min(...points.map((p) => p.x));
+	const maxX = Math.max(...points.map((p) => p.x));
+	const minY = Math.min(...points.map((p) => p.y));
+	const maxY = Math.max(...points.map((p) => p.y));
+
+	return {x: minX + (maxX - minX) / 2, y: minY + (maxY - minY)/ 2};
+}
+
 function addPoints(p1, p2){
 	return {x:p1.x + p2.x, y: p1.y + p2.y };
 }

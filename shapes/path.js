@@ -9,7 +9,7 @@ class Path extends Shape {
 	}
 
 	recenter(){
-		this.center = averagePoints(this.points);
+		this.center = getMidPoint(this.points);
 		for(const point of this.points){
 			const newPoint=substractPoints(point, this.center);
 			point.x = newPoint.x;
@@ -53,9 +53,12 @@ class Path extends Shape {
 		ctx.save();
 		ctx.beginPath();
 		ctx.rect(minX +  center.x , minY + center.y, maxX-minX, maxY-minY);
-		ctx.strokeStyle = "yellow";
+		ctx.strokeStyle = "orange";
 		ctx.lineWidth=3;
 		ctx.setLineDash([5, 5]);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(center.x, center.y, 5, 0, 2 * Math.PI);
 		ctx.stroke();
 		ctx.restore();
 	}

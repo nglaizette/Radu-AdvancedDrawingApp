@@ -10,7 +10,7 @@ class Rect extends Shape {
 	}
 
 	recenter(){
-		this.center = averagePoints([this.corner1, this.corner2]);
+		this.center = getMidPoint([this.corner1, this.corner2]);
 		this.corner1 = substractPoints(this.corner1, this.center);
 		this.corner2 = substractPoints(this.corner2, this.center);
 	}
@@ -55,6 +55,9 @@ class Rect extends Shape {
 		ctx.strokeStyle = "orange";
 		ctx.lineWidth=3;
 		ctx.setLineDash([5, 5]);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(center.x, center.y, 5, 0, 2 * Math.PI);
 		ctx.stroke();
 		ctx.restore();
 	}

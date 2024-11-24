@@ -16,7 +16,11 @@ function addPoints(p1, p2){
 	return {x:p1.x + p2.x, y: p1.y + p2.y };
 }
 
-function substractPoints(p1, p2){
+function subtractPoints(p1, p2){
 	return {x:p1.x - p2.x, y: p1.y - p2.y };
+}
+
+function equalPoints(p1, p2){
+	return p1.x === p2.x && p1.y === p2.y;
 }
 

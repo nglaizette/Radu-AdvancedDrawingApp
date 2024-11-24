@@ -43,26 +43,4 @@ class Path extends Shape {
 			this.drawGizmo(ctx);
 		}
 	}
-
-	drawGizmo(ctx){
-
-		const center = this.center? this.center:{x:0, y:0}
-
-		const minX = Math.min(...this.points.map(p=>p.x));
-		const minY = Math.min(...this.points.map(p=>p.y));
-		const maxX = Math.max(...this.points.map(p=>p.x));
-		const maxY = Math.max(...this.points.map(p=>p.y));
-
-		ctx.save();
-		ctx.beginPath();
-		ctx.rect(minX +  center.x , minY + center.y, maxX-minX, maxY-minY);
-		ctx.strokeStyle = "orange";
-		ctx.lineWidth=3;
-		ctx.setLineDash([5, 5]);
-		ctx.stroke();
-		ctx.beginPath();
-		ctx.arc(center.x, center.y, 5, 0, 2 * Math.PI);
-		ctx.stroke();
-		ctx.restore();
-	}
 }

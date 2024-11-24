@@ -47,24 +47,4 @@ class Rect extends Shape {
 			this.drawGizmo(ctx);
 		}
 	}
-
-	drawGizmo(ctx){
-		const center = this.center? this.center:{x:0, y:0}
-
-		ctx.beginPath();
-		const minX = Math.min(this.corner1.x, this.corner2.x);
-		const minY = Math.min(this.corner1.y, this.corner2.y);
-		const width = Math.abs(this.corner1.x - this.corner2.x);
-		const height = Math.abs(this.corner1.y - this.corner2.y);
-		ctx.save();
-		ctx.rect(minX +  center.x , minY + center.y , width, height);
-		ctx.strokeStyle = "orange";
-		ctx.lineWidth=3;
-		ctx.setLineDash([5, 5]);
-		ctx.stroke();
-		ctx.beginPath();
-		ctx.arc(center.x, center.y, 5, 0, 2 * Math.PI);
-		ctx.stroke();
-		ctx.restore();
-	}
 }

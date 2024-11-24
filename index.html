@@ -7,7 +7,7 @@
 </head>
 
 <body>
-	<canvas id="myCanvas"></canvas><canvas id="helperCanvas"></canvas>
+	<canvas id="myCanvas"></canvas><canvas id="hitTestCanvas"></canvas>
 	<div id="toolBox">
 		<select onchange="changeTool(this.value)">
 			<option value="path" selected> Path </option>
@@ -27,6 +27,7 @@
 	</div>
 
 	<script src="utils.js"></script>
+	<script src="toolEvents.js"></script>
 	<script src="shapes/shape.js"></script>
 	<script src="shapes/rect.js"></script>
 	<script src="shapes/path.js"></script>

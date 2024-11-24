@@ -8,13 +8,12 @@ class Path extends Shape {
 		this.points.push(point);
 	}
 
-	recenter(){
-		this.center = getMidPoint(this.points);
-		for(const point of this.points){
-			const newPoint=subtractPoints(point, this.center);
-			point.x = newPoint.x;
-			point.y = newPoint.y;
-		}
+	getPoints(){
+		return this.points;
+	}
+
+	setPoints(points){
+		this.points = points;
 	}
 
 	setCenter(center){

@@ -1,6 +1,6 @@
 const SHOW_HIT_REGION = false;
 if(!SHOW_HIT_REGION){
-	helperCanvas.style.display = "none";
+	hitTestCanvas.style.display = "none";
 }
 
 const stageProperties={
@@ -20,18 +20,15 @@ const canvasProperties={
 stageProperties.left = canvasProperties.center.x - stageProperties.width/2;
 stageProperties.top = canvasProperties.center.y - stageProperties.height/2;
 
-
 myCanvas.width = canvasProperties.width;
 myCanvas.height = canvasProperties.height;
-helperCanvas.width = canvasProperties.width;
-helperCanvas.height = canvasProperties.height;
+hitTestCanvas.width = canvasProperties.width;
+hitTestCanvas.height = canvasProperties.height;
 
 const ctx = myCanvas.getContext('2d');
-const helperCtx = helperCanvas.getContext('2d')
-clearCanvas();
+const hitTestingCtx = hitTestCanvas.getContext('2d')
 
-helperCtx.fillStyle = "red";
-helperCtx.fillRect(0,0,canvasProperties.width, canvasProperties.height);
+clearCanvas();
 
 const shapes = [];
 let currentShape = null;
@@ -47,110 +44,6 @@ window.addEventListener("keydown", (e) => {
 	}
 })
 
-function downCallbackForRect(e){
-	const mousePosition = {
-		x: e.offsetX,
-		y: e.offsetY
-	};
-	currentShape = new Rect(mousePosition, getOptions());
-
-	const moveCallback = function(e){
-		const mousePosition = {
-			x: e.offsetX,
-			y: e.offsetY
-		};
-		currentShape.setCorner2(mousePosition);
-		drawShapes([...shapes, currentShape]);
-	};
-
-	const upCallback = function (e) {
-		myCanvas.removeEventListener('pointermove', moveCallback);
-		myCanvas.removeEventListener('pointerup', upCallback);
-
-		currentShape.recenter();
-		shapes.push(currentShape);
-	}
-
-	myCanvas.addEventListener('pointermove', moveCallback);
-	myCanvas.addEventListener('pointerup', upCallback);
-}
-
-function downCallbackForPath (e){
-	const mousePosition = {
-		x: e.offsetX,
-		y: e.offsetY
-	};
-	currentShape =  new Path(mousePosition,getOptions());
-
-	const moveCallback = function(e){
-		const mousePosition = {
-			x: e.offsetX,
-			y: e.offsetY
-		};
-		//console.log(mousePosition.x);
-		currentShape.addPoint(mousePosition);
-
-		drawShapes([...shapes, currentShape]);
-	};
-
-	const upCallback = function (e) {
-		myCanvas.removeEventListener('pointermove', moveCallback);
-		myCanvas.removeEventListener('pointerup', upCallback);
-
-		currentShape.recenter();
-		shapes.push(currentShape);
-	}
-
-	myCanvas.addEventListener('pointermove', moveCallback);
-	myCanvas.addEventListener('pointerup', upCallback);
-}
-
-function downCallbackForSelect (e){
-	const startPosition = {
-		x: e.offsetX,
-		y: e.offsetY
-	};
-
-	const [r, g, b, a ] = helperCtx.getImageData(startPosition.x, startPosition.y, 1, 1).data;
-	//console.log(r, g, b, a);
-	const id =  r << 16 | g << 8 | b;
-	//console.log(id);
-	const shape = shapes.find(s=>s.id==id);
-	
-	shapes.forEach((s) => (s.selected = false));
-	drawShapes(shapes);
-
-	if(shape){
-		shape.selected = true;
-		//console.log(shape);
-		//const diff = addPoints(startPosition, subtractPoints(shape.center, startPosition));
-		const oldCenter=shape.center;
-
-		//shape.setCenter(diff);
-		drawShapes([...shapes, currentShape]);
-
-		const moveCallback = function(e){
-			const mousePosition = {
-				x: e.offsetX,
-				y: e.offsetY
-			};
-			//console.log(mousePosition.x);
-			const newPoint=subtractPoints(mousePosition, startPosition);
-			shape.setCenter(addPoints(oldCenter, newPoint));
-			drawShapes(shapes);
-	
-			//drawShapes([...shapes, currentShape]);
-		};
-	
-		const upCallback = function (e) {
-			myCanvas.removeEventListener('pointermove', moveCallback);
-			myCanvas.removeEventListener('pointerup', upCallback);
-		}
-	
-		myCanvas.addEventListener('pointermove', moveCallback);
-		myCanvas.addEventListener('pointerup', upCallback);
-	}
-}
 
 function changeTool(tool){
 	//console.log(info);
@@ -176,9 +69,9 @@ function drawShapes(shapes) {
 	for(const shape of shapes){
 		shape.draw(ctx);
 	}
-	helperCtx.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
+	hitTestingCtx.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 	for(const shape of shapes){
-		shape.drawHitRegion(helperCtx);
+		shape.drawHitRegion(hitTestingCtx);
 	}
 }
 
@@ -199,6 +92,10 @@ function clearCanvas(){
 
 	ctx.fillStyle="white";
 	ctx.fillRect(stageProperties.left, stageProperties.top, stageProperties.width, stageProperties.height);
+
+	// For debugging
+	hitTestingCtx.fillStyle = "red";
+	hitTestingCtx.fillRect(0,0,canvasProperties.width, canvasProperties.height);
 }
 
 function changeFillColor(value){

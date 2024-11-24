@@ -5,6 +5,17 @@ class Shape{
 		this.selected = false;
 	}
 
+	recenter() {
+		const points = this.getPoints();
+		this.center = getMidPoint(points);
+		for(const point of points){
+			const newPoint=subtractPoints(point, this.center);
+			point.x = newPoint.x;
+			point.y = newPoint.y;
+		}
+		this.setPoints(points);
+	}
+
 	applyHitRegionStyle(ctx){
 		const red = (this.id & 0xFF0000) >> 16;
 		const green = (this.id & 0x00FF00) >> 8;

@@ -11,8 +11,8 @@ class Rect extends Shape {
 
 	recenter(){
 		this.center = getMidPoint([this.corner1, this.corner2]);
-		this.corner1 = substractPoints(this.corner1, this.center);
-		this.corner2 = substractPoints(this.corner2, this.center);
+		this.corner1 = subtractPoints(this.corner1, this.center);
+		this.corner2 = subtractPoints(this.corner2, this.center);
 	}
 
 	setCenter(center){

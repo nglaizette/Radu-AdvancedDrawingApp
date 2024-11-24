@@ -105,6 +105,10 @@ const downCallbackForSelect = function (e){
 	const id =  r << 16 | g << 8 | b;
 	//console.log(id);
 	const shape = shapes.find(s=>s.id==id);
+	
+	shapes.forEach((s) => (s.selected = false));
+	drawShapes(shapes);
+
 	if(shape){
 		shape.selected = true;
 		//console.log(shape);
@@ -130,11 +134,6 @@ const downCallbackForSelect = function (e){
 		const upCallback = function (e) {
 			myCanvas.removeEventListener('pointermove', moveCallback);
 			myCanvas.removeEventListener('pointerup', upCallback);
-			//debugger;
-			if(equalPoints(oldCenter, shape.center)){
-				shape.selected=false;
-				drawShapes(shapes);
-			}
 		}
 	
 		myCanvas.addEventListener('pointermove', moveCallback);

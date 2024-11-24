@@ -231,3 +231,9 @@ function changeStrokeWidth(value) {
 	drawShapes(shapes);
 }
 
+function undo(){
+	alert("ToDo");
+	//shapes = JSON.parse(history.pop());
+	//drawShapes(shapes);
+}
+

@@ -38,6 +38,15 @@ let currentShape = null;
 
 myCanvas.addEventListener('pointerdown', downCallbackForPath);
 
+window.addEventListener("keydown", (e) => {
+	// if delete
+	console.log(e);
+	if(e.key === "Delete" || e.key === "Backspace"){
+		shapes.splice(shapes.findIndex((s=> s.selected)), 1);
+		drawShapes(shapes);
+	}
+})
+
 function downCallbackForRect(e){
 	const mousePosition = {
 		x: e.offsetX,

@@ -36,7 +36,9 @@ helperCtx.fillRect(0,0,canvasProperties.width, canvasProperties.height);
 const shapes = [];
 let currentShape = null;
 
-const downCallbackForRect = function (e){
+myCanvas.addEventListener('pointerdown', downCallbackForPath);
+
+function downCallbackForRect(e){
 	const mousePosition = {
 		x: e.offsetX,
 		y: e.offsetY
@@ -64,7 +66,7 @@ const downCallbackForRect = function (e){
 	myCanvas.addEventListener('pointerup', upCallback);
 }
 
-const downCallbackForPath = function(e){
+function downCallbackForPath (e){
 	const mousePosition = {
 		x: e.offsetX,
 		y: e.offsetY
@@ -94,7 +96,7 @@ const downCallbackForPath = function(e){
 	myCanvas.addEventListener('pointerup', upCallback);
 }
 
-const downCallbackForSelect = function (e){
+function downCallbackForSelect (e){
 	const startPosition = {
 		x: e.offsetX,
 		y: e.offsetY
@@ -140,8 +142,6 @@ const downCallbackForSelect = function (e){
 		myCanvas.addEventListener('pointerup', upCallback);
 	}
 }
-
-myCanvas.addEventListener('pointerdown', downCallbackForPath);
 
 function changeTool(tool){
 	//console.log(info);

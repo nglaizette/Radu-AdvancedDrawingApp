@@ -95,21 +95,50 @@ const downCallbackForPath = function(e){
 }
 
 const downCallbackForSelect = function (e){
-	const mousePosition = {
+	const startPosition = {
 		x: e.offsetX,
 		y: e.offsetY
 	};
 
-	const [r, g, b, a ] = helperCtx.getImageData(mousePosition.x, mousePosition.y, 1, 1).data;
+	const [r, g, b, a ] = helperCtx.getImageData(startPosition.x, startPosition.y, 1, 1).data;
 	//console.log(r, g, b, a);
 	const id =  r << 16 | g << 8 | b;
 	//console.log(id);
 	const shape = shapes.find(s=>s.id==id);
 	if(shape){
+		shape.selected = true;
 		//console.log(shape);
-		shape.selected=!shape.selected;
-		shape.setCenter(mousePosition);
+		//const diff = addPoints(startPosition, subtractPoints(shape.center, startPosition));
+		const oldCenter=shape.center;
+
+		//shape.setCenter(diff);
 		drawShapes([...shapes, currentShape]);
+
+		const moveCallback = function(e){
+			const mousePosition = {
+				x: e.offsetX,
+				y: e.offsetY
+			};
+			//console.log(mousePosition.x);
+			const newPoint=subtractPoints(mousePosition, startPosition);
+			shape.setCenter(addPoints(oldCenter, newPoint));
+			drawShapes(shapes);
+	
+			//drawShapes([...shapes, currentShape]);
+		};
+	
+		const upCallback = function (e) {
+			myCanvas.removeEventListener('pointermove', moveCallback);
+			myCanvas.removeEventListener('pointerup', upCallback);
+			//debugger;
+			if(equalPoints(oldCenter, shape.center)){
+				shape.selected=false;
+				drawShapes(shapes);
+			}
+		}
+	
+		myCanvas.addEventListener('pointermove', moveCallback);
+		myCanvas.addEventListener('pointerup', upCallback);
 	}
 }
 

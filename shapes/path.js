@@ -17,6 +17,10 @@ class Path extends Shape {
 		}
 	}
 
+	setCenter(center){
+		this.center = center;
+	}
+
 	drawHitRegion(ctx){
 		const center = this.center? this.center:{x:0, y:0}
 		ctx.beginPath();

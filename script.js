@@ -49,8 +49,6 @@ const downCallbackForRect = function (e){
 			y: e.offsetY
 		};
 		currentShape.setCorner2(mousePosition);
-
-		
 		drawShapes([...shapes, currentShape]);
 	};
 
@@ -110,6 +108,7 @@ const downCallbackForSelect = function (e){
 	if(shape){
 		//console.log(shape);
 		shape.selected=!shape.selected;
+		shape.setCenter(mousePosition);
 		drawShapes([...shapes, currentShape]);
 	}
 }

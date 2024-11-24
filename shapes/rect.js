@@ -15,6 +15,9 @@ class Rect extends Shape {
 		this.corner2 = substractPoints(this.corner2, this.center);
 	}
 
+	setCenter(center){
+		this.center = center;
+	}
 
 	drawHitRegion(ctx){
 		const center = this.center? this.center:{x:0, y:0}

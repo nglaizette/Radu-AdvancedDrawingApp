@@ -81,7 +81,9 @@ function getOptions(){
 		strokeColor: strokeColor.value,
 		fill: fill.checked,
 		stroke: stroke.checked,
-		strokeWidth: Number(strokeWidth.value)
+		strokeWidth: Number(strokeWidth.value),
+		lineCap: "round",
+		lineJoin: "round"
 	};
 }
 

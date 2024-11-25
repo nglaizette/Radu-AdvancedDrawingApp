@@ -50,6 +50,9 @@ class Shape{
 		const green = (this.id & 0x00FF00) >> 8;
 		const blue = this.id & 0x0000FF;
 
+		ctx.lineCap = "round";
+		ctx.lineJoin = "round";
+
 		ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
 		ctx.strokeStyle = `rgb(${red}, ${green}, ${blue})`;
 		ctx.lineWidth = this.options.strokeWidth + dilation;

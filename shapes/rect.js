@@ -18,22 +18,7 @@ class Rect extends Shape {
 		this.corner2 = points[1];
 	}
 
-	setCenter(center){
-		this.center = center;
-	}
-
-	drawHitRegion(ctx){
-		const center = this.center? this.center:{x:0, y:0}
-		ctx.beginPath();
-		const minX = Math.min(this.corner1.x, this.corner2.x);
-		const minY = Math.min(this.corner1.y, this.corner2.y);
-		const width = Math.abs(this.corner1.x - this.corner2.x);
-		const height = Math.abs(this.corner1.y - this.corner2.y);
-		ctx.rect(minX + center.x, minY + center.y , width, height);
-		this.applyHitRegionStyle(ctx);
-	}
-
-	draw(ctx){
+	draw(ctx, isHitRegion = false){
 		const center = this.center? this.center:{x:0, y:0}
 		ctx.beginPath();
 		const minX = Math.min(this.corner1.x, this.corner2.x);
@@ -41,10 +26,14 @@ class Rect extends Shape {
 		const width = Math.abs(this.corner1.x - this.corner2.x);
 		const height = Math.abs(this.corner1.y - this.corner2.y);
 		ctx.rect(minX +  center.x , minY + center.y , width, height);
-		this.applyStyle(ctx);
-
-		if(this.selected){
-			this.drawGizmo(ctx);
+		
+		if(isHitRegion){
+			this.applyHitRegionStyle(ctx);
+		} else {
+			this.applyStyle(ctx);
+			if(this.selected){
+				this.drawGizmo(ctx);
+			}
 		}
 	}
 }

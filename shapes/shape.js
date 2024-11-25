@@ -5,6 +5,10 @@ class Shape{
 		this.selected = false;
 	}
 
+	setCenter(center){
+		this.center = center;
+	}
+
 	recenter() {
 		const points = this.getPoints();
 		this.center = getMidPoint(points);
@@ -40,14 +44,14 @@ class Shape{
 		ctx.restore();
 	}
 
-	applyHitRegionStyle(ctx){
+	applyHitRegionStyle(ctx, dilation = 10){
 		const red = (this.id & 0xFF0000) >> 16;
 		const green = (this.id & 0x00FF00) >> 8;
 		const blue = this.id & 0x0000FF;
 
 		ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
 		ctx.strokeStyle = `rgb(${red}, ${green}, ${blue})`;
-		ctx.lineWidth = this.options.strokeWidth + 10;
+		ctx.lineWidth = this.options.strokeWidth + dilation;
 		if(this.options.fill){
 			ctx.fill();
 		}
@@ -72,8 +76,12 @@ class Shape{
 		ctx.restore();
 	}
 
-	drawHitRegion(ctx){
-		throw new Error("draw method must be implemented");
+	getPoints(){
+		throw new Error("getPoints method must be implemented");
+	}
+
+	setPoints(){
+		throw new Error("setPoints method must be implemented");
 	}
 
 	draw(ctx){

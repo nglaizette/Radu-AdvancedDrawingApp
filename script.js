@@ -71,7 +71,7 @@ function drawShapes(shapes) {
 	}
 	hitTestingCtx.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
 	for(const shape of shapes){
-		shape.drawHitRegion(hitTestingCtx);
+		shape.draw(hitTestingCtx, true);
 	}
 }
 

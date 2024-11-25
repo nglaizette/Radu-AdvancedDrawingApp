@@ -2,6 +2,7 @@ class Shape{
 	constructor(options){
 		this.id=Math.floor(16777216*Math.random());
 		this.options = options;
+		this.center = null;
 		this.selected = false;
 	}
 
@@ -22,7 +23,7 @@ class Shape{
 
 	drawGizmo(ctx){
 
-		const center = this.center? this.center:{x:0, y:0};
+		const center = this.center;
 
 		const points = this.getPoints();
 

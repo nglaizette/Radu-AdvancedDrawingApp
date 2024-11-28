@@ -12,9 +12,9 @@ class Shape{
 
 	recenter() {
 		const points = this.getPoints();
-		this.center = getMidPoint(points);
+		this.center = Vector.midVector(points);
 		for(const point of points){
-			const newPoint=subtractPoints(point, this.center);
+			const newPoint=Vector.subtract(point, this.center);
 			point.x = newPoint.x;
 			point.y = newPoint.y;
 		}

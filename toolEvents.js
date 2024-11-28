@@ -1,15 +1,9 @@
 function downCallbackForRect(e){
-	const mousePosition = {
-		x: e.offsetX,
-		y: e.offsetY
-	};
+	const mousePosition = new Vector(e.offsetX,e.offsetY);
 	currentShape = new Rect(mousePosition, getOptions());
 
 	const moveCallback = function(e){
-		const mousePosition = {
-			x: e.offsetX,
-			y: e.offsetY
-		};
+		const mousePosition = new Vector(e.offsetX,e.offsetY);
 		currentShape.setCorner2(mousePosition);
 		drawShapes([...shapes, currentShape]);
 	};
@@ -27,17 +21,11 @@ function downCallbackForRect(e){
 }
 
 function downCallbackForPath (e){
-	const mousePosition = {
-		x: e.offsetX,
-		y: e.offsetY
-	};
+	const mousePosition = new Vector(e.offsetX,e.offsetY);
 	currentShape =  new Path(mousePosition,getOptions());
 
 	const moveCallback = function(e){
-		const mousePosition = {
-			x: e.offsetX,
-			y: e.offsetY
-		};
+	const mousePosition = new Vector(e.offsetX,e.offsetY);
 		//console.log(mousePosition.x);
 		currentShape.addPoint(mousePosition);
 
@@ -57,10 +45,7 @@ function downCallbackForPath (e){
 }
 
 function downCallbackForSelect (e){
-	const startPosition = {
-		x: e.offsetX,
-		y: e.offsetY
-	};
+	const startPosition = new Vector(e.offsetX,e.offsetY);
 
 	const [r, g, b, a ] = hitTestingCtx.getImageData(startPosition.x, startPosition.y, 1, 1).data;
 	//console.log(r, g, b, a);
@@ -81,13 +66,10 @@ function downCallbackForSelect (e){
 		drawShapes([...shapes, currentShape]);
 
 		const moveCallback = function(e){
-			const mousePosition = {
-				x: e.offsetX,
-				y: e.offsetY
-			};
+			const mousePosition = new Vector(e.offsetX,e.offsetY);
 			//console.log(mousePosition.x);
-			const newPoint=subtractPoints(mousePosition, startPosition);
-			shape.setCenter(addPoints(oldCenter, newPoint));
+			const newPoint= Vector.subtract(mousePosition, startPosition);
+			shape.setCenter(Vector.add(oldCenter, newPoint));
 			drawShapes(shapes);
 	
 			//drawShapes([...shapes, currentShape]);

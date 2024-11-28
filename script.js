@@ -55,6 +55,10 @@ function changeTool(tool){
 	myCanvas.removeEventListener('pointerdown', downCallbackForPath);
 	myCanvas.removeEventListener('pointerdown', downCallbackForRect);
 	myCanvas.removeEventListener('pointerdown', downCallbackForSelect);
+	
+	shapes.forEach((s) => (s.selected = false));
+	drawShapes(shapes);
+
 	switch(tool){
 		case "rect":
 			myCanvas.addEventListener('pointerdown', downCallbackForRect);

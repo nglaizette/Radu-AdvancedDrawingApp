@@ -52,8 +52,8 @@ window.addEventListener("keydown", (e) => {
 
 function changeTool(tool){
 	//console.log(info);
-	myCanvas.removeEventListener('pointerdown', downCallbackForPath);
-	myCanvas.removeEventListener('pointerdown', downCallbackForRect);
+	myCanvas.removeEventListener('pointerdown', Path.addPointerDownListener);
+	myCanvas.removeEventListener('pointerdown', Rect.addPointerDownListener);
 	myCanvas.removeEventListener('pointerdown', downCallbackForSelect);
 	
 	shapes.forEach((s) => (s.selected = false));
@@ -61,10 +61,10 @@ function changeTool(tool){
 
 	switch(tool){
 		case "rect":
-			myCanvas.addEventListener('pointerdown', downCallbackForRect);
+			myCanvas.addEventListener('pointerdown', Rect.addPointerDownListener);
 			break;
 		case "path":
-			myCanvas.addEventListener('pointerdown', downCallbackForPath);
+			myCanvas.addEventListener('pointerdown', Path.addPointerDownListener);
 			break;
 		case "select":
 			myCanvas.addEventListener('pointerdown', downCallbackForSelect);

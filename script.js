@@ -49,7 +49,6 @@ window.addEventListener("keydown", (e) => {
 	}
 })
 
-
 function changeTool(tool){
 	//console.log(info);
 	myCanvas.removeEventListener('pointerdown', Path.addPointerDownListener);
@@ -123,6 +122,9 @@ function clearCanvas(){
 
 	ctx.fillStyle="white";
 	ctx.fillRect(stageProperties.left, stageProperties.top, stageProperties.width, stageProperties.height);
+
+	ctx.textAlign = "right";
+	ctx.fillText("Contributors: " + contributors.join(", "), myCanvas.width - 10, 10);
 
 	// For debugging
 	hitTestingCtx.fillStyle = "red";

@@ -33,7 +33,7 @@ clearCanvas();
 const shapes = [];
 let currentShape = null;
 
-myCanvas.addEventListener('pointerdown', downCallbackForPath);
+myCanvas.addEventListener('pointerdown', Path.addPointerDownListener);
 
 window.addEventListener("keydown", (e) => {
 	// if delete

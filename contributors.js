@@ -1,5 +1,6 @@
 const contributors = [
 	"egbertpostma",
 	"kabelo tooka",
-	"iyusuf"
+	"iyusuf",
+	"rajeshpillai"
 ];

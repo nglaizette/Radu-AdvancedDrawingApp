@@ -56,9 +56,10 @@ class Shape{
 		ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
 		ctx.strokeStyle = `rgb(${red}, ${green}, ${blue})`;
 		ctx.lineWidth = this.options.strokeWidth + dilation;
-		if(this.options.fill){
+		// pour la sélection des chemins sans remplissage
+		//if(this.options.fill){
 			ctx.fill();
-		}
+		//}
 		if(this.options.stroke){
 			ctx.stroke();
 		}

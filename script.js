@@ -167,3 +167,33 @@ function undo(){
 	//drawShapes(shapes);
 }
 
+function changeX(value) {
+	shapes.filter((s) => s.selected).forEach((s) => 
+		s.center.x = Number(value) + stageProperties.left
+	);
+	drawShapes(shapes);
+}
+
+function changeY(value) {
+	shapes.filter((s) => s.selected).forEach((s) => 
+		s.center.y = Number(value) + stageProperties.top
+	);
+	drawShapes(shapes);
+}
+
+function changeHeight(value) {
+	shapes.filter((s) => s.selected).forEach((s) => s.y = Number(value));
+	drawShapes(shapes);
+}
+
+
+function updateProperties(selectedShapes) {
+	if(selectedShapes.length === 0) {
+		document.getElementById("properties").innerHTML = "";
+		return;
+	}
+
+	const shape = selectedShapes[0];
+	x.value = Math.round(shape.center.x - stageProperties.left);
+	y.value = Math.round(shape.center.y - stageProperties.top);
+}

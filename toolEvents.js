@@ -17,7 +17,8 @@ function downCallbackForSelect (e){
 		const oldCenter=shape.center;
 
 		//shape.setCenter(diff);
-		drawShapes([...shapes, currentShape]);
+		drawShapes(shapes);
+		updateProperties(shapes.filter((s) => s.selected));
 
 		const moveCallback = function(e){
 			const mousePosition = new Vector(e.offsetX,e.offsetY);
@@ -25,13 +26,13 @@ function downCallbackForSelect (e){
 			const newPoint= Vector.subtract(mousePosition, startPosition);
 			shape.setCenter(Vector.add(oldCenter, newPoint));
 			drawShapes(shapes);
-	
 			//drawShapes([...shapes, currentShape]);
 		};
 	
 		const upCallback = function (e) {
 			myCanvas.removeEventListener('pointermove', moveCallback);
 			myCanvas.removeEventListener('pointerup', upCallback);
+			updateProperties(shapes.filter((s) => s.selected));
 		}
 	
 		myCanvas.addEventListener('pointermove', moveCallback);

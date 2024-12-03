@@ -3,6 +3,12 @@ class Shape{
 		this.id=Math.floor(16777216*Math.random());
 		this.options = options;
 		this.center = null;
+		this.size = {
+			width: 0,
+			height: 0
+		};
+		this
+
 		this.selected = false;
 	}
 
@@ -13,6 +19,7 @@ class Shape{
 	recenter() {
 		const points = this.getPoints();
 		this.center = Vector.midVector(points);
+		this.size = getSize(points);
 		for(const point of points){
 			const newPoint=Vector.subtract(point, this.center);
 			point.x = newPoint.x;

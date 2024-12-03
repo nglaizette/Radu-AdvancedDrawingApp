@@ -45,7 +45,7 @@ window.addEventListener("keydown", (e) => {
 
 	if(isShortcut(e.ctrlKey, e.key)){
 		excuteShortcut(e.ctrlKey, e.key);
-		e.defaultPrevented();
+		e.preventDefault();
 	}
 })
 
@@ -181,9 +181,15 @@ function changeY(value) {
 	drawShapes(shapes);
 }
 
+function changeWidth(value) {
+	//shapes.filter((s) => s.selected).forEach((s) =>)
+	alert("Todo");
+}
+
 function changeHeight(value) {
-	shapes.filter((s) => s.selected).forEach((s) => s.y = Number(value));
-	drawShapes(shapes);
+	//shapes.filter((s) => s.selected).forEach((s) => s.y = Number(value));
+	//drawShapes(shapes);
+	alert("Todo")
 }
 
 
@@ -196,4 +202,6 @@ function updateProperties(selectedShapes) {
 	const shape = selectedShapes[0];
 	x.value = Math.round(shape.center.x - stageProperties.left);
 	y.value = Math.round(shape.center.y - stageProperties.top);
+	width.value = shape.size.width;
+	height.value = shape.size.height;
 }

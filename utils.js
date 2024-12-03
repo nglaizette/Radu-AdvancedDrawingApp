@@ -1,4 +1,4 @@
-function averagePoints(points){
+/*function averagePoints(points){
 	const sum = points.reduce((acc, p) => addPoints(acc, p), {x: 0, y:0});
 	return {x: sum.x / points.length, y: sum.y / points.length };
 }
@@ -22,5 +22,15 @@ function subtractPoints(p1, p2){
 
 function equalPoints(p1, p2){
 	return p1.x === p2.x && p1.y === p2.y;
-}
+}*/
 
+function getSize(points){
+	const minX = Math.min(...points.map((p) => p.x));
+	const maxX = Math.max(...points.map((p) => p.x));
+	const minY = Math.min(...points.map((p) => p.y));
+	const maxY = Math.max(...points.map((p) => p.y));
+	return {
+		width: maxX - minX,
+		height: maxY - minY
+	}
+}

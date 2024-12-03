@@ -37,7 +37,7 @@ myCanvas.addEventListener('pointerdown', Path.addPointerDownListener);
 
 window.addEventListener("keydown", (e) => {
 	// if delete
-	console.log(e);
+	//console.log(e);
 	if(e.key === "Delete" || e.key === "Backspace"){
 		shapes.splice(shapes.findIndex((s=> s.selected)), 1);
 		drawShapes(shapes);
@@ -132,31 +132,31 @@ function clearCanvas(){
 }
 
 function changeFillColor(value){
-	console.log(value);
+	//console.log(value);
 	shapes.filter(s=>s.selected).forEach(s=>s.options.fillColor=value);
 	drawShapes(shapes);
 }
 
 function changeFill(value){
-	console.log(value);
+	//console.log(value);
 	shapes.filter(s=>s.selected).forEach(s=>s.options.fill=value);
 	drawShapes(shapes);
 }
 
 function changeStrokeColor(value){
-	console.log(value);
+	//console.log(value);
 	shapes.filter(s=>s.selected).forEach(s=>s.options.strokeColor=value);
 	drawShapes(shapes);
 }
 
 function changeStroke(value){
-	console.log(value);
+	//console.log(value);
 	shapes.filter(s=>s.selected).forEach(s=>s.options.stroke=value);
 	drawShapes(shapes);
 }
 
 function changeStrokeWidth(value) {
-	console.log(Number(value));
+	//console.log(Number(value));
 	shapes.filter(s=>s.selected).forEach(s=>s.options.strokeWidth=Number(value));
 	drawShapes(shapes);
 }
@@ -182,14 +182,17 @@ function changeY(value) {
 }
 
 function changeWidth(value) {
-	//shapes.filter((s) => s.selected).forEach((s) =>)
-	alert("Todo");
+	shapes.filter((s) => s.selected).forEach((s) => 
+		s.setWidth(Number(value))
+	);
+	drawShapes(shapes);
 }
 
 function changeHeight(value) {
-	//shapes.filter((s) => s.selected).forEach((s) => s.y = Number(value));
-	//drawShapes(shapes);
-	alert("Todo")
+	shapes.filter((s) => s.selected).forEach((s) => 
+		s.setHeight(Number(value))
+	);
+	drawShapes(shapes);
 }
 
 

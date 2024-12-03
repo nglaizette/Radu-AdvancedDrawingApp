@@ -3,10 +3,7 @@ class Shape{
 		this.id=Math.floor(16777216*Math.random());
 		this.options = options;
 		this.center = null;
-		this.size = {
-			width: 0,
-			height: 0
-		};
+		this.size = null;
 		this
 
 		this.selected = false;
@@ -14,6 +11,14 @@ class Shape{
 
 	setCenter(center){
 		this.center = center;
+	}
+
+	setWidth(width){
+		throw new Error("setWidth method must be implemented");
+	}
+
+	setHeight(height){
+		throw new Error("setHeight method must be implemented");
 	}
 
 	recenter() {

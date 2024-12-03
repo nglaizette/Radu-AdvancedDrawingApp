@@ -1,6 +1,9 @@
 class Rect extends Shape {
 	constructor(corner1, options){
 		super(options);
+
+		// Todo: take out corner1 and corner2 to the
+		// Drawing tool itself (it will need its own object)
 		this.corner1 =  corner1;
 		this.corner2 =  corner1;
 	}
@@ -14,19 +17,38 @@ class Rect extends Shape {
 	}
 
 	setPoints(points) {
-		this.corner1 = points[0];
-		this.corner2 = points[1];
+		//this.corner1 = points[0];
+		//this.corner2 = points[1];
+	}
+
+	setWidth(width){
+		this.size.width = width;
+	}
+
+	setHeight(height){
+		this.size.height = height;
 	}
 
 	draw(ctx, isHitRegion = false){
 		const center = this.center? this.center:{x:0, y:0}
+		let left, top, width, height;
+		if(this.size) {
+			left = center.x - this.size.width / 2;
+			top = center.y - this.size.height / 2;
+			width = this.size.width;
+			height = this.size.height;
+		} else {
+
+			const minX = Math.min(this.corner1.x, this.corner2.x);
+			const minY = Math.min(this.corner1.y, this.corner2.y);
+			width = Math.abs(this.corner1.x - this.corner2.x);
+			height = Math.abs(this.corner1.y - this.corner2.y);
+			left = minX +  center.x;
+			top = minY + center.y;
+		}
 		ctx.beginPath();
-		const minX = Math.min(this.corner1.x, this.corner2.x);
-		const minY = Math.min(this.corner1.y, this.corner2.y);
-		const width = Math.abs(this.corner1.x - this.corner2.x);
-		const height = Math.abs(this.corner1.y - this.corner2.y);
-		ctx.rect(minX +  center.x , minY + center.y , width, height);
-		
+		ctx.rect(left, top , width, height);
+
 		if(isHitRegion){
 			this.applyHitRegionStyle(ctx);
 		} else {

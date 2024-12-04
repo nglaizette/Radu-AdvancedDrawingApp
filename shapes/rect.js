@@ -13,7 +13,18 @@ class Rect extends Shape {
 	}
 
 	getPoints() {
-		return [this.corner1, this.corner2];
+		if(this.size){
+			return [
+				new Vector( -this.size.width/2,  -this.size.height/2),
+				new Vector( -this.size.width/2,  this.size.height/2),
+				new Vector(  this.size.width/2,  this.size.height/2),
+				new Vector(  this.size.width/2, -this.size.height/2),
+			]
+		}
+		return [
+			this.corner1,
+			this.corner2
+		];
 	}
 
 	setPoints(points) {

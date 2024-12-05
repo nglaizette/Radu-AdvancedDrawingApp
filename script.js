@@ -205,6 +205,6 @@ function updateProperties(selectedShapes) {
 	const shape = selectedShapes[0];
 	x.value = Math.round(shape.center.x - stageProperties.left);
 	y.value = Math.round(shape.center.y - stageProperties.top);
-	width.value = shape.size.width;
-	height.value = shape.size.height;
+	width.value = Maht.round(shape.size.width);
+	height.value = Math.round(shape.size.height);
 }

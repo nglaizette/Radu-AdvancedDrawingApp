@@ -96,6 +96,11 @@ class PropertiesPanel {
 		y.value = Math.round(shape.center.y - stageProperties.top);
 		width.value = Math.round(shape.size.width);
 		height.value = Math.round(shape.size.height);
+		fillColor.value = shape.options.fillColor;
+		fill.checked = shape.options.fill;
+		strokeColor.value = shape.options.strokeColor;
+		stroke.checked = shape.options.stroke;
+		strokeWidth.value = shape.options.strokeWidth;
 	}
 }
 

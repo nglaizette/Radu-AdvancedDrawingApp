@@ -18,7 +18,7 @@ function downCallbackForSelect (e){
 
 		//shape.setCenter(diff);
 		drawShapes(shapes);
-		updateProperties(shapes.filter((s) => s.selected));
+		PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
 
 		const moveCallback = function(e){
 			const mousePosition = new Vector(e.offsetX,e.offsetY);
@@ -32,7 +32,7 @@ function downCallbackForSelect (e){
 		const upCallback = function (e) {
 			myCanvas.removeEventListener('pointermove', moveCallback);
 			myCanvas.removeEventListener('pointerup', upCallback);
-			updateProperties(shapes.filter((s) => s.selected));
+			PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
 		}
 	
 		myCanvas.addEventListener('pointermove', moveCallback);

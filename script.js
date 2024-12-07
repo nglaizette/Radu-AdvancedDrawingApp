@@ -47,7 +47,9 @@ window.addEventListener("keydown", (e) => {
 		excuteShortcut(e.ctrlKey, e.key);
 		e.preventDefault();
 	}
-})
+});
+
+const propertiesPanel = new PropertiesPanel(propertiesHolder);
 
 function changeTool(tool){
 	//console.log(info);
@@ -131,80 +133,8 @@ function clearCanvas(){
 	hitTestingCtx.fillRect(0,0,canvasProperties.width, canvasProperties.height);
 }
 
-function changeFillColor(value){
-	//console.log(value);
-	shapes.filter(s=>s.selected).forEach(s=>s.options.fillColor=value);
-	drawShapes(shapes);
-}
-
-function changeFill(value){
-	//console.log(value);
-	shapes.filter(s=>s.selected).forEach(s=>s.options.fill=value);
-	drawShapes(shapes);
-}
-
-function changeStrokeColor(value){
-	//console.log(value);
-	shapes.filter(s=>s.selected).forEach(s=>s.options.strokeColor=value);
-	drawShapes(shapes);
-}
-
-function changeStroke(value){
-	//console.log(value);
-	shapes.filter(s=>s.selected).forEach(s=>s.options.stroke=value);
-	drawShapes(shapes);
-}
-
-function changeStrokeWidth(value) {
-	//console.log(Number(value));
-	shapes.filter(s=>s.selected).forEach(s=>s.options.strokeWidth=Number(value));
-	drawShapes(shapes);
-}
-
 function undo(){
 	alert("ToDo");
 	//shapes = JSON.parse(history.pop());
 	//drawShapes(shapes);
-}
-
-function changeX(value) {
-	shapes.filter((s) => s.selected).forEach((s) => 
-		s.center.x = Number(value) + stageProperties.left
-	);
-	drawShapes(shapes);
-}
-
-function changeY(value) {
-	shapes.filter((s) => s.selected).forEach((s) => 
-		s.center.y = Number(value) + stageProperties.top
-	);
-	drawShapes(shapes);
-}
-
-function changeWidth(value) {
-	shapes.filter((s) => s.selected).forEach((s) => 
-		s.setWidth(Number(value))
-	);
-	drawShapes(shapes);
-}
-
-function changeHeight(value) {
-	shapes.filter((s) => s.selected).forEach((s) => 
-		s.setHeight(Number(value))
-	);
-	drawShapes(shapes);
-}
-
-
-function updateProperties(selectedShapes) {
-	if(selectedShapes.length === 0) {
-		document.getElementById("properties").innerHTML = "";
-		return;
-	}
-
-	const shape = selectedShapes[0];
-	x.value = Math.round(shape.center.x - stageProperties.left);
-	y.value = Math.round(shape.center.y - stageProperties.top);
-	width.value = Maht.round(shape.size.width);
-	height.value = Math.round(shape.size.height);
 }

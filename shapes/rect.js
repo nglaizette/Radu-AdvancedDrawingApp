@@ -8,6 +8,33 @@ class Rect extends Shape {
 		this.corner2 =  corner1;
 	}
 
+	static load(data, stageProperties){
+		const rect = new Rect();
+		rect.id = data.id;
+		rect.options = data.options;
+		rect.center = new Vector(
+			data.center.x + stageProperties.left,
+			data.center.y + stageProperties.top
+		);
+		rect.size = data.size;
+		rect.selected = data.selected;
+		return rect;
+	}
+
+	serialize(stageProperties){
+		return {
+			type: 'Rect',
+			id: this.id,
+			options: this.options,
+			center: new Vector(
+				this.center.x - stageProperties.left,
+				this.center.y - stageProperties.top
+			),
+			size: this.size,
+			selected: this.selected
+		};
+	}
+
 	setCorner2(corner2){
 		this.corner2 = corner2;
 	}
@@ -49,7 +76,6 @@ class Rect extends Shape {
 			width = this.size.width;
 			height = this.size.height;
 		} else {
-
 			const minX = Math.min(this.corner1.x, this.corner2.x);
 			const minY = Math.min(this.corner1.y, this.corner2.y);
 			width = Math.abs(this.corner1.x - this.corner2.x);

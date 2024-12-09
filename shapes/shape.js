@@ -9,6 +9,10 @@ class Shape{
 		this.selected = false;
 	}
 
+	serialize(stageProperties){
+		throw new Error("serialize method must be implemented");
+	}
+
 	setCenter(center){
 		this.center = center;
 	}

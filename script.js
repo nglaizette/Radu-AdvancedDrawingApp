@@ -138,3 +138,53 @@ function undo(){
 	//shapes = JSON.parse(history.pop());
 	//drawShapes(shapes);
 }
+
+function save(){
+	//console.log(shapes)
+	const data = JSON.stringify(shapes.map((s) => s.serialize(stageProperties)));
+	console.log(data);
+
+	//download(
+	const a = document.createElement("a");
+	const file = new Blob([data], { type: "application/json" });
+	a.href = URL.createObjectURL(file);
+	a.download = "drawing.json";
+	a.click();
+}
+
+function load(){
+	const input = document.createElement("input");
+	input.type = "file";
+	input.accept = ".json";
+	input.onchange = (e) => {
+		const file = e.target.files[0];
+		const reader = new FileReader();
+		reader.onload = (e) => {
+			const data = JSON.parse(e.target.result);
+			//shapes.splice(0, shapes.length);
+			shapes.length = 0;
+			for(const shapeData of data){
+				let shape;
+				switch(shapeData.type){
+					case "Rect":
+						shape = Rect.load(shapeData, stageProperties);
+						//shape = new Rect(new Vector(shapeData.x, shapeData.y), new Vector(shapeData.width, shapeData.height));
+						break;
+					case "Path":
+						//shape = new Path(new Vector(shapeData.x, shapeData.y), getOptions());
+						//for(const point of shapeData.points){
+						//	shape.addPoint(new Vector(point.x, point.y));
+						//}
+						shape = Path.load(shapeData, stageProperties);
+						break;
+					default:
+						throw new Error("Unknown shape type: " + shapeData.type);
+				}
+				shapes.push(shape);
+			}
+			drawShapes(shapes);
+		};
+		reader.readAsText(file);
+	};
+	input.click();
+}

@@ -41,6 +41,7 @@ window.addEventListener("keydown", (e) => {
 	//console.log(e);
 	if(e.key === "Delete" || e.key === "Backspace"){
 		shapes.splice(shapes.findIndex((s=> s.selected)), 1);
+		propertiesPanel.reset();
 		drawShapes(shapes);
 	}
 
@@ -74,7 +75,7 @@ function changeTool(tool){
 	}
 }
 
-function selectTool(tool){
+function selectTool(tool) {
 	changeTool(tool);
 	const toolSelector =  document.getElementById("toolSelector");
 	if(toolSelector){

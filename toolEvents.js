@@ -1,4 +1,6 @@
-function downCallbackForSelect (e){
+function downCallbackForSelect (e) {
+	
+	propertiesPanel.reset();
 	const startPosition = new Vector(e.offsetX,e.offsetY);
 
 	const [r, g, b, a ] = hitTestingCtx.getImageData(startPosition.x, startPosition.y, 1, 1).data;
@@ -23,8 +25,8 @@ function downCallbackForSelect (e){
 		const moveCallback = function(e){
 			const mousePosition = new Vector(e.offsetX,e.offsetY);
 			//console.log(mousePosition.x);
-			const newPoint= Vector.subtract(mousePosition, startPosition);
-			shape.setCenter(Vector.add(oldCenter, newPoint));
+			const mouseDelta = Vector.subtract(mousePosition, startPosition);
+			shape.setCenter(Vector.add(oldCenter, mouseDelta));
 			drawShapes(shapes);
 			//drawShapes([...shapes, currentShape]);
 		};

@@ -112,6 +112,8 @@ class Rect extends Shape {
 	
 			currentShape.recenter();
 			shapes.push(currentShape);
+
+			updateHistory(shapes);
 		}
 	
 		myCanvas.addEventListener('pointermove', moveCallback);

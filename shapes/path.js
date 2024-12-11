@@ -94,6 +94,8 @@ class Path extends Shape {
 			currentShape.addPoint(mousePosition);
 	
 			drawShapes([...shapes, currentShape]);
+
+			updateHistory(shapes)
 		};
 	
 		const upCallback = function (e) {
@@ -102,6 +104,8 @@ class Path extends Shape {
 	
 			currentShape.recenter();
 			shapes.push(currentShape);
+
+			updateHistory(shapes);
 		}
 	
 		myCanvas.addEventListener('pointermove', moveCallback);

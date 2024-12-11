@@ -30,6 +30,7 @@ const hitTestingCtx = hitTestCanvas.getContext('2d')
 
 clearCanvas();
 
+const history = [];
 const shapes = [];
 let currentShape = null;
 
@@ -133,10 +134,19 @@ function clearCanvas(){
 	hitTestingCtx.fillRect(0,0,canvasProperties.width, canvasProperties.height);
 }
 
+function updateHistory(shapes){
+	history.push(shapes.map((s) => s.serialize(stageProperties)));
+}
+
 function undo(){
-	alert("ToDo");
-	//shapes = JSON.parse(history.pop());
-	//drawShapes(shapes);
+	history.pop();
+	if(history.length > 0){
+		loadShapes(history[history.length - 1]);
+	}
+	else {
+		shapes.length = 0;
+	}
+	drawShapes(shapes);
 }
 
 function save(){
@@ -152,6 +162,29 @@ function save(){
 	a.click();
 }
 
+function loadShapes(data){
+	shapes.length = 0;
+	for(const shapeData of data){
+		let shape;
+		switch(shapeData.type){
+			case "Rect":
+				shape = Rect.load(shapeData, stageProperties);
+				//shape = new Rect(new Vector(shapeData.x, shapeData.y), new Vector(shapeData.width, shapeData.height));
+				break;
+			case "Path":
+				//shape = new Path(new Vector(shapeData.x, shapeData.y), getOptions());
+				//for(const point of shapeData.points){
+				//	shape.addPoint(new Vector(point.x, point.y));
+				//}
+				shape = Path.load(shapeData, stageProperties);
+				break;
+			default:
+				throw new Error("Unknown shape type: " + shapeData.type);
+		}
+		shapes.push(shape);
+	}
+}
+
 function load(){
 	const input = document.createElement("input");
 	input.type = "file";
@@ -162,27 +195,9 @@ function load(){
 		reader.onload = (e) => {
 			const data = JSON.parse(e.target.result);
 			//shapes.splice(0, shapes.length);
-			shapes.length = 0;
-			for(const shapeData of data){
-				let shape;
-				switch(shapeData.type){
-					case "Rect":
-						shape = Rect.load(shapeData, stageProperties);
-						//shape = new Rect(new Vector(shapeData.x, shapeData.y), new Vector(shapeData.width, shapeData.height));
-						break;
-					case "Path":
-						//shape = new Path(new Vector(shapeData.x, shapeData.y), getOptions());
-						//for(const point of shapeData.points){
-						//	shape.addPoint(new Vector(point.x, point.y));
-						//}
-						shape = Path.load(shapeData, stageProperties);
-						break;
-					default:
-						throw new Error("Unknown shape type: " + shapeData.type);
-				}
-				shapes.push(shape);
-			}
+			loadShapes(data);
 			drawShapes(shapes);
+			updateHistory(shapes);
 		};
 		reader.readAsText(file);
 	};

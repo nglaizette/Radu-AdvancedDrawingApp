@@ -33,6 +33,8 @@ function downCallbackForSelect (e){
 			myCanvas.removeEventListener('pointermove', moveCallback);
 			myCanvas.removeEventListener('pointerup', upCallback);
 			PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
+
+			updateHistory(shapes);
 		}
 	
 		myCanvas.addEventListener('pointermove', moveCallback);

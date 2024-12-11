@@ -11,7 +11,7 @@ class Rect extends Shape {
 	static load(data, stageProperties){
 		const rect = new Rect();
 		rect.id = data.id;
-		rect.options = data.options;
+		rect.options = JSON.parse(JSON.stringify(data.options));
 		rect.center = new Vector(
 			data.center.x + stageProperties.left,
 			data.center.y + stageProperties.top
@@ -25,7 +25,7 @@ class Rect extends Shape {
 		return {
 			type: 'Rect',
 			id: this.id,
-			options: this.options,
+			options: JSON.parse(JSON.stringify(this.options)),
 			center: new Vector(
 				this.center.x - stageProperties.left,
 				this.center.y - stageProperties.top

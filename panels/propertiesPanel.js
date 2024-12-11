@@ -32,6 +32,7 @@ class PropertiesPanel {
 			s.center.x = Number(value) + stageProperties.left
 		);
 		drawShapes(shapes);
+		updateHistory(shapes);
 	}
 
 	static changeY(value) {
@@ -39,6 +40,7 @@ class PropertiesPanel {
 			s.center.y = Number(value) + stageProperties.top
 		);
 		drawShapes(shapes);
+		updateHistory(shapes);
 	}
 	
 	static changeWidth(value) {
@@ -46,6 +48,7 @@ class PropertiesPanel {
 			s.setWidth(Number(value))
 		);
 		drawShapes(shapes);
+		updateHistory(shapes);
 	}
 	
 	static changeHeight(value) {
@@ -53,36 +56,42 @@ class PropertiesPanel {
 			s.setHeight(Number(value))
 		);
 		drawShapes(shapes);
+		updateHistory(shapes);
 	}
 
 	static changeFillColor(value){
 		//console.log(value);
 		shapes.filter(s=>s.selected).forEach(s=>s.options.fillColor=value);
 		drawShapes(shapes);
+		updateHistory(shapes);
 	}
 	
 	static changeFill(value){
 		//console.log(value);
 		shapes.filter(s=>s.selected).forEach(s=>s.options.fill=value);
 		drawShapes(shapes);
+		updateHistory(shapes);
 	}
 	
 	static changeStrokeColor(value){
 		//console.log(value);
 		shapes.filter(s=>s.selected).forEach(s=>s.options.strokeColor=value);
 		drawShapes(shapes);
+		updateHistory(shapes);
 	}
 	
 	static changeStroke(value){
 		//console.log(value);
 		shapes.filter(s=>s.selected).forEach(s=>s.options.stroke=value);
 		drawShapes(shapes);
+		updateHistory(shapes);
 	}
 	
 	static changeStrokeWidth(value) {
 		//console.log(Number(value));
 		shapes.filter(s=>s.selected).forEach(s=>s.options.strokeWidth=Number(value));
 		drawShapes(shapes);
+		updateHistory(shapes);
 	}
 
 	static updateDisplay(selectedShapes) {

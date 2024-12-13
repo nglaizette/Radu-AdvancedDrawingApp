@@ -9,36 +9,55 @@ function downCallbackForSelect (e) {
 	//console.log(id);
 	const shape = shapes.find(s=>s.id==id);
 	
-	if(e.ctrlKey === false){
-		shapes.forEach((s) => (s.selected = false));
+	const selectedShapes = shapes.filter((s) => s.selected);
+	
+	let isClickingSelectedShape = false;
+	if (shape && shape.selected) {
+	   isClickingSelectedShape = true;
 	}
 	
+	if(!isClickingSelectedShape){
+	   if (e.ctrlKey === false && e.shiftKey === false) {
+		  shapes.forEach((s) => (s.selected = false));
+	   }
+	}
+
 	drawShapes(shapes);
 
 	if(shape){
-		shape.selected = !shape.selected;
-		//console.log(shape);
-		//const diff = addPoints(startPosition, subtractPoints(shape.center, startPosition));
-		const oldCenter=shape.center;
+
+		if(!isClickingSelectedShape) {  
+			shape.selected = true;
+		 }
+		 const selectedShapes = shapes.filter((s) => s.selected);
+		 const oldCenters = selectedShapes.map((s) => s.center);
+		 let mouseDelta=null;
 
 		//shape.setCenter(diff);
 		drawShapes(shapes);
-		PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
+		PropertiesPanel.updateDisplay(selectedShapes);
 
 		const moveCallback = function(e){
 			const mousePosition = new Vector(e.offsetX,e.offsetY);
 			//console.log(mousePosition.x);
-			const mouseDelta = Vector.subtract(mousePosition, startPosition);
-			shape.setCenter(Vector.add(oldCenter, mouseDelta));
+			mouseDelta = Vector.subtract(mousePosition, startPosition);
+			selectedShapes.forEach((s, i) => {
+				s.setCenter(Vector.add(oldCenters[i], mouseDelta));
+			});
 			drawShapes(shapes);
-			PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
+			PropertiesPanel.updateDisplay(selectedShapes);
 			//drawShapes([...shapes, currentShape]);
 		};
 	
 		const upCallback = function (e) {
 			myCanvas.removeEventListener('pointermove', moveCallback);
 			myCanvas.removeEventListener('pointerup', upCallback);
-			PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
+
+			if(isClickingSelectedShape && !mouseDelta){
+				shape.selected = false;
+				drawShapes(shapes);
+			 }
+			PropertiesPanel.updateDisplay(selectedShapes);
 
 			updateHistory(shapes);
 		}

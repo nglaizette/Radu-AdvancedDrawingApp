@@ -46,7 +46,7 @@ window.addEventListener("keydown", (e) => {
 	}
 
 	if(isShortcut(e.ctrlKey, e.key)){
-		excuteShortcut(e.ctrlKey, e.key);
+		executeShortcut(e.ctrlKey, e.key);
 		e.preventDefault();
 	}
 });
@@ -149,6 +149,11 @@ function undo(){
 	}
 	drawShapes(shapes);
 }
+
+function selectAll() {
+	shapes.forEach((s) => (s.selected = true));
+	drawShapes(shapes);
+ }
 
 function save(){
 	//console.log(shapes)

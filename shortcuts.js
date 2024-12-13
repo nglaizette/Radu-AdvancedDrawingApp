@@ -1,20 +1,18 @@
-const shortcuts = []
+const shortcuts = [
+   { control: false, key: "r", action: selectRectTool },
+   { control: false, key: "p", action: selectPathTool },
+   { control: false, key: "v", action: selectSelectTool },
+   { control: true, key: "z", action: undo },
+   { control: true, key: "a", action: selectAll },
+];
 
-const shortcutR = {control: false, key: "r", action: selectRectTool}
-const shortcutP = {control: false, key: "p", action: selectPathTool}
-const shortcutSpace = {control: false, key: "v", action: selectSelectTool}
-const shortcutUndo = {control: true, key: "z", action: undo }
-
-shortcuts.push(shortcutP, shortcutR, shortcutSpace, shortcutUndo)
-
-function isShortcut(control, key){
-	//console.log(control, key);
-	return shortcuts.find((s) => s.key === key && s.control === control)
+function isShortcut(control, key) {
+   return shortcuts.find((s) => s.key === key && s.control === control);
 }
 
-function excuteShortcut(control, key) {
-	const shortcut =  isShortcut(control, key)
-	if(shortcut){
-		shortcut.action()
-	}
+function executeShortcut(control, key) {
+   const shortcut = isShortcut(control, key);
+   if (shortcut) {
+      shortcut.action();
+   }
 }

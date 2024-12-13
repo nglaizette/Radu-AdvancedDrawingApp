@@ -9,20 +9,13 @@ function downCallbackForSelect (e) {
 	//console.log(id);
 	const shape = shapes.find(s=>s.id==id);
 	
-	const selectedShapes = shapes.filter((s) => s.selected);
-	
-	let isClickingSelectedShape = false;
-	if (shape && shape.selected) {
-	   isClickingSelectedShape = true;
-	}
+	let isClickingSelectedShape = shape && shape.selected;
 	
 	if(!isClickingSelectedShape){
 	   if (e.ctrlKey === false && e.shiftKey === false) {
 		  shapes.forEach((s) => (s.selected = false));
 	   }
 	}
-
-	drawShapes(shapes);
 
 	if(shape){
 
@@ -32,6 +25,7 @@ function downCallbackForSelect (e) {
 		 const selectedShapes = shapes.filter((s) => s.selected);
 		 const oldCenters = selectedShapes.map((s) => s.center);
 		 let mouseDelta=null;
+		 let dragging = false;
 
 		//shape.setCenter(diff);
 		drawShapes(shapes);
@@ -41,6 +35,8 @@ function downCallbackForSelect (e) {
 			const mousePosition = new Vector(e.offsetX,e.offsetY);
 			//console.log(mousePosition.x);
 			mouseDelta = Vector.subtract(mousePosition, startPosition);
+			isDragging = true;
+
 			selectedShapes.forEach((s, i) => {
 				s.setCenter(Vector.add(oldCenters[i], mouseDelta));
 			});
@@ -53,7 +49,7 @@ function downCallbackForSelect (e) {
 			myCanvas.removeEventListener('pointermove', moveCallback);
 			myCanvas.removeEventListener('pointerup', upCallback);
 
-			if(isClickingSelectedShape && !mouseDelta){
+			if(isClickingSelectedShape && !dragging){
 				shape.selected = false;
 				drawShapes(shapes);
 			 }
@@ -67,6 +63,8 @@ function downCallbackForSelect (e) {
 	} else {
 		selectShapeUnderRectangle(e);
 	}
+
+	drawShapes(shapes);
 }
 
 function selectShapeUnderRectangle(e){

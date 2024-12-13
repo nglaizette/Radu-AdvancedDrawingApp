@@ -114,9 +114,30 @@ function selectShapeUnderRectangle(e){
 				const minY = Math.min(...points.map((p) => p.y + shape.center.y));
 				const maxY = Math.max(...points.map((p) => p.y + shape.center.y));
 
-				if(minX >= rectMinX && maxX <= rectMaxX && minY >= rectMinY && maxY <= rectMaxY){
-					shape.selected = true;
-				}
+				switch(RECTANGULAR_SELECTION_MODE){
+					case "containement":
+						// logic for shape must be inside rectangle
+						if(
+							minX >= rectMinX && 
+							maxX <= rectMaxX && 
+							minY >= rectMinY && 
+							maxY <= rectMaxY
+						){
+							shape.selected = true;
+						}
+						break;
+					case "intersection":
+						if(
+							minX <= rectMaxX &&
+							maxX >= rectMinX &&
+							minY <= rectMaxY &&
+							maxY >= rectMinY
+						){
+							shape.selected = true;
+						}
+						break;
+						default:
+				};
 			});
 
 			rect.remove();

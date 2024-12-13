@@ -1,4 +1,5 @@
 const SHOW_HIT_REGION = false;
+const RECTANGULAR_SELECTION_MODE = "intersection"; //"intersection" or "containment"
 if(!SHOW_HIT_REGION){
 	hitTestCanvas.style.display = "none";
 }

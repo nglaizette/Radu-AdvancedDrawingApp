@@ -44,16 +44,20 @@ class PropertiesPanel {
 	}
 	
 	static changeWidth(value) {
+		const fixedValue = Math.max(Number(value), 1);
+		width.value = fixedValue;
 		shapes.filter((s) => s.selected).forEach((s) => 
-			s.setWidth(Number(value))
+			s.setWidth(fixedValue)
 		);
 		drawShapes(shapes);
 		updateHistory(shapes);
 	}
 	
 	static changeHeight(value) {
+		const fixedValue = Math.max(Number(value), 1);
+		width.value = fixedValue;
 		shapes.filter((s) => s.selected).forEach((s) => 
-			s.setHeight(Number(value))
+			s.setHeight(fixedValue)
 		);
 		drawShapes(shapes);
 		updateHistory(shapes);
@@ -119,6 +123,7 @@ class PropertiesPanel {
 
 	static updateDisplay(selectedShapes) {
 		if(selectedShapes.length === 0) {
+			PropertiesPanel.reset();
 			return;
 		}
 	

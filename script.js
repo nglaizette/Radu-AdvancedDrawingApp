@@ -154,6 +154,7 @@ function undo(){
 		shapes.length = 0;
 	}
 	drawShapes(shapes);
+	PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));	
 }
 
 function selectAll() {

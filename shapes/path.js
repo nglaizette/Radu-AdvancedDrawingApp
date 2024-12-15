@@ -93,8 +93,6 @@ class Path extends Shape {
 			currentShape.addPoint(mousePosition);
 	
 			drawShapes([...shapes, currentShape]);
-
-			updateHistory(shapes)
 		};
 	
 		const upCallback = function (e) {

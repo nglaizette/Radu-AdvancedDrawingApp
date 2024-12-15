@@ -41,7 +41,12 @@ window.addEventListener("keydown", (e) => {
 	// if delete
 	//console.log(e);
 	if(e.key === "Delete" || e.key === "Backspace"){
-		shapes.splice(shapes.findIndex((s=> s.selected)), 1);
+
+		let index = shapes.findIndex((s) => s.selected);
+		while(index!==-1){
+			shapes.splice(index, 1);
+			index = shapes.findIndex((s) => s.selected);
+		} 
 		PropertiesPanel.reset();
 		drawShapes(shapes);
 	}

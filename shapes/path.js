@@ -30,7 +30,6 @@ class Path extends Shape {
 				this.center.y - stageProperties.top
 			),
 			size: this.size,
-			selected: this.selected,
 			points: this.points
 		};
 	}

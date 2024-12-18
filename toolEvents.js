@@ -35,10 +35,10 @@ function downCallbackForSelect (e) {
 			const mousePosition = new Vector(e.offsetX,e.offsetY);
 			mouseDelta = Vector.subtract(mousePosition, startPosition);
 
-			if(e.altKey){
+			/*if(e.altKey){
 				mouseDelta.x = Math.round(mouseDelta.x / 10) * 10;
 				mouseDelta.y = Math.round(mouseDelta.y / 10) * 10;
-			}
+			}*/
 			//console.log(mousePosition.x);
 
 			isDragging = true;
@@ -59,7 +59,7 @@ function downCallbackForSelect (e) {
 				shape.selected = false;
 				drawShapes(shapes);
 			 }
-			PropertiesPanel.updateDisplay(selectedShapes);
+			PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
 
 			if(!isDragging && mouseDelta?.magnitude() > 0){
 				updateHistory(shapes);

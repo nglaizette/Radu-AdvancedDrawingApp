@@ -4,12 +4,12 @@ if(!SHOW_HIT_REGION){
 	hitTestCanvas.style.display = "none";
 }
 
-const stageProperties={
+const stageProperties = { 
 	width: 600,
 	height: 480
 }
 
-const canvasProperties={
+const canvasProperties = {
 	width: SHOW_HIT_REGION ? window.innerWidth/2 : window.innerWidth,
 	height: window.innerHeight,
 	center: {
@@ -31,9 +31,11 @@ const hitTestingCtx = hitTestCanvas.getContext('2d')
 
 clearCanvas();
 
+const redoStack = [];
 const history = [];
-const shapes = [];
+let shapes = [];
 let currentShape = null;
+let clipboard = null;
 
 myCanvas.addEventListener('pointerdown', Path.addPointerDownListener);
 
@@ -101,6 +103,16 @@ function selectSelectTool(){
 	selectTool("select");
 }
 
+function deleteSelectedShapes(){
+	let index = shapes.findIndex((s) => s.selected);
+	while(index!==-1){
+		shapes.splice(index, 1);
+		index = shapes.findIndex((s) => s.selected);
+	}
+	PropertiesPanel.reset();
+	drawShapes(shapes);
+}
+
 function drawShapes(shapes) {
 	clearCanvas();
 
@@ -143,12 +155,47 @@ function clearCanvas(){
 
 function updateHistory(shapes){
 	history.push(shapes.map((s) => s.serialize(stageProperties)));
+	redoStack.length = 0;
+}
+
+function copy() {
+	const selectedShapes = shapes.filter((s) => s.selected);
+	if(selectedShapes.length > 0){
+		const data = selectedShapes.map((s) => s.serialize(stageProperties));
+		//copyToClipboard(JSON.stringify(selectedShapes));
+		clipboard = JSON.stringify(data);
+	}
+}
+
+function paste() {
+	if(clipboard){
+		shapes.forEach((s) => (s.selected = false));
+		const newShapes= loadShapes(JSON.parse(clipboard));
+		newShapes.forEach((s) => s.generateId());
+		shapes.push(...newShapes);
+
+		drawShapes(shapes);
+		updateHistory(shapes);
+	};
+}
+
+/**
+ * I used a object with with 2 arrays: undo and redo. And also a history that you can select where you want to go
+ */
+function redo() {
+	if(redoStack.length > 0){
+		const data= redoStack.pop();
+		shapes = loadShapes(data);
+		drawShapes(shapes);
+		history.push(data);
+		PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
+	}
 }
 
 function undo(){
-	history.pop();
+	redoStack.push(history.pop());
 	if(history.length > 0){
-		loadShapes(history[history.length - 1]);
+		shapes = loadShapes(history[history.length - 1]);
 	}
 	else {
 		shapes.length = 0;
@@ -162,7 +209,7 @@ function selectAll() {
 	drawShapes(shapes);
  }
 
-function save(){
+function save() {
 	//console.log(shapes)
 	const data = JSON.stringify(shapes.map((s) => s.serialize(stageProperties)));
 	console.log(data);
@@ -176,7 +223,7 @@ function save(){
 }
 
 function loadShapes(data){
-	shapes.length = 0;
+	const loadShapes=[];
 	for(const shapeData of data){
 		let shape;
 		switch(shapeData.type){
@@ -194,8 +241,9 @@ function loadShapes(data){
 			default:
 				throw new Error("Unknown shape type: " + shapeData.type);
 		}
-		shapes.push(shape);
+		loadShapes.push(shape);
 	}
+	return loadShapes;
 }
 
 function load(){
@@ -208,7 +256,7 @@ function load(){
 		reader.onload = (e) => {
 			const data = JSON.parse(e.target.result);
 			//shapes.splice(0, shapes.length);
-			loadShapes(data);
+			shapes = loadShapes(data);
 			drawShapes(shapes);
 			updateHistory(shapes);
 		};

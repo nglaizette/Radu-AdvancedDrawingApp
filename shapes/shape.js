@@ -1,12 +1,14 @@
 class Shape{
 	constructor(options){
-		this.id=Math.floor(16777216*Math.random());
+		this.generateId();
 		this.options = options;
 		this.center = null;
 		this.size = null;
-		this
-
 		this.selected = false;
+	}
+
+	generateId() {
+		this.id = Math.floor( 16777216 * Math.random());
 	}
 
 	serialize(stageProperties){

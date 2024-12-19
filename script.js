@@ -39,18 +39,11 @@ let clipboard = null;
 
 myCanvas.addEventListener('pointerdown', Path.addPointerDownListener);
 
-window.addEventListener("keydown", (e) => {
-	// if delete
+document.addEventListener("keydown", (e) => {
+	
 	//console.log(e);
-	if(e.key === "Delete" || e.key === "Backspace"){
-
-		let index = shapes.findIndex((s) => s.selected);
-		while(index!==-1){
-			shapes.splice(index, 1);
-			index = shapes.findIndex((s) => s.selected);
-		} 
-		PropertiesPanel.reset();
-		drawShapes(shapes);
+	if(e.target instanceof HTMLInputElement){
+		return;
 	}
 
 	if(isShortcut(e.ctrlKey, e.key)){
@@ -61,7 +54,7 @@ window.addEventListener("keydown", (e) => {
 
 const propertiesPanel = new PropertiesPanel(propertiesHolder);
 
-function changeTool(tool){
+function changeTool(tool) {
 	//console.log(info);
 	myCanvas.removeEventListener('pointerdown', Path.addPointerDownListener);
 	myCanvas.removeEventListener('pointerdown', Rect.addPointerDownListener);
@@ -91,19 +84,19 @@ function selectTool(tool) {
 	}
 }
 
-function selectRectTool(){
+function selectRectTool() {
 	selectTool("rect");
 }
 
-function selectPathTool(){
+function selectPathTool() {
 	selectTool("path");
 }
 
-function selectSelectTool(){
+function selectSelectTool() {
 	selectTool("select");
 }
 
-function deleteSelectedShapes(){
+function deleteSelectedShapes() {
 	let index = shapes.findIndex((s) => s.selected);
 	while(index!==-1){
 		shapes.splice(index, 1);

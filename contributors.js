@@ -4,7 +4,7 @@ const contributors = [
 	"iyusuf",
 	"rajeshpillai",
 	"bobcravens",
-	//"isaacfink123",
-	"kgene521",
-	"christian-schubert",	
+	"rahul thakare",
+	"michael golden",
+	"thoughtandco"	
 ];

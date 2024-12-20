@@ -14,7 +14,7 @@ class MyImage extends Shape {
 	}
 
 	static load(data, stageProperties){
-		const myImage = new myImage(new Image());
+		const myImage = new MyImage(new Image());
 		myImage.id = data.id;
 		myImage.img.src = data.base64;
 		myImage.base64 = data.base64;

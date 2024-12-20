@@ -111,3 +111,57 @@ class Shape{
 		throw new Error("draw method must be implemented");
 	}
 }
+
+function deleteSelectedShapes() {
+	let index = shapes.findIndex((s) => s.selected);
+	while(index!==-1){
+		shapes.splice(index, 1);
+		index = shapes.findIndex((s) => s.selected);
+	}
+	PropertiesPanel.reset();
+	drawShapes(shapes);
+}
+
+function drawShapes(shapes) {
+	clearCanvas();
+
+	for(const shape of shapes){
+		shape.draw(ctx);
+	}
+	hitTestingCtx.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
+	for(const shape of shapes){
+		shape.draw(hitTestingCtx, true);
+	}
+}
+
+function selectAll() {
+	shapes.forEach((s) => (s.selected = true));
+	drawShapes(shapes);
+ }
+
+function loadShapes(data){
+	const loadShapes=[];
+	for(const shapeData of data){
+		let shape;
+		switch(shapeData.type){
+			case "Rect":
+				shape = Rect.load(shapeData, stageProperties);
+				//shape = new Rect(new Vector(shapeData.x, shapeData.y), new Vector(shapeData.width, shapeData.height));
+				break;
+			case "Path":
+				//shape = new Path(new Vector(shapeData.x, shapeData.y), getOptions());
+				//for(const point of shapeData.points){
+				//	shape.addPoint(new Vector(point.x, point.y));
+				//}
+				shape = Path.load(shapeData, stageProperties);
+				break;
+			case "MyImage":
+				shape = MyImage.load(shapeData, stageProperties);
+				break;
+			default:
+				throw new Error("Unknown shape type: " + shapeData.type);
+		}
+		loadShapes.push(shape);
+	}
+	return loadShapes;
+}

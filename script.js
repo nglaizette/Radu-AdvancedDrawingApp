@@ -96,28 +96,6 @@ function selectSelectTool() {
 	selectTool("select");
 }
 
-function deleteSelectedShapes() {
-	let index = shapes.findIndex((s) => s.selected);
-	while(index!==-1){
-		shapes.splice(index, 1);
-		index = shapes.findIndex((s) => s.selected);
-	}
-	PropertiesPanel.reset();
-	drawShapes(shapes);
-}
-
-function drawShapes(shapes) {
-	clearCanvas();
-
-	for(const shape of shapes){
-		shape.draw(ctx);
-	}
-	hitTestingCtx.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
-	for(const shape of shapes){
-		shape.draw(hitTestingCtx, true);
-	}
-}
-
 function getOptions(){
 	return {
 		fillColor: fillColor.value,
@@ -197,11 +175,6 @@ function undo(){
 	PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));	
 }
 
-function selectAll() {
-	shapes.forEach((s) => (s.selected = true));
-	drawShapes(shapes);
- }
-
 function save() {
 	//console.log(shapes)
 	const data = JSON.stringify(shapes.map((s) => s.serialize(stageProperties)));
@@ -213,30 +186,6 @@ function save() {
 	a.href = URL.createObjectURL(file);
 	a.download = "drawing.json";
 	a.click();
-}
-
-function loadShapes(data){
-	const loadShapes=[];
-	for(const shapeData of data){
-		let shape;
-		switch(shapeData.type){
-			case "Rect":
-				shape = Rect.load(shapeData, stageProperties);
-				//shape = new Rect(new Vector(shapeData.x, shapeData.y), new Vector(shapeData.width, shapeData.height));
-				break;
-			case "Path":
-				//shape = new Path(new Vector(shapeData.x, shapeData.y), getOptions());
-				//for(const point of shapeData.points){
-				//	shape.addPoint(new Vector(point.x, point.y));
-				//}
-				shape = Path.load(shapeData, stageProperties);
-				break;
-			default:
-				throw new Error("Unknown shape type: " + shapeData.type);
-		}
-		loadShapes.push(shape);
-	}
-	return loadShapes;
 }
 
 function load(){
@@ -256,4 +205,67 @@ function load(){
 		reader.readAsText(file);
 	};
 	input.click();
+}
+
+function do_import(data) {
+	const input = document.createElement("input");
+	input.type = "file";
+	input.accept = ".png";
+	input.onchange = (e) => {
+		const file = e.target.files[0];
+		const reader = new FileReader();
+		reader.onload = (e) => {
+			const img = new Image();
+			img.onload = () => {
+				const myImage = new MyImage(img, getOptions());
+				myImage.setCenter(
+					new Vector(
+						stageProperties.left + stageProperties.width / 2,
+						stageProperties.top + stageProperties.height / 2
+					)
+				);
+				shapes.push(myImage);
+				drawShapes(shapes);
+				updateHistory(shapes);
+			};
+			img.src = e.target.result;
+		};
+		reader.readAsDataURL(file);
+	};
+	input.click();
+}
+
+function do_export(data) {
+	// saves canvas as an image
+
+	const tmpCanvas = document.createElement("canvas");
+	tmpCanvas.width = stageProperties.width;
+	tmpCanvas.height = stageProperties.height;
+	const tmpCtx = tmpCanvas.getContext("2d");
+	tmpCtx.translate(-stageProperties.left, -stageProperties.top);
+	for (const shape of shapes) {
+		const isSelected = shape.selected;
+		shape.selected = false;
+		shape.draw(tmpCtx);
+		shape.selected = isSelected;
+	}
+	/* temporaire affichage d'une image 
+	tmpCtx.drawImage(
+		myCanvas,
+		stageProperties.left,
+		stageProperties.top,
+		stageProperties.width,
+		stageProperties.height,
+		0,
+		0,
+		stageProperties.width,
+		stageProperties.height
+	);*/
+	tmpCanvas.toBlob((blob) => {
+		const a = document.createElement("a");
+		a.href = URL.createObjectURL(blob);
+		a.download = "screenshot.png";
+		a.click();
+	});
+
 }

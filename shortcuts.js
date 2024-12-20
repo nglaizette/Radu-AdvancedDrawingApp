@@ -7,7 +7,8 @@ const shortcuts = [
    { control: true, key: "a", action: selectAll },
    { control: true, key: "c", action: copy },
    { control: true, key: "v", action: paste },
-   { control: false, key: "Delete", action: deleteSelectedShapes}
+   { control: false, key: "Delete", action: deleteSelectedShapes},
+   { control: false, key: "Backspace", action: deleteSelectedShapes}
 ];
 
 function isShortcut(control, key) {

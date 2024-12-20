@@ -58,6 +58,8 @@ function changeTool(tool) {
 	//console.log(info);
 	myCanvas.removeEventListener('pointerdown', Path.addPointerDownListener);
 	myCanvas.removeEventListener('pointerdown', Rect.addPointerDownListener);
+	myCanvas.removeEventListener('pointerdown', Oval.addPointerDownListener);
+	myCanvas.removeEventListener('pointerdown', Text.addPointerDownListener);
 	myCanvas.removeEventListener('pointerdown', downCallbackForSelect);
 	
 	shapes.forEach((s) => (s.selected = false));
@@ -69,6 +71,12 @@ function changeTool(tool) {
 			break;
 		case "path":
 			myCanvas.addEventListener('pointerdown', Path.addPointerDownListener);
+			break;
+		case "oval":
+			myCanvas.addEventListener('pointerdown', Oval.addPointerDownListener);
+			break;
+		case "text":
+			myCanvas.addEventListener('pointerdown', Text.addPointerDownListener);
 			break;
 		case "select":
 			myCanvas.addEventListener('pointerdown', downCallbackForSelect);
@@ -86,6 +94,14 @@ function selectTool(tool) {
 
 function selectRectTool() {
 	selectTool("rect");
+}
+
+function selectOvalTool() {
+	selectTool("oval");
+}
+
+function selectTextTool() {
+	selectTool("text");
 }
 
 function selectPathTool() {

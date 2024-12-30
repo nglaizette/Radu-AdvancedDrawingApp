@@ -24,6 +24,8 @@ class PropertiesPanel {
 		<br />
 		<input type="range" id="strokeWidth" value="5" min="1" max="100" title="Stroke Width" oninput="PropertiesPanel.previewStrokeWidth(this.value)" onchange="PropertiesPanel.changeStrokeWidth(this.value)" />
 		<br />
+		<input type="text" id="text" title="Text" value="Test" oninput="PropertiesPanel.changeText(this.value)">
+		<br />
 		`;
 	}
 
@@ -104,6 +106,14 @@ class PropertiesPanel {
 		updateHistory(shapes);
 	}
 
+	static changeText(value){
+		//console.log(value);
+		shapes.filter((s)=> s.selected && s.text !== undefined).forEach((s) => s.setText(value));
+		updateHistory(shapes);
+		drawShapes(shapes);
+	}
+
+
 	static previewStrokeWidth(value) {
 		//console.log(Number(value));
 		shapes.filter(s=>s.selected).forEach(s=>s.options.strokeWidth=Number(value));
@@ -115,6 +125,7 @@ class PropertiesPanel {
 		y.value = "";
 		width.value = "";
 		height.value = "";
+		text.value = "";
 		x.placeholder = "";
 		y.placeholder = "";
 		width.placeholder = "";
@@ -140,7 +151,8 @@ class PropertiesPanel {
 					fill: shape.options.fill,
 					strokeColor: shape.options.strokeColor,
 					stroke: shape.options.stroke,
-					strokeWidth: shape.options.strokeWidth
+					strokeWidth: shape.options.strokeWidth,
+					text: shape.text
 				};
 			} else {
 				if(newProperties.x !== shape.center.x - stageProperties.left){
@@ -170,27 +182,32 @@ class PropertiesPanel {
 				if(newProperties.strokeWidth !== shape.options.strokeWidth){
 					newProperties.strokeWidth = null;
 				}
+				if(newProperties.text !== shape.text){
+					newProperties.text = null;
+				}
 			}
 		}
 		if(newProperties === null){
 			return;
 		} else {
 			
-			x.value = newProperties.x?Math.round(newProperties.x):"";
-			y.value = newProperties.y?Math.round(newProperties.y):"";
-			width.value = newProperties.width?Math.round(newProperties.width):"";
-			height.value = newProperties.height?Math.round(newProperties.height):"";
-			fillColor.value = newProperties.fillColor?newProperties.fillColor:"";
-			fill.checked = newProperties.fill?newProperties.fill:false;
-			strokeColor.value = newProperties.strokeColor?newProperties.strokeColor:"";
-			stroke.checked = newProperties.stroke?newProperties.stroke:false;
-			strokeWidth.value = newProperties.strokeWidth?newProperties.strokeWidth:"";
+			x.value = newProperties.x ? Math.round(newProperties.x) : "";
+			y.value = newProperties.y ? Math.round(newProperties.y) : "";
+			width.value = newProperties.width ? Math.round(newProperties.width) : "";
+			height.value = newProperties.height ? Math.round(newProperties.height) : "";
+			fillColor.value = newProperties.fillColor ? newProperties.fillColor : "";
+			fill.checked = newProperties.fill ?newProperties.fill : false;
+			strokeColor.value = newProperties.strokeColor ? newProperties.strokeColor : "";
+			stroke.checked = newProperties.stroke ? newProperties.stroke : false;
+			strokeWidth.value = newProperties.strokeWidth ? newProperties.strokeWidth : "";
+			text.value = newProperties.text ? newProperties.text : "";
 
 			const placeholderText = "Multiple values";
-			x.placeholder = newProperties.x?"":placeholderText;
-			y.placeholder = newProperties.y?"":placeholderText;
-			width.placeholder = newProperties.width?"":placeholderText;
-			height.placeholder = newProperties.height?"":placeholderText;
+			x.placeholder = newProperties.x ? "" : placeholderText;
+			y.placeholder = newProperties.y ? "" : placeholderText;
+			width.placeholder = newProperties.width ? "" : placeholderText;
+			height.placeholder = newProperties.height ? "" : placeholderText;
+			text.placeholder = newProperties.text ? "" : placeholderText;
 			//fillColor.placeholder = newProperties.fillColor?"":placeholderText;
 			//strokeColor.placeholder = newProperties.strokeColor?"":placeholderText;
 			//fill.checked = newProperties.fill?"":placeholderText;

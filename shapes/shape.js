@@ -63,20 +63,25 @@ class Shape{
 		ctx.restore();
 	}
 
-	applyHitRegionStyle(ctx, dilation = 10){
+	getHitRGB() {
 		const red = (this.id & 0xFF0000) >> 16;
 		const green = (this.id & 0x00FF00) >> 8;
 		const blue = this.id & 0x0000FF;
+		return `rgb(${red}, ${green}, ${blue})`;
+	}
 
+	applyHitRegionStyle(ctx, dilation = 10){
+
+		const rgb = this.getHitRGB();
 		ctx.lineCap = this.options.lineCap;
 		ctx.lineJoin = this.options.lineJoin;
 
-		ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
-		ctx.strokeStyle = `rgb(${red}, ${green}, ${blue})`;
+		ctx.fillStyle = rgb;
+		ctx.strokeStyle = rgb;
 		ctx.lineWidth = this.options.strokeWidth + dilation;
 		// pour la sélection des chemins sans remplissage
 		//if(this.options.fill){
-			ctx.fill();
+		ctx.fill();
 		//}
 		if(this.options.stroke){
 			ctx.stroke();
@@ -114,7 +119,7 @@ class Shape{
 
 function deleteSelectedShapes() {
 	let index = shapes.findIndex((s) => s.selected);
-	while(index!==-1){
+	while (index !== -1) {
 		shapes.splice(index, 1);
 		index = shapes.findIndex((s) => s.selected);
 	}
@@ -140,7 +145,7 @@ function selectAll() {
  }
 
 function loadShapes(data){
-	const loadShapes=[];
+	const loadShapes = [];
 	for(const shapeData of data){
 		let shape;
 		switch(shapeData.type){
@@ -148,6 +153,7 @@ function loadShapes(data){
 				shape = Rect.load(shapeData, stageProperties);
 				//shape = new Rect(new Vector(shapeData.x, shapeData.y), new Vector(shapeData.width, shapeData.height));
 				break;
+
 			case "Path":
 				//shape = new Path(new Vector(shapeData.x, shapeData.y), getOptions());
 				//for(const point of shapeData.points){
@@ -155,9 +161,18 @@ function loadShapes(data){
 				//}
 				shape = Path.load(shapeData, stageProperties);
 				break;
+
 			case "MyImage":
 				shape = MyImage.load(shapeData, stageProperties);
 				break;
+
+			case "Oval":
+				shape = Oval.load(shapeData, stageProperties);
+				break;
+
+			case "Text":
+				shape = Text.load(shapeData, stageProperties);
+
 			default:
 				throw new Error("Unknown shape type: " + shapeData.type);
 		}
@@ -174,10 +189,10 @@ function secondCornerMoveCallback(e, startPosition, currentShape) {
 		const deltaY = startPosition.y - mousePosition.y;
 		const sgnX = deltaX < 0 ? -1 : 1;
 		const sgnY = deltaY < 0 ? -1 : 1;
-		const maxDelta = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+		const minDelta = Math.min(Math.abs(deltaX), Math.abs(deltaY));
 		secondCornerPositon = new Vector(
-			startPosition.x - sgnX * maxDelta,
-			startPosition.y - sgnY * maxDelta
+			startPosition.x - sgnX * minDelta,
+			startPosition.y - sgnY * minDelta
 		);
 		drawShapes([...shapes, currentShape]);
 	} 

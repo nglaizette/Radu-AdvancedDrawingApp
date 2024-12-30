@@ -151,7 +151,6 @@ function selectShapeUnderRectangle(e){
 			rect.remove();
 			PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
 			drawShapes(shapes);
-			updateHistory(shapes);
 		};
 	// adding event listeners to the rectangle to allow rectangle redraw when pointer moves into it
 	myCanvas.addEventListener('pointermove', moveCallback);

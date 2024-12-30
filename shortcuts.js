@@ -9,6 +9,7 @@ const shortcuts = [
    { control: true, key: "a", action: selectAll },
    { control: true, key: "c", action: copy },
    { control: true, key: "v", action: paste },
+   { constol: true, key: "d", action: duplicate },
    { control: false, key: "Delete", action: deleteSelectedShapes},
    { control: false, key: "Backspace", action: deleteSelectedShapes}
 ];

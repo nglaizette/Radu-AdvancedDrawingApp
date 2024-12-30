@@ -168,6 +168,11 @@ function paste() {
 	};
 }
 
+function duplicate(){
+	copy();
+	paste();
+}
+
 /**
  * I used a object with with 2 arrays: undo and redo. And also a history that you can select where you want to go
  */
@@ -181,7 +186,10 @@ function redo() {
 	}
 }
 
-function undo(){
+function undo() {
+	if(!history.length){ // prevent pushing undefined into redoStack
+		return;
+	}
 	redoStack.push(history.pop());
 	if(history.length > 0){
 		shapes = loadShapes(history[history.length - 1]);

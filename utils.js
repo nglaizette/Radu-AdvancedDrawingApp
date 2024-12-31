@@ -34,3 +34,46 @@ function getSize(points){
 		height: maxY - minY
 	}
 }
+
+/**
+ * Création d'un élément du DOM
+ * @param {string} type : Type de DOM élément, eg. 'div', input, etc...
+ * @param {Array<key: string, value: string>} attributes : Attributs de l'élément eg. 'onchange', 'title', etc...
+ * @param {string} text : Texte de l'élément
+ * @returns {HTMLElement} : L'élément DOM créé
+ */
+
+function createDOMElement(type, attributes, text) {
+	const element = document.createElement(type);
+	if (text) {
+		element.innerText = text;
+	}
+	if (attributes) {
+		Object.entries(attributes).forEach(([key, value]) => {
+			element.setAttribute(key, value);
+		});
+	}
+
+	return element;
+}
+
+/**
+ * Création d'un élément de type "input" avec un label
+ * @param {string} label : Texte du label
+ * @param {Array<key: string, value: string>} attributes : Attributs de l'élément eg. 'onchange', 'title', etc...
+ * @returns {HTMLElement} : Une div avec un label et un élément de type input
+ */
+function createInputWithLabel(labelText, attributes){
+	const element = document.createElement("div");
+	element.appendChild(
+		createDOMElement("label", { for: labelText.toLowerCase() }, `${labelText}: `),
+	);
+	element.appendChild(
+		createDOMElement("input", {
+			id: labelText.toLowerCase(),
+			title:  labelText,
+			...attributes,
+		}),
+	);
+	return element;
+}

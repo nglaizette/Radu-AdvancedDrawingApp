@@ -177,7 +177,8 @@ function loadShapes(data){
 
 			case "Text":
 				shape = Text.load(shapeData, stageProperties);
-
+				break;
+				
 			default:
 				throw new Error("Unknown shape type: " + shapeData.type);
 		}

@@ -178,7 +178,7 @@ function loadShapes(data){
 			case "Text":
 				shape = Text.load(shapeData, stageProperties);
 				break;
-				
+
 			default:
 				throw new Error("Unknown shape type: " + shapeData.type);
 		}
@@ -211,7 +211,9 @@ function secondCornerUpCallback(e, currentShape, moveCallback, upCallback) {
 	myCanvas.removeEventListener('pointerup', upCallback);
 
 	currentShape.recenter();
-	shapes.push(currentShape);
 
-	updateHistory(shapes);
+	if(currentShape.size.width > 0 && currentShape.size.height > 0) {
+		shapes.push(currentShape);
+		updateHistory(shapes);
+	}
 };

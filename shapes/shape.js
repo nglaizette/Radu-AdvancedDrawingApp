@@ -133,15 +133,29 @@ function deleteSelectedShapes() {
 }
 
 function drawShapes(shapes) {
+	ctx.save();
+	hitTestingCtx.save();
+
 	clearCanvas();
 
+	hitTestingCtx.clearRect(-canvasProperties.width / 2, -canvasProperties.height / 2, canvasProperties.width, canvasProperties.height);
+	ctx.scale(viewport.zoom, viewport.zoom);
+	hitTestingCtx.scale(viewport.zoom, viewport.zoom);
+
+	ctx.translate(viewport.offset.x, viewport.offset.y);
+	hitTestingCtx.translate(viewport.offset.x, viewport.offset.y);
+
+	drawStage();
 	for(const shape of shapes){
 		shape.draw(ctx);
 	}
-	hitTestingCtx.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
+
 	for(const shape of shapes){
 		shape.draw(hitTestingCtx, true);
 	}
+
+	ctx.restore();
+	hitTestingCtx.restore();
 }
 
 function selectAll() {
@@ -188,11 +202,16 @@ function loadShapes(data){
 }
 
 function secondCornerMoveCallback(e, startPosition, currentShape) {
-	const mousePosition = new Vector(e.offsetX,e.offsetY);
-	let secondCornerPositon = mousePosition;
+	const mousePosition = new Vector(e.offsetX,e.offsetY).subtract(
+		canvasProperties.offset
+	);
+	const scaledMousePosition = mousePosition
+		.scale( 1 / viewport.zoom)
+		.subtract(viewport.offset);	
+	let secondCornerPositon = scaledMousePosition;
 	if(e.shiftKey){
-		const deltaX = startPosition.x - mousePosition.x;
-		const deltaY = startPosition.y - mousePosition.y;
+		const deltaX = startPosition.x - scaledMousePosition.x;
+		const deltaY = startPosition.y - scaledMousePosition.y;
 		const sgnX = deltaX < 0 ? -1 : 1;
 		const sgnY = deltaY < 0 ? -1 : 1;
 		const minDelta = Math.min(Math.abs(deltaX), Math.abs(deltaY));
@@ -212,7 +231,7 @@ function secondCornerUpCallback(e, currentShape, moveCallback, upCallback) {
 
 	currentShape.recenter();
 
-	if(currentShape.size.width > 0 && currentShape.size.height > 0) {
+	if (currentShape.size.width > 0 && currentShape.size.height > 0) {
 		shapes.push(currentShape);
 		updateHistory(shapes);
 	}

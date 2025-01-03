@@ -14,9 +14,7 @@ class Path extends Shape {
 		)
 		path.size = data.size;
 		path.selected = data.selected;
-		path.points = data.points.map( (p) =>
-				Vector.load(p)
-		);
+		path.points = data.points.map( (p) => Vector.load(p) );
 		return path;
 	}
 
@@ -31,7 +29,7 @@ class Path extends Shape {
 			),
 			size: this.size,
 			selected: this.selected,
-			points: this.points
+			points: this.points,
 		};
 	}
 
@@ -85,14 +83,28 @@ class Path extends Shape {
 	}
 
 	static addPointerDownListener (e){
-		const mousePosition = new Vector(e.offsetX,e.offsetY);
-		currentShape =  new Path(mousePosition,getOptions());
+		
+		if(e.button !== 0) return;
+
+		const mousePosition = new Vector(e.offsetX, e.offsetY).subtract(
+			canvasProperties.offset
+		);
+		const startPosition = mousePosition
+			.scale(1 / viewport.zoom)
+			.subtract(viewport.offset);
+		
+		currentShape =  new Path(startPosition,getOptions());
 	
 		const moveCallback = function(e){
-		const mousePosition = new Vector(e.offsetX,e.offsetY);
-			//console.log(mousePosition.x);
-			currentShape.addPoint(mousePosition);
-	
+		const mousePosition = new Vector(e.offsetX,e.offsetY).subtract(
+			canvasProperties.offset
+		);
+
+		const startPostion = mousePosition
+			.scale(1 / viewport.zoom)
+			.subtract(viewport.offset);
+
+			currentShape.addPoint(startPostion);	
 			drawShapes([...shapes, currentShape]);
 		};
 	

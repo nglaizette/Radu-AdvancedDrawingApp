@@ -1,4 +1,4 @@
-const SHOW_HIT_REGION = false;
+const SHOW_HIT_REGION = true;
 const RECTANGULAR_SELECTION_MODE = "intersection"; //"intersection" or "containment"
 if(!SHOW_HIT_REGION){
 	hitTestCanvas.style.display = "none";
@@ -12,11 +12,9 @@ const stageProperties = {
 const canvasProperties = {
 	width: SHOW_HIT_REGION ? window.innerWidth/2 : window.innerWidth,
 	height: window.innerHeight,
-	center: {
-		x: SHOW_HIT_REGION ? window.innerWidth/4 : window.innerWidth/2,
-		y: window.innerHeight/2
-	}
+	center: Vector.zero()
 };
+canvasProperties.offset = new Vector(canvasProperties.width/2, canvasProperties.height/2);
 
 stageProperties.left = canvasProperties.center.x - stageProperties.width/2;
 stageProperties.top = canvasProperties.center.y - stageProperties.height/2;
@@ -29,7 +27,11 @@ hitTestCanvas.height = canvasProperties.height;
 const ctx = myCanvas.getContext('2d');
 const hitTestingCtx = hitTestCanvas.getContext('2d')
 
+ctx.translate(canvasProperties.offset.x, canvasProperties.offset.y);
+hitTestingCtx.translate(canvasProperties.offset.x, canvasProperties.offset.y);
+
 clearCanvas();
+drawStage();
 
 const redoStack = [];
 const history = [];
@@ -51,6 +53,8 @@ document.addEventListener("keydown", (e) => {
 		e.preventDefault();
 	}
 });
+
+const viewport = new Viewport(myCanvas, hitTestCanvas);
 
 const propertiesPanel = new PropertiesPanel(propertiesHolder);
 
@@ -125,20 +129,31 @@ function getOptions(){
 }
 
 function clearCanvas() {
-	ctx.save();
-	ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-	ctx.fillStyle="gray";
-	ctx.fillRect(0, 0, myCanvas.width, myCanvas.height);
 
-	ctx.fillStyle="white";
-	ctx.fillRect(stageProperties.left, stageProperties.top, stageProperties.width, stageProperties.height);
+	ctx.fillStyle = "gray";
+	ctx.fillRect(-myCanvas.width / 2, -myCanvas.height / 2, myCanvas.width, myCanvas.height);
+
+	ctx.fillStyle = "white";
 
 	ctx.textAlign = "right";
-	ctx.fillText("Contributors: " + contributors.join(", "), myCanvas.width - 10, 10);
+	ctx.fillText(
+		"Contributors: " + contributors.join(", "), 
+		myCanvas.width / 2 - 10,
+		 myCanvas.height / 2 + 10
+	);
+}
 
-	// For debugging
-	hitTestingCtx.fillStyle = "red";
-	hitTestingCtx.fillRect(0,0,canvasProperties.width, canvasProperties.height);
+function drawStage() {
+	ctx.save();
+
+	ctx.fillStyle = "white";
+	ctx.fillRect(
+		stageProperties.left,
+		stageProperties.top,
+		stageProperties.width,
+		stageProperties.height
+	);
+
 	ctx.restore();
 }
 

@@ -84,7 +84,7 @@ class MyImage extends Shape {
 		}
 	}
 
-	static addPointerDownListener(e){
+	/*static addPointerDownListener(e){
 		const mousePosition = new Vector(e.offsetX,e.offsetY);
 		currentShape = new Rect(mousePosition, getOptions());
 	
@@ -106,5 +106,5 @@ class MyImage extends Shape {
 	
 		myCanvas.addEventListener('pointermove', moveCallback);
 		myCanvas.addEventListener('pointerup', upCallback);
-	}
+	}*/
 }

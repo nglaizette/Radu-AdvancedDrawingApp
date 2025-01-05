@@ -134,12 +134,11 @@ function clearCanvas() {
 	ctx.fillRect(-myCanvas.width / 2, -myCanvas.height / 2, myCanvas.width, myCanvas.height);
 
 	ctx.fillStyle = "white";
-
 	ctx.textAlign = "right";
 	ctx.fillText(
 		"Contributors: " + contributors.join(", "), 
 		myCanvas.width / 2 - 10,
-		 myCanvas.height / 2 + 10
+		- myCanvas.height / 2 + 10
 	);
 }
 

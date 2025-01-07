@@ -54,7 +54,12 @@ document.addEventListener("keydown", (e) => {
 	}
 });
 
-const viewport = new Viewport(myCanvas, hitTestCanvas);
+const viewport = new Viewport(
+	myCanvas,
+	hitTestCanvas,
+	canvasProperties,
+	stageProperties
+);
 
 const propertiesPanel = new PropertiesPanel(propertiesHolder);
 

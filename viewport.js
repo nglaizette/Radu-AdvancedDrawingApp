@@ -1,12 +1,21 @@
 class Viewport {
-	constructor(canvas, hitTestCanvas) {
+	constructor(canvas, hitTestCanvas, canevasProperties, stageProperties) {
 		this.canvas = canvas;
 		this.hitTestCanvas = hitTestCanvas;
+		this.canevasProperties = canevasProperties;
+		this.stageProperties = stageProperties;
 		this.zoom = 1;
 		this.offset = Vector.zero();
 		this.zoomSteps = 0.05;
 
 		this.#addEventListeners();
+	}
+
+	getMousePosition(e) {
+		return new Vector(e.offsetX, e.offsetY)
+			.subtract(this.canevasProperties.offset)
+			.scale(1 / this.zoom)
+			.subtract(this.offset);
 	}
 
 	#addEventListeners() {

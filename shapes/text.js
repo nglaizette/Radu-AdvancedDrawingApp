@@ -132,11 +132,8 @@ class Text extends Shape {
 	static addPointerDownListener(e){
 		if(e.button !== 0) return;
 
-		const mousePosition = new Vector(e.offsetX, e.offsetY).subtract(canvasProperties.offset);
-		const scaledPosition = mousePosition
-			.scale(1 / viewport.zoom)
-			.subtract(viewport.offset);
-		currentShape = new Text(scaledPosition, getOptions());
+		const mousePosition = viewport.getMousePosition(e);
+		currentShape = new Text(mousePosition, getOptions());
 		shapes.push(currentShape);
 		drawShapes(shapes);
 		updateHistory(shapes);

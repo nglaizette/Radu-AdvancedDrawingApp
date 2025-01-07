@@ -101,13 +101,7 @@ class Oval extends Shape {
 	static addPointerDownListener(e){
 		if(e.button !== 0) return;
 
-		const mousePosition = new Vector(e.offsetX, e.offsetY).subtract(
-			canvasProperties.offset
-		);
-
-		const startPosition = mousePosition
-			.scale(1 / viewport.zoom)
-			.subtract(viewport.offset);
+		const startPosition = viewport.getMousePosition(e);
 
 		currentShape = new Oval(startPosition, getOptions());
 		const moveCallback = (e) => {

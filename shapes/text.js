@@ -85,7 +85,7 @@ class Text extends Shape {
 		const metrics = ctx.measureText(this.text);
 		this.size = {};
 		this.size.width = metrics.width;
-		console.log(this.properties);
+		//console.log(this.properties);
 		this.size.height = this.properties.fontSize;
 		ctx.restore();
 	}
@@ -132,7 +132,7 @@ class Text extends Shape {
 	static addPointerDownListener(e){
 		if(e.button !== 0) return;
 
-		const mousePosition = viewport.getMousePosition(e);
+		const mousePosition = viewport.getAdjustedPosition(e);
 		currentShape = new Text(mousePosition, getOptions());
 		shapes.push(currentShape);
 		drawShapes(shapes);

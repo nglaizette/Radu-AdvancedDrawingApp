@@ -203,7 +203,7 @@ function loadShapes(data){
 
 function secondCornerMoveCallback(e, startPosition, currentShape) {
 	
-	const mousePosition = viewportport.getMousePosition(e);
+	const mousePosition = viewport.getAdjustedPosition(e);
 	let secondCornerPositon = mousePosition;
 	if(e.shiftKey){
 		const deltaX = startPosition.x - mousePosition.x;

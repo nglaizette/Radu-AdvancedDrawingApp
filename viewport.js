@@ -11,7 +11,11 @@ class Viewport {
 		this.#addEventListeners();
 	}
 
-	getMousePosition(e) {
+	scale(vector) {
+		return vector.scale(1 / this.zoom);
+	}
+
+	getAdjustedPosition(e) {
 		return new Vector(e.offsetX, e.offsetY)
 			.subtract(this.canevasProperties.offset)
 			.scale(1 / this.zoom)
@@ -23,7 +27,7 @@ class Viewport {
 			
 			e.preventDefault();
 			const dir = -Math.sign(e.deltaY);
-			console.log(dir);
+			//console.log(dir);
 			this.zoom += dir * this.zoomSteps;
 			this.zoom = Math.max(this.zoomSteps, this.zoom);
 			drawShapes(shapes);

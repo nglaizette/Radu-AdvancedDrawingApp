@@ -223,7 +223,7 @@ function undo() {
 function save() {
 	//console.log(shapes)
 	const data = JSON.stringify(shapes.map((s) => s.serialize(stageProperties)));
-	console.log(data);
+	//console.log(data);
 
 	//download(
 	const a = document.createElement("a");

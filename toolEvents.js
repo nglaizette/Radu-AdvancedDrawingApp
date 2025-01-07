@@ -35,10 +35,8 @@ function downCallbackForSelect (e) {
 
 		const moveCallback = function(e){
 			const mousePosition = new Vector(e.offsetX,e.offsetY);
-			mouseDelta = Vector.scale(
-				Vector.subtract(mousePosition, startPosition),
-				1 / viewport.zoom
-			);
+			const diff = Vector.subtract(mousePosition, startPosition);
+			mouseDelta = viewport.scale(diff);
 
 			/*if(e.altKey){
 				mouseDelta.x = Math.round(mouseDelta.x / 10) * 10;
@@ -96,6 +94,7 @@ function selectShapeUnderRectangle(e){
 
 	let rectMinX, rectMinY, rectMaxX, rectMaxY = 0;
 
+
 	const moveCallback = function(e){
 		const mousePosition = {
 			x: e.clientX,
@@ -126,7 +125,7 @@ function selectShapeUnderRectangle(e){
 			rectMaxX = (rectMaxX - canvasProperties.offset.x) / viewport.zoom - viewport.offset.x;
 			rectMaxY = (rectMaxY - canvasProperties.offset.y) / viewport.zoom - viewport.offset.y;
 
-			console.log(rectMinX, rectMinY, rectMaxX, rectMaxY);
+			//console.log(rectMinX, rectMinY, rectMaxX, rectMaxY);
 			
 			shapes.forEach((shape) => {
 				const points = shape.getPoints();

@@ -15,8 +15,15 @@ class Viewport {
 		return vector.scale(1 / this.zoom);
 	}
 
-	getAdjustedPosition(e) {
+	getAdjustedPositionOld(e) {
 		return new Vector(e.offsetX, e.offsetY)
+			.subtract(this.canevasProperties.offset)
+			.scale(1 / this.zoom)
+			.subtract(this.offset);
+	}
+
+	getAdjustedPosition(vector) {
+		return vector
 			.subtract(this.canevasProperties.offset)
 			.scale(1 / this.zoom)
 			.subtract(this.offset);

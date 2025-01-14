@@ -4,6 +4,10 @@ class Vector{
 		this.y = y;
 	}
 
+	static fromOffsets(info){
+		return new Vector(info.offsetX, info.offsetY);
+	}
+
 	static zero(){
 		return new Vector(0, 0);
 	}
@@ -28,7 +32,15 @@ class Vector{
 		return new Vector(this.x * scalar, this.y * scalar);
 	}
 
-	static midVector(vectors){
+	min(v){
+		return new Vector(Math.min(this.x, v.x), Math.min(this.y, v.y));
+	}
+
+	max(v){
+		return new Vector(Math.max(this.x, v.x), Math.max(this.y, v.y));
+	}
+
+	static midVector(vectors) {
 		const minX = Math.min(...vectors.map((p) => p.x));
 		const maxX = Math.max(...vectors.map((p) => p.x));
 		const minY = Math.min(...vectors.map((p) => p.y));
@@ -37,20 +49,28 @@ class Vector{
 		return new Vector(minX + (maxX - minX) / 2, minY + (maxY - minY)/ 2);
 	}
 
-	static add(v1, v2){
+	static add(v1, v2) {
 		return v1.add(v2);
 	}
 
-	static subtract(v1, v2){
+	static subtract(v1, v2) {
 		return v1.subtract(v2);
 	}
 
-	static magnitude(v){
+	static magnitude(v) {
 		return v.magnitude();
 	}
 
-	static scale(v, scalar){
+	static scale(v, scalar) {
 		return v.scale(scalar);
+	}
+
+	static min(v1, v2) {
+		return v1.min(v2);
+	}
+
+	static max(v1, v2) {
+		return v1.max(v2);
 	}
 }
 

@@ -86,12 +86,12 @@ class Path extends Shape {
 		
 		if(e.button !== 0) return;
 
-		const startPosition = viewport.getAdjustedPosition(e);
+		const startPosition = viewport.getAdjustedPosition(Vector.fromOffsets(e));
 		
 		currentShape =  new Path(startPosition,getOptions());
 	
 		const moveCallback = function(e){
-		const mousePosition = viewport.getAdjustedPosition(e);
+		const mousePosition = viewport.getAdjustedPosition(Vector.fromOffsets(e));
 
 			currentShape.addPoint(mousePosition);	
 			drawShapes([...shapes, currentShape]);

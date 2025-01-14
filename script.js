@@ -25,7 +25,7 @@ hitTestCanvas.width = canvasProperties.width;
 hitTestCanvas.height = canvasProperties.height;
 
 const ctx = myCanvas.getContext('2d');
-const hitTestingCtx = hitTestCanvas.getContext('2d')
+const hitTestingCtx = hitTestCanvas.getContext('2d', {willReadFrequently: true});
 
 ctx.translate(canvasProperties.offset.x, canvasProperties.offset.y);
 hitTestingCtx.translate(canvasProperties.offset.x, canvasProperties.offset.y);

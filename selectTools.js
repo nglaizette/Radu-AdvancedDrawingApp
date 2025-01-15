@@ -15,7 +15,7 @@ function downCallbackForSelect (e) {
 	
 	if (!isClickingSelectedShape) {
 	   if (e.ctrlKey === false && e.shiftKey === false) {
-		  shapes.forEach((s) => (s.selected = false));
+			shapes.forEach((s) => (s.selected = false));
 	   }
 	}
 
@@ -112,39 +112,27 @@ function selectShapeUnderRectangle(e) {
 			rect.removeEventListener("pointerup", upCallback);
 			rect.removeEventListener("pointermove", moveCallback);
 
-			topLeft = viewport.getAdjustedPosition(topLeft);
-			bottomRight = viewport.getAdjustedPosition(bottomRight);
+			const rectBox = new BoundingBox(
+				viewport.getAdjustedPosition(topLeft), 
+				viewport.getAdjustedPosition(bottomRight));
 			
 			shapes.forEach((shape) => {
-				const points = shape.getPoints();
-				const minX = Math.min(...points.map((p) => p.x + shape.center.x));
-				const maxX = Math.max(...points.map((p) => p.x + shape.center.x));
-				const minY = Math.min(...points.map((p) => p.y + shape.center.y));
-				const maxY = Math.max(...points.map((p) => p.y + shape.center.y));
+				const shapeBox = BoundingBox.fromPoints(shape.getPoints().map((p) => p.add(shape.center)));
 
 				switch(RECTANGULAR_SELECTION_MODE){
 					case "containement":
 						// logic for shape must be inside rectangle
-						if(
-							minX >= topLeft.x && 
-							maxX <= bottomRight.x && 
-							minY >= topLeft.y && 
-							maxY <= bottomRight.y
-						){
+						if(rectBox.contains(shapeBox)){
 							shape.selected = true;
 						}
 						break;
 					case "intersection":
-						if(
-							minX <= bottomRight.x &&
-							maxX >= topLeft.x &&
-							minY <= bottomRight.y &&
-							maxY >= bottomRight.y
-						){
+						if(rectBox.intersect(shapeBox)){
 							shape.selected = true;
 						}
 						break;
-						default:
+					default:
+							break;
 				};
 			});
 

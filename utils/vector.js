@@ -72,5 +72,21 @@ class Vector{
 	static max(v1, v2) {
 		return v1.max(v2);
 	}
+
+	static topLeft(vectors) {
+		let topLeft = vectors[0];
+		for(const vector of vectors) {
+			topLeft = topLeft.min(vector);
+		}
+		return topLeft;
+	}
+
+	static multiMax(vectors) {
+		let bottomRight = vectors[0];
+		for(const vector of vectors) {
+			bottomRight = bottomRight.max(vector);
+		}
+		return bottomRight;
+	}
 }
 

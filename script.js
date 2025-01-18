@@ -36,6 +36,7 @@ drawStage();
 const redoStack = [];
 const history = [];
 let shapes = [];
+let gizmos = [];
 let currentShape = null;
 let clipboard = null;
 

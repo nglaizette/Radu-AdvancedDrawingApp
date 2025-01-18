@@ -44,15 +44,11 @@ class Shape{
 		const center = this.center;
 
 		const points = this.getPoints();
-
-		const minX = Math.min(...points.map(p=>p.x));
-		const minY = Math.min(...points.map(p=>p.y));
-		const maxX = Math.max(...points.map(p=>p.x));
-		const maxY = Math.max(...points.map(p=>p.y));
+		const box = BoundingBox.fromPoints(points.map((p) => p.add(center)))
 
 		ctx.save();
 		ctx.beginPath();
-		ctx.rect(minX +  center.x , minY + center.y, maxX-minX, maxY-minY);
+		ctx.rect(box.topLeft.x , box.topLeft.y, box.width, box.height);
 		ctx.strokeStyle = "orange";
 		ctx.lineWidth=3;
 		ctx.setLineDash([5, 5]);
@@ -133,6 +129,8 @@ function deleteSelectedShapes() {
 }
 
 function drawShapes(shapes) {
+	gizmos = shapes.filter((s)=> s.selected).map((s) => new Gizmo(s));
+
 	ctx.save();
 	hitTestingCtx.save();
 
@@ -148,6 +146,10 @@ function drawShapes(shapes) {
 	drawStage();
 	for(const shape of shapes){
 		shape.draw(ctx);
+	}
+
+	for(const gizmo of gizmos){
+		gizmo.draw(ctx)
 	}
 
 	for(const shape of shapes){

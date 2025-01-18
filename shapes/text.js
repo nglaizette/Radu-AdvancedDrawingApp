@@ -90,7 +90,7 @@ class Text extends Shape {
 		ctx.restore();
 	}
 
-	draw(ctx, isHitRegion = false){
+	draw(ctx, isHitRegion = false) {
 		const center = this.center? this.center:{x:0, y:0}
 		let left, top, width, height;
 		
@@ -123,9 +123,6 @@ class Text extends Shape {
 				ctx.strokeText(this.text, left + width / 2 , top + height / 2);
 			}
 			ctx.restore();
-			if(this.selected){
-				this.drawGizmo(ctx);
-			}
 		}
 	}
 

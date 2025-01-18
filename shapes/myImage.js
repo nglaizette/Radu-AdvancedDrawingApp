@@ -46,18 +46,18 @@ class MyImage extends Shape {
 
 	getPoints() {
 		return [
-			new Vector( -this.size.width/2,  -this.size.height/2),
+			new Vector( -this.size.width/2, -this.size.height/2),
 			new Vector( -this.size.width/2,  this.size.height/2),
 			new Vector(  this.size.width/2,  this.size.height/2),
 			new Vector(  this.size.width/2, -this.size.height/2),
 		]
 	}
 
-	setWidth(width){
+	setWidth(width) {
 		this.size.width = width;
 	}
 
-	setHeight(height){
+	setHeight(height) {
 		this.size.height = height;
 	}
 
@@ -78,9 +78,6 @@ class MyImage extends Shape {
 			ctx.beginPath();
 			ctx.drawImage(this.img, left, top, width, height);
 			this.applyStyle(ctx);
-			if(this.selected){
-				this.drawGizmo(ctx);
-			}
 		}
 	}
 

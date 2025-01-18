@@ -39,7 +39,7 @@ class Shape{
 		this.setPoints(points);
 	}
 
-	drawGizmo(ctx){
+	/*drawGizmo(ctx){
 
 		const center = this.center;
 
@@ -57,7 +57,7 @@ class Shape{
 		ctx.arc(center.x, center.y, 5, 0, 2 * Math.PI);
 		ctx.stroke();
 		ctx.restore();
-	}
+	}*/
 
 	getHitRGB() {
 		const red = (this.id & 0xFF0000) >> 16;

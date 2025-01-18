@@ -92,9 +92,6 @@ class Oval extends Shape {
 			this.applyHitRegionStyle(ctx);
 		} else {
 			this.applyStyle(ctx);
-			if(this.selected){
-				this.drawGizmo(ctx);
-			}
 		}
 	}
 

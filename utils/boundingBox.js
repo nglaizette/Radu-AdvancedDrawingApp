@@ -4,6 +4,8 @@ class BoundingBox {
 		this.bottomRight = bottomRight;
 		this.width = bottomRight.x - topLeft.x;
 		this.height = bottomRight.y - topLeft.y;
+		this.topRight = new Vector(bottomRight.x, topLeft.y);
+		this.bottomLeft = new Vector(topLeft.x, bottomRight.y);
 	}
 
 	static fromPoints(points){

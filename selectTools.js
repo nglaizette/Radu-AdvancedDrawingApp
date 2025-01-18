@@ -10,6 +10,12 @@ function downCallbackForSelect (e) {
 	const id =  r << 16 | g << 8 | b;
 	//console.log(id);
 	const shape = shapes.find(s=>s.id==id);
+	const gizmo = gizmos.find(g=>g.hasHandle(id));
+
+	if(gizmo){
+		gizmo.addEventListeners(startPosition, gizmo.hasHandle(id));
+		return;
+	}
 	
 	let isClickingSelectedShape = shape && shape.selected;
 	

@@ -19,8 +19,35 @@ class Gizmo {
 			
 	}
 
-	draw(ctx){
+	hasHandle(id) {
+		return this.handles.find((handle) => handle.id === id);
+	}
 
+	addEventListeners(startPosition, handle) {
+		const oldCenter = handle.center;
+		let mouseDelta = null;
+		let isDragging = false;
+		const moveCallback = e => {
+			const mousePosition = new Vector(e.offsetX,e.offsetY);
+			const diff = Vector.subtract(mousePosition, startPosition);
+			mouseDelta = viewport.scale(diff);
+			//console.log(mouseDelta);
+			isDragging = true;
+			this.shape.setWidth(this.box.width + 2 * mouseDelta.x);
+			handle.center = Vector.add(oldCenter, mouseDelta);
+			drawShapes(shapes);
+		};
+	
+		const upCallback = e => {
+			myCanvas.removeEventListener('pointermove', moveCallback);
+			myCanvas.removeEventListener('pointerup', upCallback);	
+		}
+	
+		myCanvas.addEventListener('pointermove', moveCallback);
+		myCanvas.addEventListener('pointerup', upCallback);
+	}
+
+	draw(ctx, hitRegion = false){
 
 		ctx.save();
 		ctx.beginPath();
@@ -41,7 +68,7 @@ class Gizmo {
 		ctx.fillStyle="black";
 
 		for(const handle of this.handles){
-			handle.draw(ctx);
+			handle.draw(ctx, hitRegion);
 		}
 
 		ctx.restore();

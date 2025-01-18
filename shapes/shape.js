@@ -1,14 +1,14 @@
 class Shape{
 	constructor(options){
-		this.generateId();
+		this.id = Shape.generateId();
 		this.options = options;
 		this.center = null;
 		this.size = null;
 		this.selected = false;
 	}
 
-	generateId() {
-		this.id = Math.floor( 16777216 * Math.random());
+	static generateId() {
+		return Math.floor( 16777216 * Math.random());
 	}
 
 	serialize(stageProperties){
@@ -59,16 +59,16 @@ class Shape{
 		ctx.restore();
 	}*/
 
-	getHitRGB() {
-		const red = (this.id & 0xFF0000) >> 16;
-		const green = (this.id & 0x00FF00) >> 8;
-		const blue = this.id & 0x0000FF;
+	static getHitRGB(id) {
+		const red = (id & 0xFF0000) >> 16;
+		const green = (id & 0x00FF00) >> 8;
+		const blue = id & 0x0000FF;
 		return `rgb(${red}, ${green}, ${blue})`;
 	}
 
 	applyHitRegionStyle(ctx, dilation = 10){
 
-		const rgb = this.getHitRGB();
+		const rgb = Shape.getHitRGB(this.id);
 		ctx.lineCap = this.options.lineCap;
 		ctx.lineJoin = this.options.lineJoin;
 
@@ -154,6 +154,10 @@ function drawShapes(shapes) {
 
 	for(const shape of shapes){
 		shape.draw(hitTestingCtx, true);
+	}
+
+	for(const gizmo of gizmos){
+		gizmo.draw(hitTestingCtx,  true);
 	}
 
 	ctx.restore();

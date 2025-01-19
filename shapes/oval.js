@@ -84,8 +84,8 @@ class Oval extends Shape {
 			top = minY + center.y;
 		}
 		ctx.beginPath();
-		const radius1 = width / 2;
-		const radius2 = height / 2;
+		const radius1 = Math.abs(width / 2);
+		const radius2 = Math.abs(height / 2);
 		ctx.ellipse(left + width /2 , top + height / 2, radius1, radius2, 0, 0, 2 * Math.PI);
 
 		if(isHitRegion){

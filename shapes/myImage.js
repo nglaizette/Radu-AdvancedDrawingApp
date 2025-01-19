@@ -75,9 +75,13 @@ class MyImage extends Shape {
 			ctx.rect(left, top, width, height);
 			this.applyHitRegionStyle(ctx);
 		} else {
+			ctx.save();
+			ctx.translate(center.x, center.y);
+			ctx.scale(Math.sign(width), Math.sign(height));
 			ctx.beginPath();
-			ctx.drawImage(this.img, left, top, width, height);
+			ctx.drawImage(this.img, -width/2.0, -height / 2.0, width, height);
 			this.applyStyle(ctx);
+			ctx.restore();
 		}
 	}
 

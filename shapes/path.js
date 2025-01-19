@@ -58,7 +58,7 @@ class Path extends Shape {
 		const size = getSize(this.points);
 		const ratio = height / size.height;
 		for(const point of this.points){
-			point.x *= ratio;
+			point.y *= ratio;
 		}
 		this.size.height = height ;
 	}

@@ -47,7 +47,13 @@ class Path extends Shape {
 
 	setWidth(width){
 		const size = getSize(this.points);
-		const ratio = width / size.width;
+		const flip = Math.sign(width) !== Math.sign(this.size.width) ? -1 : 1;
+		const eps = 0.0001;
+		if (size.width == 0) {
+		   console.err("Size 0 problem!");
+		}
+		const _width = size.width == 0 ? eps : size.width;
+		const ratio = (flip * Math.abs(width)) / _width;
 		for(const point of this.points){
 			point.x *= ratio;
 		}
@@ -56,7 +62,13 @@ class Path extends Shape {
 
 	setHeight(height){
 		const size = getSize(this.points);
-		const ratio = height / size.height;
+		const flip = Math.sign(height) !== Math.sign(this.size.height) ? -1 : 1;
+		const eps = 0.0001;
+		if (size.height == 0) {
+		   console.err("Size 0 problem!");
+		}
+		const _height = size.height == 0 ? eps : size.height;
+		const ratio = (flip * Math.abs(height)) / _height;
 		for(const point of this.points){
 			point.y *= ratio;
 		}

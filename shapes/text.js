@@ -104,7 +104,7 @@ class Text extends Shape {
 
 		if(isHitRegion){
 			ctx.beginPath();
-			const rgb = this.getHitRGB();
+			const rgb = Shape.getHitRGB(this.id);
 			ctx.fillStyle = rgb;
 			ctx.strokeStyle = rgb;
 			ctx.lineWidth = this.options.strokeWidth + this.properties.dilatation;

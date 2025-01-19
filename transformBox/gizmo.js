@@ -7,14 +7,14 @@ class Gizmo {
 		const points = this.shape.getPoints();
 		this.box = BoundingBox.fromPoints(points.map((p) => p.add(this.center)));
 		this.handles = [
-			new Handle(this.box.topLeft),
-			new Handle(this.box.topRight),
-			new Handle(this.box.bottomLeft),
-			new Handle(this.box.bottomRight),
-			new Handle(Vector.midVector([this.box.topLeft, this.box.topRight])),
-			new Handle(Vector.midVector([this.box.topRight, this.box.bottomRight])),
-			new Handle(Vector.midVector([this.box.bottomRight, this.box.bottomLeft])),
-			new Handle(Vector.midVector([this.box.bottomLeft, this.box.topLeft])),
+			new Handle(this.box.topLeft, Handle.TOP_LEFT),
+			new Handle(this.box.topRight, Handle.TOP_RIGHT),
+			new Handle(this.box.bottomLeft, Handle.BOTTOM_LEFT),
+			new Handle(this.box.bottomRight, Handle.BOTTOM_RIGHT),
+			new Handle(Vector.midVector([this.box.topLeft, this.box.topRight]), Handle.TOP),
+			new Handle(Vector.midVector([this.box.topRight, this.box.bottomRight]), Handle.RIGHT),
+			new Handle(Vector.midVector([this.box.bottomRight, this.box.bottomLeft]), Handle.BOTTOM),
+			new Handle(Vector.midVector([this.box.bottomLeft, this.box.topLeft]), Handle.LEFT),
 		];
 			
 	}
@@ -31,10 +31,45 @@ class Gizmo {
 			const mousePosition = new Vector(e.offsetX,e.offsetY);
 			const diff = Vector.subtract(mousePosition, startPosition);
 			mouseDelta = viewport.scale(diff);
-			//console.log(mouseDelta);
 			isDragging = true;
-			this.shape.setWidth(this.box.width + 2 * mouseDelta.x);
-			handle.center = Vector.add(oldCenter, mouseDelta);
+
+			switch(handle.type){
+				case Handle.RIGHT:
+					this.shape.setWidth(this.box.width + 2 * mouseDelta.x);
+					break;
+				case Handle.LEFT:
+					this.shape.setWidth(this.box.width - 2 * mouseDelta.x);
+					break;
+				case Handle.TOP:
+					this.shape.setHeight(this.box.height - 2 * mouseDelta.y);
+					break;
+				case Handle.BOTTOM:
+					this.shape.setHeight(this.box.height + 2 * mouseDelta.y);
+					break;
+				case Handle.TOP_LEFT:
+					this.shape.setSize(
+						this.box.width - 2 * mouseDelta.x,
+						this.box.height - 2 * mouseDelta.y);
+					break;
+				case  Handle.TOP_RIGHT:
+					this.shape.setSize(
+						this.box.width + 2 * mouseDelta.x,
+						this.box.height - 2 * mouseDelta.y
+						);
+					break;
+				case Handle.BOTTOM_LEFT:
+					this.shape.setSize(
+						this.box.width - 2 * mouseDelta.x,
+						this.box.height + 2 * mouseDelta.y
+						);
+					break;
+				case Handle.BOTTOM_RIGHT:
+					this.shape.setSize(
+						this.box.width + 2 * mouseDelta.x,
+						this.box.height + 2 * mouseDelta.y
+						);
+					break;
+			}
 			drawShapes(shapes);
 		};
 	

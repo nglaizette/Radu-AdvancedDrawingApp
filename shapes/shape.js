@@ -27,6 +27,11 @@ class Shape{
 		throw new Error("setHeight method must be implemented");
 	}
 
+	setSize(width, height){
+		this.setHeight(height);
+		this.setWidth(width);
+	}
+
 	recenter() {
 		const points = this.getPoints();
 		this.center = Vector.midVector(points);

@@ -32,6 +32,18 @@ class Shape{
 		this.setWidth(width);
 	}
 
+	changeWidth(width, ratio) {
+		this.setWidth(width * ratio);
+	}
+
+	changeHeight(height, ratio) {
+		this.setHeight(height * ratio);
+	}
+
+	changeSize(width, height, ratioWidth, ratioHeight) {
+		this.setSize(width * ratioWidth, height * ratioHeight);
+	}
+
 	recenter() {
 		const points = this.getPoints();
 		this.center = Vector.midVector(points);

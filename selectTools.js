@@ -13,7 +13,9 @@ function downCallbackForSelect (e) {
 	const gizmo = gizmos.find(g=>g.hasHandle(id));
 
 	if(gizmo){
-		gizmo.addEventListeners(startPosition, gizmo.hasHandle(id));
+		const handle = gizmo.hasHandle(id);
+		const selectedShapes = shapes.filter(s=>s.selected);
+		gizmo.addEventListeners(startPosition, handle, selectedShapes);
 		return;
 	}
 	

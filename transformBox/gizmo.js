@@ -23,8 +23,9 @@ class Gizmo {
 		return this.handles.find((handle) => handle.id === id);
 	}
 
-	addEventListeners(startPosition, handle) {
-		const oldCenter = handle.center;
+	addEventListeners(startPosition, handle, selectedShapes) {
+		const oldBoxes = selectedShapes.map((s) => 
+			BoundingBox.fromPoints(s.getPoints().map((p) => p.add(this.center))));
 		let mouseDelta = null;
 		let isDragging = false;
 		const moveCallback = e => {
@@ -33,44 +34,64 @@ class Gizmo {
 			mouseDelta = viewport.scale(diff);
 			isDragging = true;
 
-			switch(handle.type){
-				case Handle.RIGHT:
-					this.shape.setWidth(this.box.width + 2 * mouseDelta.x);
-					break;
-				case Handle.LEFT:
-					this.shape.setWidth(this.box.width - 2 * mouseDelta.x);
-					break;
-				case Handle.TOP:
-					this.shape.setHeight(this.box.height - 2 * mouseDelta.y);
-					break;
-				case Handle.BOTTOM:
-					this.shape.setHeight(this.box.height + 2 * mouseDelta.y);
-					break;
-				case Handle.TOP_LEFT:
-					this.shape.setSize(
-						this.box.width - 2 * mouseDelta.x,
-						this.box.height - 2 * mouseDelta.y);
-					break;
-				case  Handle.TOP_RIGHT:
-					this.shape.setSize(
-						this.box.width + 2 * mouseDelta.x,
-						this.box.height - 2 * mouseDelta.y
+			const ratio = new Vector(
+				mouseDelta.x / this.box.width,
+				mouseDelta.y / this.box.height
+			).scale(2)
+			.add(new Vector(1, 1));
+
+			for(let i = 0; i < selectedShapes.length; i++) {
+				const shape = selectedShapes[i];
+				const oldBox = oldBoxes[i];
+
+				switch(handle.type){
+					case Handle.RIGHT:
+						shape.changeWidth(oldBox.width, ratio.x);
+						break;
+					case Handle.LEFT:
+						shape.changeWidth(oldBox.width, 2 - ratio.x);
+						break;
+					case Handle.TOP:
+						shape.changeHeight(oldBox.height, 2 - ratio.y);
+						break;
+					case Handle.BOTTOM:
+						shape.changeHeight(oldBox.height, ratio.y);
+						break;
+					case Handle.TOP_LEFT:
+						shape.changeSize(
+							oldBox.width,
+							oldBox.height,
+							2 - ratio.x,
+							2 - ratio.y);
+						break;
+					case  Handle.TOP_RIGHT:
+						shape.changeSize(
+							oldBox.width,
+							oldBox.height,
+							ratio.x,
+							2 - ratio.y
+							);
+						break;
+					case Handle.BOTTOM_LEFT:
+						shape.changeSize(
+							oldBox.width,
+							oldBox.height,
+							2 - ratio.x,
+							ratio.y
 						);
-					break;
-				case Handle.BOTTOM_LEFT:
-					this.shape.setSize(
-						this.box.width - 2 * mouseDelta.x,
-						this.box.height + 2 * mouseDelta.y
+						break;
+					case Handle.BOTTOM_RIGHT:
+						shape.changeSize(
+							oldBox.width,
+							oldBox.height,
+							ratio.x,
+							ratio.y
 						);
-					break;
-				case Handle.BOTTOM_RIGHT:
-					this.shape.setSize(
-						this.box.width + 2 * mouseDelta.x,
-						this.box.height + 2 * mouseDelta.y
-						);
-					break;
+						break;
+				}
 			}
 			drawShapes(shapes);
+			PropertiesPanel.updateDisplay(selectedShapes);
 		};
 	
 		const upCallback = e => {

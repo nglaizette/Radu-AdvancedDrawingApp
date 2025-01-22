@@ -107,10 +107,17 @@ class Gizmo {
 
 		ctx.save();
 		ctx.beginPath();
-		ctx.rect(this.box.topLeft.x , this.box.topLeft.y, this.box.width, this.box.height);
-		ctx.strokeStyle = "back";
+		ctx.rect(
+			this.box.topLeft.x,
+			this.box.topLeft.y,
+			this.box.width,
+			this.box.height
+		);
+		ctx.strokeStyle = "white";
+		ctx.lineWidth = 2 / viewport.zoom;
+		ctx.stroke();
+		ctx.strokeStyle = "black";
 		ctx.lineWidth = 1 / viewport.zoom;
-		//ctx.setLineDash([5, 5]);
 		ctx.stroke();
 
 		const size = Handle.size / viewport.zoom;
@@ -120,8 +127,8 @@ class Gizmo {
 		ctx.setLineDash([1, 1]);
 		ctx.arc(this.center.x, this.center.y, size / 2.0, 0, 2 * Math.PI);
 		ctx.stroke();
-
-		ctx.fillStyle="black";
+		ctx.lineWidth = 1 / viewport.zoom;
+		ctx.setLineDash([]);
 
 		for(const handle of this.handles){
 			handle.draw(ctx, hitRegion);

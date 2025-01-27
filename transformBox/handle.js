@@ -9,13 +9,13 @@ class Handle {
 	static BOTTOM_LEFT = 6;
 	static BOTTOM_RIGHT = 7;
 
-  	constructor(center, type){
+	constructor(center, type) {
 		this.center = center;
 		this.id = Shape.generateId();
 		this.type = type;
-  	}
- 
-	draw(ctx, hitRegion = false ) {
+	}
+
+	draw(ctx, hitRegion = false) {
 		const size = Handle.size / viewport.zoom;
 		ctx.fillStyle = hitRegion ? Shape.getHitRGB(this.id) : "black";
 		ctx.strokeStyle = "white";
@@ -25,7 +25,7 @@ class Handle {
 			size,
 			size
 		);
-		if(!hitRegion){
+		if (!hitRegion) {
 			ctx.strokeRect(
 				this.center.x - size / 2.0,
 				this.center.y - size / 2.0,

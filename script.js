@@ -122,6 +122,20 @@ function selectSelectTool() {
 	selectTool("select");
 }
 
+function resetColors() {
+	fillColor.value = "#ffffff";
+	strokeColor.value = "#000000";
+}
+
+function swapColors(){
+	const fillStyle = fillColor.value;
+	const strokeStyle =  strokeColor.value;
+
+	fillColor.value = strokeStyle;
+	strokeColor.value = fillStyle;
+
+}
+
 function getOptions(){
 	return {
 		fillColor: fillColor.value,

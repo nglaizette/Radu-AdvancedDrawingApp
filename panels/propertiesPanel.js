@@ -22,6 +22,13 @@ class PropertiesPanel {
 			}),
 		);
 		this.holderDiv.appendChild(
+			createInputWithLabel("Constrain", {
+				type: "checkbox",
+				id: "constrainDimensions"
+			}),
+		);
+
+		this.holderDiv.appendChild(
 			createInputWithLabel("Height", {
 				type: "number",
 				onchange: "PropertiesPanel.changeHeight(this.value)",
@@ -110,23 +117,46 @@ class PropertiesPanel {
 	}
 	
 	static changeWidth(value) {
+		const aspectRatio =  getProperty(width, "data-width") / getProperty(height, "data-height");
 		const fixedValue = Math.max(Number(value), 1);
+		const newHeight = fixedValue / aspectRatio;
 		width.value = fixedValue;
 		shapes.filter((s) => s.selected).forEach((s) => 
 			s.setWidth(fixedValue)
 		);
+		if(constrainDimensions.checked){
+			height.value = Math.round(newHeight);
+			shapes
+				.filter((s) => s.selected)
+				.forEach((s) => s.setHeight(newHeight)
+			);
+			setProperty(height, "data-height", newHeight);
+		}
 		drawShapes(shapes);
 		updateHistory(shapes);
+		setProperty(width, "data-width", fixedValue);
 	}
 	
 	static changeHeight(value) {
+		const aspectRatio =  getProperty(width, "data-width") / getProperty(height, "data-height");
 		const fixedValue = Math.max(Number(value), 1);
+		const newWidth = fixedValue * aspectRatio;
+
 		width.value = fixedValue;
 		shapes.filter((s) => s.selected).forEach((s) => 
 			s.setHeight(fixedValue)
 		);
+		if(constrainDimensions.checked){
+			width.value = Math.round(newWidth);
+			shapes
+				.filter((s) => s.selected)
+				.forEach((s) => s.setWidth(newWidth)
+			);
+			setProperty(width, "data-width", newWidth);
+		}
 		drawShapes(shapes);
 		updateHistory(shapes);
+		setProperty(height, "data-height", fixedValue);
 	}
 
 	static previewFillColor(value){
@@ -270,7 +300,9 @@ class PropertiesPanel {
 			x.placeholder = newProperties.x ? "" : placeholderText;
 			y.placeholder = newProperties.y ? "" : placeholderText;
 			width.placeholder = newProperties.width ? "" : placeholderText;
+			setProperty(width, "data-width", newProperties.width);
 			height.placeholder = newProperties.height ? "" : placeholderText;
+			setProperty(height, "data-height", newProperties.height);
 			text.placeholder = newProperties.text ? "" : placeholderText;
 			//fillColor.placeholder = newProperties.fillColor?"":placeholderText;
 			//strokeColor.placeholder = newProperties.strokeColor?"":placeholderText;

@@ -77,3 +77,23 @@ function createInputWithLabel(labelText, attributes){
 	);
 	return element;
 }
+
+/**
+ *  Get the property value of the input element.
+ *  @ param {HTMLElement} element : The property input element
+ * 	@ param {string} key : The element attribute
+ * @ returns
+ */
+function getProperty(element, key){
+	return Number(element.getAttribute(key));
+}
+
+/**
+ * Set the property value of the input element.
+ * @param {HTMLElement} element : The property input element
+ * @param {string} key : The element attribute
+ * @param {string} value : The element value
+ */
+function setProperty(element, key, value){
+	element.setAttribute(key, value);
+}

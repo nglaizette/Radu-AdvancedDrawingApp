@@ -125,6 +125,8 @@ function selectSelectTool() {
 function resetColors() {
 	fillColor.value = "#ffffff";
 	strokeColor.value = "#000000";
+	PropertiesPanel.changeFillColor(fillColor.value);
+	PropertiesPanel.changeStrokeColor(strokeColor.value);
 }
 
 function swapColors(){
@@ -133,6 +135,9 @@ function swapColors(){
 
 	fillColor.value = strokeStyle;
 	strokeColor.value = fillStyle;
+
+	PropertiesPanel.changeFillColor(fillColor.value);
+	PropertiesPanel.changeStrokeColor(strokeColor.value);
 
 }
 

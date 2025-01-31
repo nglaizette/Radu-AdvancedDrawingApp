@@ -8,6 +8,7 @@
 
 <body>
 	<canvas id="myCanvas"></canvas><canvas id="hitTestCanvas"></canvas>
+	<div id="toolsHolder"></div>
 	<div id="toolBox">
 		<label for="toolSelector"> Tool: </label>
 		<select id="toolSelector" name="toolSelector" onchange="changeTool(this.value)">
@@ -21,7 +22,6 @@
 
 		<button onclick="save()">Save</button>
 		<button onclick="load()">Load</button>
-		<button onclick="do_import()" style="display:none">Import</button>
 		<button onclick="do_export()">Export</button>
 		<hr />
 		<button onclick="undo()">Undo</button>
@@ -35,6 +35,7 @@
 	<script src="utils/boundingBox.js"></script>
 	<script src="viewport.js"></script>
 	<script src="panels/propertiesPanel.js"></script>
+	<script src="panels/toolsPanel.js"></script>	
 	<script src="contributors.js"></script>
 	<script src="utils/misc.js"></script>
 	<script src="selectTools.js"></script>
@@ -44,7 +45,7 @@
 	<script src="shapes/oval.js"></script>
 	<script src="shapes/text.js"></script>
 	<script src="shapes/myImage.js"></script>
-	<script src="script.js"></script>
+	<script src="main.js"></script>
 	<script src="utils/shortcuts.js"></script>
 	<script src="transformBox/gizmo.js"></script>
 	<script src="transformBox/handle.js"></script>

@@ -63,6 +63,7 @@ const viewport = new Viewport(
 );
 
 const propertiesPanel = new PropertiesPanel(propertiesHolder);
+const toolsPanel = new ToolsPanel(toolsHolder);
 
 function changeTool(tool) {
 	//console.log(info);

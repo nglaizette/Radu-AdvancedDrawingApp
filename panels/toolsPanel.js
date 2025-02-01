@@ -4,6 +4,9 @@ class ToolsPanel {
 		this.#addDocumentTools(holderDiv);
 		holderDiv.appendChild(createDOMElement("hr"));
 
+		this.#addEditTools(holderDiv);
+		holderDiv.appendChild(createDOMElement("hr"));
+
 		this.#addShapeTools(holderDiv);
 		holderDiv.appendChild(createDOMElement("hr"));
 	}
@@ -18,6 +21,14 @@ class ToolsPanel {
 		holderDiv.appendChild(createDOMElement("button", {id: "exportBtn"}, "Export"));
 	}
 
+	#addEditTools(holderDiv) {
+		holderDiv.appendChild(createDOMElement("div", {id: "editToolsHeader"}, "Edit"));
+
+		holderDiv.appendChild(createDOMElement("button", {id: "undoBtn"}, "Undo"));
+		holderDiv.appendChild(createDOMElement("br"));
+		holderDiv.appendChild(createDOMElement("button", {id: "redoBtn"}, "Redo"));
+	}
+
 	#addShapeTools(holderDiv){
 		holderDiv.appendChild(createDOMElement("div", {id: "shapeToolsHeader"}, "Shape tools"));
 		holderDiv.appendChild(
@@ -25,6 +36,7 @@ class ToolsPanel {
 				type: "radio",
 				id: "pathTool",
 				name: "shapeTools",
+				checked: "checked",
 			}),
 		);
 

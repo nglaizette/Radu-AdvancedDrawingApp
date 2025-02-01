@@ -14,19 +14,19 @@ class ToolsPanel {
 	#addDocumentTools(holderDiv) {
 		holderDiv.appendChild(createDOMElement("div", {id: "documentToolsHeader"}, "Document"));
 
-		holderDiv.appendChild(createDOMElement("button", {id: "saveBtn"}, "Save"));
+		holderDiv.appendChild(createDOMElement("button", {id: "saveBtn", onclick: "DocumentTools.save()"}, "Save"));
 		holderDiv.appendChild(createDOMElement("br"));
-		holderDiv.appendChild(createDOMElement("button", {id: "loadBtn"}, "Load"));
+		holderDiv.appendChild(createDOMElement("button", {id: "loadBtn", onclick: "DocumentTools.load()"}, "Load"));
 		holderDiv.appendChild(createDOMElement("br"));
-		holderDiv.appendChild(createDOMElement("button", {id: "exportBtn"}, "Export"));
+		holderDiv.appendChild(createDOMElement("button", {id: "exportBtn", onclick: "DocumentTools.do_export()"}, "Export"));
 	}
 
 	#addEditTools(holderDiv) {
-		holderDiv.appendChild(createDOMElement("div", {id: "editToolsHeader"}, "Edit"));
+		holderDiv.appendChild(createDOMElement("div", {id: "historyToolsHeader"}, "History"));
 
-		holderDiv.appendChild(createDOMElement("button", {id: "undoBtn"}, "Undo"));
+		holderDiv.appendChild(createDOMElement("button", {id: "undoBtn", onclick: "HistoryTools.undo()"}, "Undo"));
 		holderDiv.appendChild(createDOMElement("br"));
-		holderDiv.appendChild(createDOMElement("button", {id: "redoBtn"}, "Redo"));
+		holderDiv.appendChild(createDOMElement("button", {id: "redoBtn", onclick: "HistoryTools.redo()"}, "Redo"));
 	}
 
 	#addShapeTools(holderDiv){
@@ -72,4 +72,4 @@ class ToolsPanel {
 			}),
 		);
 	}
-} 
+}

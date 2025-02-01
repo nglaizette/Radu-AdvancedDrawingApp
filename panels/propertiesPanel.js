@@ -105,7 +105,7 @@ class PropertiesPanel {
 			s.center.x = Number(value) + stageProperties.left
 		);
 		drawShapes(shapes);
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 	}
 
 	static changeY(value) {
@@ -113,7 +113,7 @@ class PropertiesPanel {
 			s.center.y = Number(value) + stageProperties.top
 		);
 		drawShapes(shapes);
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 	}
 	
 	static changeWidth(value) {
@@ -133,7 +133,7 @@ class PropertiesPanel {
 			setProperty(height, "data-height", newHeight);
 		}
 		drawShapes(shapes);
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 		setProperty(width, "data-width", fixedValue);
 	}
 	
@@ -155,7 +155,7 @@ class PropertiesPanel {
 			setProperty(width, "data-width", newWidth);
 		}
 		drawShapes(shapes);
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 		setProperty(height, "data-height", fixedValue);
 	}
 
@@ -167,21 +167,21 @@ class PropertiesPanel {
 
 	static changeFillColor(value){
 		PropertiesPanel.previewFillColor(value);
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 	}
 	
 	static changeFill(value){
 		//console.log(value);
 		shapes.filter(s=>s.selected).forEach(s=>s.options.fill=value);
 		drawShapes(shapes);
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 	}
 	
 	static changeStrokeColor(value){
 		//console.log(value);
 		shapes.filter(s=>s.selected).forEach(s=>s.options.strokeColor=value);
 		drawShapes(shapes);
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 	}
 
 	static previewStrokeColor(value){
@@ -192,18 +192,18 @@ class PropertiesPanel {
 	
 	static changeStroke(value){
 		PropertiesPanel.previewStrokeColor(value);
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 	}
 	
 	static changeStrokeWidth(value) {
 		PropertiesPanel.previewStrokeWidth(value);
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 	}
 
 	static changeText(value){
 		//console.log(value);
 		shapes.filter((s)=> s.selected && s.text !== undefined).forEach((s) => s.setText(value));
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 		drawShapes(shapes);
 	}
 

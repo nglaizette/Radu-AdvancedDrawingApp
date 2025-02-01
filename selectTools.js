@@ -73,7 +73,7 @@ function downCallbackForSelect (e) {
 			PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
 
 			if (!isDragging && mouseDelta?.magnitude() > 0) {
-				updateHistory(shapes);
+				HistoryTools.record(shapes);
 			}	
 		}
 	

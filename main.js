@@ -33,8 +33,6 @@ hitTestingCtx.translate(canvasProperties.offset.x, canvasProperties.offset.y);
 clearCanvas();
 drawStage();
 
-const redoStack = [];
-const history = [];
 let shapes = [];
 let gizmos = [];
 let currentShape = null;
@@ -182,11 +180,6 @@ function drawStage() {
 	ctx.restore();
 }
 
-function updateHistory(shapes){
-	history.push(shapes.map((s) => s.serialize(stageProperties)));
-	redoStack.length = 0;
-}
-
 function copy() {
 	const selectedShapes = shapes.filter((s) => s.selected);
 	if(selectedShapes.length > 0){
@@ -204,7 +197,7 @@ function paste() {
 		shapes.push(...newShapes);
 
 		drawShapes(shapes);
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 	};
 }
 

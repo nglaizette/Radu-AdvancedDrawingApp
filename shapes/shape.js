@@ -139,7 +139,7 @@ function deleteSelectedShapes() {
 	}
 
 	if(shouldUpdateHistory){
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 	}
 	PropertiesPanel.reset();
 	drawShapes(shapes);
@@ -252,6 +252,6 @@ function secondCornerUpCallback(e, currentShape, moveCallback, upCallback) {
 
 	if (currentShape.size.width > 0 && currentShape.size.height > 0) {
 		shapes.push(currentShape);
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 	}
 };

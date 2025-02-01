@@ -112,7 +112,7 @@ class Path extends Shape {
 			currentShape.recenter();
 			shapes.push(currentShape);
 
-			updateHistory(shapes);
+			HistoryTools.record(shapes);
 		}
 	
 		myCanvas.addEventListener('pointermove', moveCallback);

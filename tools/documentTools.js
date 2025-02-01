@@ -28,7 +28,7 @@ class DocumentTools {
 					//shapes.splice(0, shapes.length);
 					shapes = loadShapes(data);
 					drawShapes(shapes);
-					updateHistory(shapes);
+					HistoryTools.record(shapes);
 				}
 				else if(extension === "png"){
 					DocumentTools.loadImage(e);
@@ -57,7 +57,7 @@ class DocumentTools {
 			);
 			shapes.push(myImage);
 			drawShapes(shapes);
-			updateHistory(shapes);
+			HistoryTools.record(shapes);
 		};
 		img.src = e.target.result;
 	}

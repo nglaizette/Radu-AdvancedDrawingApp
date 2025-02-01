@@ -133,6 +133,6 @@ class Text extends Shape {
 		currentShape = new Text(mousePosition, getOptions());
 		shapes.push(currentShape);
 		drawShapes(shapes);
-		updateHistory(shapes);
+		HistoryTools.record(shapes);
 	}
 }

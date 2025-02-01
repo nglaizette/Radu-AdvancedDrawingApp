@@ -7,31 +7,34 @@ class PropertiesPanel {
 			createInputWithLabel("X", {
 				type: "number",
 				onchange: "PropertiesPanel.changeX(this.value)",
+				id: "xInput",
 			}),
 		);
 		this.holderDiv.appendChild(
 			createInputWithLabel("Y", {
 				type: "number",
 				onchange: "PropertiesPanel.changeY(this.value)",
+				id: "yInput",
 			}),
 		);
 		this.holderDiv.appendChild(
 			createInputWithLabel("Width", {
 				type: "number",
 				onchange: "PropertiesPanel.changeWidth(this.value)",
+				id: "widthInput",
+			}),
+		);
+		this.holderDiv.appendChild(
+			createInputWithLabel("Height", {
+				type: "number",
+				onchange: "PropertiesPanel.changeHeight(this.value)",
+				id: "heightInput",
 			}),
 		);
 		this.holderDiv.appendChild(
 			createInputWithLabel("Constrain", {
 				type: "checkbox",
 				id: "constrainDimensions"
-			}),
-		);
-
-		this.holderDiv.appendChild(
-			createInputWithLabel("Height", {
-				type: "number",
-				onchange: "PropertiesPanel.changeHeight(this.value)",
 			}),
 		);
 		this.holderDiv.appendChild(
@@ -117,46 +120,46 @@ class PropertiesPanel {
 	}
 	
 	static changeWidth(value) {
-		const aspectRatio =  getProperty(width, "data-width") / getProperty(height, "data-height");
+		const aspectRatio =  getProperty(widthInput, "data-width") / getProperty(heightInput, "data-height");
 		const fixedValue = Math.max(Number(value), 1);
 		const newHeight = fixedValue / aspectRatio;
-		width.value = fixedValue;
+		widthInput.value = fixedValue;
 		shapes.filter((s) => s.selected).forEach((s) => 
 			s.setWidth(fixedValue)
 		);
 		if(constrainDimensions.checked){
-			height.value = Math.round(newHeight);
+			heightInput.value = Math.round(newHeight);
 			shapes
 				.filter((s) => s.selected)
 				.forEach((s) => s.setHeight(newHeight)
 			);
-			setProperty(height, "data-height", newHeight);
+			setProperty(heightInput, "data-height", newHeight);
 		}
 		drawShapes(shapes);
 		HistoryTools.record(shapes);
-		setProperty(width, "data-width", fixedValue);
+		setProperty(widthInput, "data-width", fixedValue);
 	}
 	
 	static changeHeight(value) {
-		const aspectRatio =  getProperty(width, "data-width") / getProperty(height, "data-height");
+		const aspectRatio =  getProperty(widthInput, "data-width") / getProperty(heightInput, "data-height");
 		const fixedValue = Math.max(Number(value), 1);
 		const newWidth = fixedValue * aspectRatio;
 
-		width.value = fixedValue;
+		widthInput.value = fixedValue;
 		shapes.filter((s) => s.selected).forEach((s) => 
 			s.setHeight(fixedValue)
 		);
 		if(constrainDimensions.checked){
-			width.value = Math.round(newWidth);
+			widthInput.value = Math.round(newWidth);
 			shapes
 				.filter((s) => s.selected)
 				.forEach((s) => s.setWidth(newWidth)
 			);
-			setProperty(width, "data-width", newWidth);
+			setProperty(widthInput, "data-width", newWidth);
 		}
 		drawShapes(shapes);
 		HistoryTools.record(shapes);
-		setProperty(height, "data-height", fixedValue);
+		setProperty(heightInput, "data-height", fixedValue);
 	}
 
 	static previewFillColor(value){
@@ -215,15 +218,15 @@ class PropertiesPanel {
 	}
 
 	static reset(){
-		x.value = "";
-		y.value = "";
-		width.value = "";
-		height.value = "";
+		xInput.value = "";
+		yInput.value = "";
+		widthInput.value = "";
+		heightInput.value = "";
 		text.value = "";
-		x.placeholder = "";
-		y.placeholder = "";
-		width.placeholder = "";
-		height.placeholder = "";
+		xInput.placeholder = "";
+		yInput.placeholder = "";
+		widthInput.placeholder = "";
+		heightInput.placeholder = "";
 	}
 
 	static updateDisplay(selectedShapes) {
@@ -285,10 +288,10 @@ class PropertiesPanel {
 			return;
 		} else {
 			
-			x.value = newProperties.x ? Math.round(newProperties.x) : "";
-			y.value = newProperties.y ? Math.round(newProperties.y) : "";
-			width.value = newProperties.width ? Math.round(newProperties.width) : "";
-			height.value = newProperties.height ? Math.round(newProperties.height) : "";
+			xInput.value = newProperties.x ? Math.round(newProperties.x) : "";
+			yInput.value = newProperties.y ? Math.round(newProperties.y) : "";
+			widthInput.value = newProperties.width ? Math.round(newProperties.width) : "";
+			heightInput.value = newProperties.height ? Math.round(newProperties.height) : "";
 			fillColor.value = newProperties.fillColor ? newProperties.fillColor : "";
 			fill.checked = newProperties.fill ?newProperties.fill : false;
 			strokeColor.value = newProperties.strokeColor ? newProperties.strokeColor : "";
@@ -297,12 +300,12 @@ class PropertiesPanel {
 			text.value = newProperties.text ? newProperties.text : "";
 
 			const placeholderText = "Multiple values";
-			x.placeholder = newProperties.x ? "" : placeholderText;
-			y.placeholder = newProperties.y ? "" : placeholderText;
-			width.placeholder = newProperties.width ? "" : placeholderText;
-			setProperty(width, "data-width", newProperties.width);
-			height.placeholder = newProperties.height ? "" : placeholderText;
-			setProperty(height, "data-height", newProperties.height);
+			xInput.placeholder = newProperties.x ? "" : placeholderText;
+			yInput.placeholder = newProperties.y ? "" : placeholderText;
+			widthInput.placeholder = newProperties.width ? "" : placeholderText;
+			setProperty(widthInput, "data-width", newProperties.width);
+			heightInput.placeholder = newProperties.height ? "" : placeholderText;
+			setProperty(heightInput, "data-height", newProperties.height);
 			text.placeholder = newProperties.text ? "" : placeholderText;
 			//fillColor.placeholder = newProperties.fillColor?"":placeholderText;
 			//strokeColor.placeholder = newProperties.strokeColor?"":placeholderText;

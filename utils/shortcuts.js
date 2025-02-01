@@ -10,6 +10,7 @@ const shortcuts = [
    { control: true, key: "y", action: HistoryTools.redo},
    { control: true, key: "l", action: DocumentTools.load },
    { control: true, key: "s", action: DocumentTools.save},
+   { control: true, key: "e", action: DocumentTools.do_export},
    { control: true, key: "a", action: selectAll },
    { control: true, key: "c", action: copy },
    { control: true, key: "v", action: paste },

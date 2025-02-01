@@ -1,19 +1,12 @@
 class ToolsPanel {
 	constructor(holderDiv){
 		this.holderDiv = holderDiv;
-		this.holderDiv.innerHTML = "Tools";
-		/*this.holderDiv.appendChild(
-			createDOMElement("input", {
-				id: "pathTool",
-				checked: true,
-				//onchange: "PropertiesPanel.changeFill(this.checked)",
-				title: "Path",
-				type: "radio",
-			}))*/
+		this.holderDiv.innerHTML = "Shape tools";
 			this.holderDiv.appendChild(
 				createInputWithLabel("Path", {
 					type: "radio",
 					id: "pathTool",
+					name: "shapeTools",
 				}),
 			);
 
@@ -21,6 +14,7 @@ class ToolsPanel {
 				createInputWithLabel("Rect", {
 					type: "radio",
 					id: "rectTool",
+					name: "shapeTools",
 				}),
 			);
 
@@ -28,6 +22,7 @@ class ToolsPanel {
 				createInputWithLabel("Oval", {
 					type: "radio",
 					id: "ovalTool",
+					name: "shapeTools",
 				}),
 			);
 
@@ -35,6 +30,7 @@ class ToolsPanel {
 				createInputWithLabel("Text", {
 					type: "radio",
 					id: "textTool",
+					name: "shapeTools",
 				}),
 			);
 
@@ -42,7 +38,10 @@ class ToolsPanel {
 				createInputWithLabel("Select", {
 					type: "radio",
 					id: "selectTool",
+					name: "shapeTools",
 				}),
 			);
+
+			this.holderDiv.appendChild(createDOMElement("hr"));
 	}
 } 

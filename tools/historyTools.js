@@ -3,9 +3,6 @@ class HistoryTools {
 	static redoStack = [];
 	static undoStack = [];
 
-	/**
-	* I used a object with with 2 arrays: undo and redo. And also a history that you can select where you want to go
-	*/
 	static redo() {
 		if(HistoryTools.redoStack.length > 0){
 			const data= HistoryTools.redoStack.pop();

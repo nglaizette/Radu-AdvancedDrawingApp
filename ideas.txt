@@ -1,0 +1,19 @@
+* doe:
+I used a object with with 2 arrays: undo and redo. And also a history that you can select where you want to go
+
+*?
+Signals in javascript
+Signal is cool but not yet natively supported in JS
+(either you have to code it from scratch, 
+which is not very big effort ,
+ but given priority could be) 
+ or else use a library(wh is out of scope).
+
+
+* Rajesh Pillai
+Membre (6 mois)
+​​JS has observer baked in via Proxy. It can help streamline binding and code further. JFYI.
+
+* mshryane​​ShapeData 
+ShapeView...Shape properties set via getter/setter methods when values set can choose to call updateView method , shapeView has ref to shapeData, properties panel has ref to current
+(or multiple) method in propertiesPanel class can check multiple shapeData classes to check for matching property values

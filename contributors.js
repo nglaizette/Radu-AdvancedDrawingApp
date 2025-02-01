@@ -10,4 +10,5 @@ const contributors = [
 	"pesterenan",
 	"V-key",
 	"Gyanendra Singh",
+	"mshryane",
 ];

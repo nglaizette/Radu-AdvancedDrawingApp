@@ -1,19 +1,26 @@
 class ToolsPanel {
 	constructor(holderDiv){
-		this.holderDiv = holderDiv;
 
-		this.holderDiv.appendChild(createDOMElement("div", {id: "documentToolsHeader"}, "Document"));
+		this.#addDocumentTools(holderDiv);
+		holderDiv.appendChild(createDOMElement("hr"));
 
-		this.holderDiv.appendChild(createDOMElement("button", {id: "saveBtn"}, "Save"));
-		this.holderDiv.appendChild(createDOMElement("br"));
-		this.holderDiv.appendChild(createDOMElement("button", {id: "loadBtn"}, "Load"));
-		this.holderDiv.appendChild(createDOMElement("br"));
-		this.holderDiv.appendChild(createDOMElement("button", {id: "exportBtn"}, "Export"));
+		this.#addShapeTools(holderDiv);
+		holderDiv.appendChild(createDOMElement("hr"));
+	}
 
-		this.holderDiv.appendChild(createDOMElement("hr"));
+	#addDocumentTools(holderDiv) {
+		holderDiv.appendChild(createDOMElement("div", {id: "documentToolsHeader"}, "Document"));
 
-		this.holderDiv.appendChild(createDOMElement("div", {id: "shapeToolsHeader"}, "Shape tools"));
-		this.holderDiv.appendChild(
+		holderDiv.appendChild(createDOMElement("button", {id: "saveBtn"}, "Save"));
+		holderDiv.appendChild(createDOMElement("br"));
+		holderDiv.appendChild(createDOMElement("button", {id: "loadBtn"}, "Load"));
+		holderDiv.appendChild(createDOMElement("br"));
+		holderDiv.appendChild(createDOMElement("button", {id: "exportBtn"}, "Export"));
+	}
+
+	#addShapeTools(holderDiv){
+		holderDiv.appendChild(createDOMElement("div", {id: "shapeToolsHeader"}, "Shape tools"));
+		holderDiv.appendChild(
 			createInputWithLabel("Path", {
 				type: "radio",
 				id: "pathTool",
@@ -21,7 +28,7 @@ class ToolsPanel {
 			}),
 		);
 
-		this.holderDiv.appendChild(
+		holderDiv.appendChild(
 			createInputWithLabel("Rect", {
 				type: "radio",
 				id: "rectTool",
@@ -29,7 +36,7 @@ class ToolsPanel {
 			}),
 		);
 
-		this.holderDiv.appendChild(
+		holderDiv.appendChild(
 			createInputWithLabel("Oval", {
 				type: "radio",
 				id: "ovalTool",
@@ -37,7 +44,7 @@ class ToolsPanel {
 			}),
 		);
 
-		this.holderDiv.appendChild(
+		holderDiv.appendChild(
 			createInputWithLabel("Text", {
 				type: "radio",
 				id: "textTool",
@@ -45,14 +52,12 @@ class ToolsPanel {
 			}),
 		);
 
-		this.holderDiv.appendChild(
+		holderDiv.appendChild(
 			createInputWithLabel("Select", {
 				type: "radio",
 				id: "selectTool",
 				name: "shapeTools",
 			}),
 		);
-
-		this.holderDiv.appendChild(createDOMElement("hr"));
 	}
 } 

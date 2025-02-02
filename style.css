@@ -10,14 +10,14 @@ body {
 	user-select: none;
 }
 
-#toolBox {
+#toolsHolder {
 	position: absolute;
 	top: 0px;
 	left: 0px;
 	margin: 5px;
 }
 
-#toolsHolder{
+#propertiesHolder{
 	position: absolute;
 	top: 20px;
 	right: 0px;

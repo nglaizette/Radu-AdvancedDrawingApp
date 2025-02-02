@@ -120,46 +120,49 @@ class PropertiesPanel {
 	}
 	
 	static changeWidth(value) {
+		const newWidth = Math.max(Number(value), 1);
+
 		const aspectRatio =  getProperty(widthInput, "data-width") / getProperty(heightInput, "data-height");
-		const fixedValue = Math.max(Number(value), 1);
-		const newHeight = fixedValue / aspectRatio;
-		widthInput.value = fixedValue;
+
+		const constrainedHeight = newWidth / aspectRatio;
+		widthInput.value = newWidth;
 		shapes.filter((s) => s.selected).forEach((s) => 
-			s.setWidth(fixedValue)
+			s.setWidth(newWidth)
 		);
 		if(constrainDimensions.checked){
-			heightInput.value = Math.round(newHeight);
+			heightInput.value = Math.round(constrainedHeight);
 			shapes
 				.filter((s) => s.selected)
-				.forEach((s) => s.setHeight(newHeight)
+				.forEach((s) => s.setHeight(constrainedHeight)
 			);
-			setProperty(heightInput, "data-height", newHeight);
+			setProperty(heightInput, "data-height", constrainedHeight);
 		}
 		drawShapes(shapes);
 		HistoryTools.record(shapes);
-		setProperty(widthInput, "data-width", fixedValue);
+		setProperty(widthInput, "data-width", newWidth);
 	}
 	
 	static changeHeight(value) {
+		const newHeight = Math.max(Number(value), 1);
 		const aspectRatio =  getProperty(widthInput, "data-width") / getProperty(heightInput, "data-height");
-		const fixedValue = Math.max(Number(value), 1);
-		const newWidth = fixedValue * aspectRatio;
 
-		widthInput.value = fixedValue;
+		const constrainedWidth = newHeight * aspectRatio;
+
+		widthInput.value = newHeight;
 		shapes.filter((s) => s.selected).forEach((s) => 
-			s.setHeight(fixedValue)
+			s.setHeight(newHeight)
 		);
 		if(constrainDimensions.checked){
-			widthInput.value = Math.round(newWidth);
+			widthInput.value = Math.round(constrainedWidth);
 			shapes
 				.filter((s) => s.selected)
-				.forEach((s) => s.setWidth(newWidth)
+				.forEach((s) => s.setWidth(constrainedWidth)
 			);
-			setProperty(widthInput, "data-width", newWidth);
+			setProperty(widthInput, "data-width", constrainedWidth);
 		}
 		drawShapes(shapes);
 		HistoryTools.record(shapes);
-		setProperty(heightInput, "data-height", fixedValue);
+		setProperty(heightInput, "data-height", newHeight);
 	}
 
 	static previewFillColor(value){

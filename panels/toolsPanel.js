@@ -34,41 +34,46 @@ class ToolsPanel {
 		holderDiv.appendChild(
 			createInputWithLabel("Path", {
 				type: "radio",
-				id: "pathTool",
+				id: "pathRadio",
 				name: "shapeTools",
 				checked: "checked",
+				onchange: "changeTool('path')"
 			}),
 		);
 
 		holderDiv.appendChild(
 			createInputWithLabel("Rect", {
 				type: "radio",
-				id: "rectTool",
+				id: "rectRadio",
 				name: "shapeTools",
+				onchange: "changeTool('rect')"
 			}),
 		);
 
 		holderDiv.appendChild(
 			createInputWithLabel("Oval", {
 				type: "radio",
-				id: "ovalTool",
+				id: "ovalRadio",
 				name: "shapeTools",
+				onchange: "changeTool('oval')"
 			}),
 		);
 
 		holderDiv.appendChild(
 			createInputWithLabel("Text", {
 				type: "radio",
-				id: "textTool",
+				id: "textRadio",
 				name: "shapeTools",
+				onchange: "changeTool('text')"
 			}),
 		);
 
 		holderDiv.appendChild(
 			createInputWithLabel("Select", {
 				type: "radio",
-				id: "selectTool",
+				id: "selectRadio",
 				name: "shapeTools",
+				onchange: "changeTool('select')"
 			}),
 		);
 	}

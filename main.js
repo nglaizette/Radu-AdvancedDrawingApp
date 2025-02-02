@@ -38,7 +38,7 @@ let gizmos = [];
 let currentShape = null;
 let clipboard = null;
 
-myCanvas.addEventListener('pointerdown', Path.addPointerDownListener);
+myCanvas.addEventListener('pointerdown', PathTool.addPointerDownListener);
 
 document.addEventListener("keydown", (e) => {
 	
@@ -65,35 +65,37 @@ const toolsPanel = new ToolsPanel(toolsHolder);
 
 function changeTool(tool) {
 	//console.log(info);
-	myCanvas.removeEventListener('pointerdown', Path.addPointerDownListener);
-	myCanvas.removeEventListener('pointerdown', Rect.addPointerDownListener);
-	myCanvas.removeEventListener('pointerdown', Oval.addPointerDownListener);
-	myCanvas.removeEventListener('pointerdown', Text.addPointerDownListener);
-	myCanvas.removeEventListener('pointerdown', downCallbackForSelect);
+	myCanvas.removeEventListener('pointerdown', PathTool.addPointerDownListener);
+	myCanvas.removeEventListener('pointerdown', RectTool.addPointerDownListener);
+	myCanvas.removeEventListener('pointerdown', OvalTool.addPointerDownListener);
+	myCanvas.removeEventListener('pointerdown', TextTool.addPointerDownListener);
+	myCanvas.removeEventListener('pointerdown', SelectTool.addPointerdownListener);
 	
 	shapes.forEach((s) => (s.selected = false));
 	drawShapes(shapes);
 
 	switch(tool){
 		case "rect":
-			myCanvas.addEventListener('pointerdown', Rect.addPointerDownListener);
+			myCanvas.addEventListener('pointerdown', RectTool.addPointerDownListener);
 			break;
 		case "path":
-			myCanvas.addEventListener('pointerdown', Path.addPointerDownListener);
+			myCanvas.addEventListener('pointerdown', PathTool.addPointerDownListener);
 			break;
 		case "oval":
-			myCanvas.addEventListener('pointerdown', Oval.addPointerDownListener);
+			myCanvas.addEventListener('pointerdown', OvalTool.addPointerDownListener);
 			break;
 		case "text":
-			myCanvas.addEventListener('pointerdown', Text.addPointerDownListener);
+			myCanvas.addEventListener('pointerdown', TextTool.addPointerDownListener);
 			break;
 		case "select":
-			myCanvas.addEventListener('pointerdown', downCallbackForSelect);
+			myCanvas.addEventListener('pointerdown', SelectTool.addPointerdownListener);
 			break;		
 	}
 }
 
 function selectTool(tool) {
+	ShapeTools.selectTool(tool);
+	return;
 	changeTool(tool);
 	const toolSelector =  document.getElementById("toolSelector");
 	if(toolSelector){

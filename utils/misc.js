@@ -97,3 +97,15 @@ function getProperty(element, key){
 function setProperty(element, key, value){
 	element.setAttribute(key, value);
 }
+
+function getNumericValue(element){
+	return Number(element.value);
+}
+
+function getValue(element){
+	return element.value;
+}
+
+function setValue(element, value){
+	element.value = value;
+}

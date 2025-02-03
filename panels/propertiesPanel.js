@@ -121,48 +121,54 @@ class PropertiesPanel {
 	
 	static changeWidth(value) {
 		const newWidth = Math.max(Number(value), 1);
+		let newHeight = 0;
 
-		const aspectRatio =  getProperty(widthInput, "data-width") / getProperty(heightInput, "data-height");
-
-		const constrainedHeight = newWidth / aspectRatio;
-		widthInput.value = newWidth;
-		shapes.filter((s) => s.selected).forEach((s) => 
-			s.setWidth(newWidth)
-		);
-		if(constrainDimensions.checked){
-			heightInput.value = Math.round(constrainedHeight);
-			shapes
-				.filter((s) => s.selected)
-				.forEach((s) => s.setHeight(constrainedHeight)
-			);
-			setProperty(heightInput, "data-height", constrainedHeight);
+		shapes
+			.filter((s) => s.selected)
+			.forEach((s) => {
+				const currentWidth = s.size.width;
+				const currentHeight = s.size.height;
+				newHeight = currentHeight;
+				if(constrainDimensions.checked){
+					const aspectRatio = currentWidth / currentHeight;
+					const constrainedHeight = newWidth / aspectRatio;
+					newHeight = constrainedHeight;
+				}
+				s.setSize(newWidth, newHeight)
+			});
+		setValue(widthInput, Math.round(newWidth));
+		if(getValue(heightInput) != 0){
+			setValue(heightInput, Math.round(newHeight));
 		}
-		drawShapes(shapes);
+
 		HistoryTools.record(shapes);
-		setProperty(widthInput, "data-width", newWidth);
+		drawShapes(shapes);
 	}
 	
 	static changeHeight(value) {
 		const newHeight = Math.max(Number(value), 1);
-		const aspectRatio =  getProperty(widthInput, "data-width") / getProperty(heightInput, "data-height");
+		let newWidth = 0;
 
-		const constrainedWidth = newHeight * aspectRatio;
-
-		widthInput.value = newHeight;
-		shapes.filter((s) => s.selected).forEach((s) => 
-			s.setHeight(newHeight)
-		);
-		if(constrainDimensions.checked){
-			widthInput.value = Math.round(constrainedWidth);
-			shapes
-				.filter((s) => s.selected)
-				.forEach((s) => s.setWidth(constrainedWidth)
-			);
-			setProperty(widthInput, "data-width", constrainedWidth);
+		shapes
+			.filter((s) => s.selected)
+			.forEach((s) => {
+				const currentWidth = s.size.width;
+				const currentHeight = s.size.height;
+				newWidth = currentWidth;
+				if(constrainDimensions.checked){
+					const aspectRatio = currentWidth / currentHeight;
+					const constrainedWidth= newHeight * aspectRatio;
+					newWidth = constrainedWidth;
+				}
+				s.setSize(newWidth, newHeight)
+			});
+		setValue(heightInput, Math.round(newHeight));
+		if(getValue(widthInput) != 0){
+			setValue(widthInput, Math.round(newWidth));
 		}
-		drawShapes(shapes);
+
 		HistoryTools.record(shapes);
-		setProperty(heightInput, "data-height", newHeight);
+		drawShapes(shapes);
 	}
 
 	static previewFillColor(value){

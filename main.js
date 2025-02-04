@@ -63,26 +63,6 @@ const viewport = new Viewport(
 const propertiesPanel = new PropertiesPanel(propertiesHolder);
 const toolsPanel = new ToolsPanel(toolsHolder);
 
-function selectRectTool() {
-	ShapeTools.selectTool("rect");
-}
-
-function selectOvalTool() {
-	ShapeTools.selectTool("oval");
-}
-
-function selectTextTool() {
-	ShapeTools.selectTool("text");
-}
-
-function selectPathTool() {
-	ShapeTools.selectTool("path");
-}
-
-function selectSelectTool() {
-	ShapeTools.selectTool("select");
-}
-
 function resetColors() {
 	fillColor.value = "#ffffff";
 	strokeColor.value = "#000000";

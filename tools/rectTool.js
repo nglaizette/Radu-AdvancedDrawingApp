@@ -1,5 +1,5 @@
 class RectTool {
-	static addPointerDownListener(e){
+	static addPointerDownListener(e) {
 		if(e.button !== 0) return;
 
 		const startPosition = viewport.getAdjustedPosition(Vector.fromOffsets(e));

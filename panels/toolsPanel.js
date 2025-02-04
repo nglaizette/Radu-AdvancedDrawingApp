@@ -37,7 +37,7 @@ class ToolsPanel {
 				id: "pathRadio",
 				name: "shapeTools",
 				checked: "checked",
-				onchange: "changeTool('path')"
+				onchange: "ShapeTools.selectTool('path')"
 			}),
 		);
 
@@ -46,7 +46,7 @@ class ToolsPanel {
 				type: "radio",
 				id: "rectRadio",
 				name: "shapeTools",
-				onchange: "changeTool('rect')"
+				onchange: "ShapeTools.selectTool('rect')"
 			}),
 		);
 
@@ -55,7 +55,7 @@ class ToolsPanel {
 				type: "radio",
 				id: "ovalRadio",
 				name: "shapeTools",
-				onchange: "changeTool('oval')"
+				onchange: "ShapeTools.selectTool('oval')"
 			}),
 		);
 
@@ -64,7 +64,7 @@ class ToolsPanel {
 				type: "radio",
 				id: "textRadio",
 				name: "shapeTools",
-				onchange: "changeTool('text')"
+				onchange: "ShapeTools.selectTool('text')"
 			}),
 		);
 
@@ -73,7 +73,7 @@ class ToolsPanel {
 				type: "radio",
 				id: "selectRadio",
 				name: "shapeTools",
-				onchange: "changeTool('select')"
+				onchange: "ShapeTools.selectTool('select')"
 			}),
 		);
 	}

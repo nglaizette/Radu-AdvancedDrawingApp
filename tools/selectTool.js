@@ -1,6 +1,6 @@
 class SelectTool {
-	static addPointerdownListener (e) { // downCallbackForSelect
-
+	static addPointerDownListener (e) { // downCallbackForSelect
+		
 		if(e.button !== 0) return;
 		
 		PropertiesPanel.reset();

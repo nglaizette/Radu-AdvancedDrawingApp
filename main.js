@@ -63,64 +63,24 @@ const viewport = new Viewport(
 const propertiesPanel = new PropertiesPanel(propertiesHolder);
 const toolsPanel = new ToolsPanel(toolsHolder);
 
-function changeTool(tool) {
-	//console.log(info);
-	myCanvas.removeEventListener('pointerdown', PathTool.addPointerDownListener);
-	myCanvas.removeEventListener('pointerdown', RectTool.addPointerDownListener);
-	myCanvas.removeEventListener('pointerdown', OvalTool.addPointerDownListener);
-	myCanvas.removeEventListener('pointerdown', TextTool.addPointerDownListener);
-	myCanvas.removeEventListener('pointerdown', SelectTool.addPointerdownListener);
-	
-	shapes.forEach((s) => (s.selected = false));
-	drawShapes(shapes);
-
-	switch(tool){
-		case "rect":
-			myCanvas.addEventListener('pointerdown', RectTool.addPointerDownListener);
-			break;
-		case "path":
-			myCanvas.addEventListener('pointerdown', PathTool.addPointerDownListener);
-			break;
-		case "oval":
-			myCanvas.addEventListener('pointerdown', OvalTool.addPointerDownListener);
-			break;
-		case "text":
-			myCanvas.addEventListener('pointerdown', TextTool.addPointerDownListener);
-			break;
-		case "select":
-			myCanvas.addEventListener('pointerdown', SelectTool.addPointerdownListener);
-			break;		
-	}
-}
-
-function selectTool(tool) {
-	ShapeTools.selectTool(tool);
-	return;
-	changeTool(tool);
-	const toolSelector =  document.getElementById("toolSelector");
-	if(toolSelector){
-		toolSelector.value = tool
-	}
-}
-
 function selectRectTool() {
-	selectTool("rect");
+	ShapeTools.selectTool("rect");
 }
 
 function selectOvalTool() {
-	selectTool("oval");
+	ShapeTools.selectTool("oval");
 }
 
 function selectTextTool() {
-	selectTool("text");
+	ShapeTools.selectTool("text");
 }
 
 function selectPathTool() {
-	selectTool("path");
+	ShapeTools.selectTool("path");
 }
 
 function selectSelectTool() {
-	selectTool("select");
+	ShapeTools.selectTool("select");
 }
 
 function resetColors() {

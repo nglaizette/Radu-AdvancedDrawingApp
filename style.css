@@ -10,16 +10,20 @@ body {
 	user-select: none;
 }
 
-#toolsHolder {
+.panel {
 	position: absolute;
-	top: 0px;
-	left: 0px;
+	background-color: #f0f0f0;
+	padding: 5px;
+	border-radius: 5px;
 	margin: 5px;
 }
 
+#toolsHolder {
+	top: 0px;
+	left: 0px;
+}
+
 #propertiesHolder{
-	position: absolute;
 	top: 20px;
 	right: 0px;
-	margin: 5px;
 }

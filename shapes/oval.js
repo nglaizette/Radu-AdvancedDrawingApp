@@ -8,7 +8,7 @@ class Oval extends Shape {
 		this.corner2 =  corner1;
 	}
 
-	static load(data, stageProperties){
+	static load (data, stageProperties){
 		const oval = new Oval();
 		oval.id = data.id;
 		oval.options = JSON.parse(JSON.stringify(data.options));

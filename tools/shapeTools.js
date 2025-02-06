@@ -1,10 +1,11 @@
 class ShapeTools {
 	static tools = {
-		"path": {class: PathTool, radioId:"pathRadio"},
-		"rect": {class: RectTool, radioId:"rectRadio"},
-		"oval": {class: OvalTool, radioId:"ovalRadio"},
-		"text": {class: TextTool, radioId:"textRadio"},
-		"select": {class: SelectTool, radioId:"selectRadio"},
+		"Path": {class: PathTool, shape: Path, showButton: true },
+		"Rect": {class: RectTool, shape: Rect, showButton: true },
+		"Oval": {class: OvalTool, shape: Oval, showButton: true },
+		"Text": {class: TextTool, shape: Text , showButton: true },
+		"Select": {class: SelectTool, showButton: true },
+		"MyImage": { class: MyImageTool, shape: MyImage, showButton: false}
 	};
 
 	static selectTool(tool) {
@@ -18,7 +19,7 @@ class ShapeTools {
 		drawShapes(shapes);
 	
 		myCanvas.addEventListener('pointerdown', ShapeTools.tools[tool].class.addPointerDownListener);
-		const radioBtn =  document.getElementById(ShapeTools.tools[tool].radioId);
+		const radioBtn =  document.getElementById(tool.toLowerCase() + "Radio");
 		radioBtn.checked = true;
 	}
 }

@@ -189,36 +189,7 @@ function selectAll() {
 function loadShapes(data){
 	const loadShapes = [];
 	for(const shapeData of data){
-		let shape;
-		switch(shapeData.type){
-			case "Rect":
-				shape = Rect.load(shapeData, stageProperties);
-				//shape = new Rect(new Vector(shapeData.x, shapeData.y), new Vector(shapeData.width, shapeData.height));
-				break;
-
-			case "Path":
-				//shape = new Path(new Vector(shapeData.x, shapeData.y), getOptions());
-				//for(const point of shapeData.points){
-				//	shape.addPoint(new Vector(point.x, point.y));
-				//}
-				shape = Path.load(shapeData, stageProperties);
-				break;
-
-			case "MyImage":
-				shape = MyImage.load(shapeData, stageProperties);
-				break;
-
-			case "Oval":
-				shape = Oval.load(shapeData, stageProperties);
-				break;
-
-			case "Text":
-				shape = Text.load(shapeData, stageProperties);
-				break;
-
-			default:
-				throw new Error("Unknown shape type: " + shapeData.type);
-		}
+		const shape = ShapeTools.tools[shapeData.type].shape.load(shapeData, stageProperties);
 		loadShapes.push(shape);
 	}
 	return loadShapes;

@@ -17,3 +17,12 @@ Membre (6 mois)
 * mshryane​​ShapeData 
 ShapeView...Shape properties set via getter/setter methods when values set can choose to call updateView method , shapeView has ref to shapeData, properties panel has ref to current
 (or multiple) method in propertiesPanel class can check multiple shapeData classes to check for matching property values
+
+Michael Golden
+​​I think you should invert the dependency of select tools containing the tools array.
+ and instead define a shape factory that defines the shape, class, and tool. 
+ select tools would use the factory to ​​find all shapes with tools
+​​this would allow for shapes to be loaded without tools.
+
+Michael Golden
+data driven binding is the way to go. looks good to me!

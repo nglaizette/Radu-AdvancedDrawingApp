@@ -122,29 +122,3 @@ function drawStage() {
 	ctx.restore();
 }
 
-function copy() {
-	const selectedShapes = shapes.filter((s) => s.selected);
-	if(selectedShapes.length > 0){
-		const data = selectedShapes.map((s) => s.serialize(stageProperties));
-		//copyToClipboard(JSON.stringify(selectedShapes));
-		clipboard = JSON.stringify(data);
-	}
-}
-
-function paste() {
-	if(clipboard){
-		shapes.forEach((s) => (s.selected = false));
-		const newShapes= loadShapes(JSON.parse(clipboard));
-		newShapes.forEach((s) => s.id = Shape.generateId());
-		shapes.push(...newShapes);
-
-		drawShapes(shapes);
-		HistoryTools.record(shapes);
-	};
-}
-
-function duplicate(){
-	copy();
-	paste();
-}
-

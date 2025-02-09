@@ -130,21 +130,6 @@ class Shape{
 	}
 }
 
-function deleteSelectedShapes() {
-	let index = shapes.findIndex((s) => s.selected);
-	let shouldUpdateHistory = index !== -1;
-	while (index !== -1) {
-		shapes.splice(index, 1);
-		index = shapes.findIndex((s) => s.selected);
-	}
-
-	if(shouldUpdateHistory){
-		HistoryTools.record(shapes);
-	}
-	PropertiesPanel.reset();
-	drawShapes(shapes);
-}
-
 function drawShapes(shapes) {
 	gizmos = shapes.filter((s)=> s.selected).map((s) => new Gizmo(s));
 
@@ -180,11 +165,6 @@ function drawShapes(shapes) {
 	ctx.restore();
 	hitTestingCtx.restore();
 }
-
-function selectAll() {
-	shapes.forEach((s) => (s.selected = true));
-	drawShapes(shapes);
- }
 
 function loadShapes(data){
 	const loadShapes = [];

@@ -11,12 +11,12 @@ const shortcuts = [
    { control: true, key: "l", action: DocumentTools.load },
    { control: true, key: "s", action: DocumentTools.save},
    { control: true, key: "e", action: DocumentTools.do_export},
-   { control: true, key: "a", action: selectAll },
-   { control: true, key: "c", action: copy },
-   { control: true, key: "v", action: paste },
-   { constol: true, key: "d", action: duplicate },
-   { control: false, key: "Delete", action: deleteSelectedShapes},
-   { control: false, key: "Backspace", action: deleteSelectedShapes}
+   { control: true, key: "a", action: EditingTools.selectAll },
+   { control: true, key: "c", action: EditingTools.copy },
+   { control: true, key: "v", action: EditingTools.paste },
+   { control: true, key: "d", action: EditingTools.duplicate },
+   { control: false, key: "Delete", action: EditingTools.delete},
+   { control: false, key: "Backspace", action: EditingTools.delete}
 ];
 
 function isShortcut(control, key) {

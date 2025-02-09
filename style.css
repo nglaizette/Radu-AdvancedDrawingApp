@@ -18,6 +18,20 @@ body {
 	margin: 5px;
 }
 
+button {
+	/*background: #EEE;
+	border: none;*/
+	padding: 3px;
+	border-radius: 4px;
+	/*font-size: large;*/
+	margin: 2px;
+	cursor: pointer;
+}
+
+.tool-button {
+	width: 70px;
+}
+
 #toolsHolder {
 	top: 0px;
 	left: 0px;

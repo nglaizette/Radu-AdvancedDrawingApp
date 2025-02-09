@@ -7,7 +7,7 @@ class HistoryTools {
 		if(HistoryTools.redoStack.length > 0){
 			const data= HistoryTools.redoStack.pop();
 			shapes = loadShapes(data);
-			drawShapes(shapes);
+			viewport.drawShapes(shapes);
 			HistoryTools.undoStack.push(data);
 			PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
 		}
@@ -24,7 +24,7 @@ class HistoryTools {
 		else {
 			shapes.length = 0;
 		}
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 		PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));	
 	}
 

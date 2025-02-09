@@ -120,7 +120,7 @@ class PropertiesPanel {
 		shapes
 			.filter((s) => s.selected)
 			.forEach((s) => (s.center.x = Number(value) + stageProperties.left));
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 		HistoryTools.record(shapes);
 	}
 
@@ -128,7 +128,7 @@ class PropertiesPanel {
 		shapes
 			.filter((s) => s.selected)
 			.forEach((s) => (s.center.y = Number(value) + stageProperties.top));
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 		HistoryTools.record(shapes);
 	}
 
@@ -155,7 +155,7 @@ class PropertiesPanel {
 		}
 
 		HistoryTools.record(shapes);
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 	}
 
 	static changeHeight(value) {
@@ -181,7 +181,7 @@ class PropertiesPanel {
 		}
 
 		HistoryTools.record(shapes);
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 	}
 
 	static previewFillColor(value) {
@@ -189,7 +189,7 @@ class PropertiesPanel {
 		shapes
 			.filter((s) => s.selected)
 			.forEach((s) => (s.options.fillColor = value));
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 	}
 
 	static changeFillColor(value) {
@@ -200,7 +200,7 @@ class PropertiesPanel {
 	static changeFill(value) {
 		//console.log(value);
 		shapes.filter((s) => s.selected).forEach((s) => (s.options.fill = value));
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 		HistoryTools.record(shapes);
 	}
 
@@ -209,7 +209,7 @@ class PropertiesPanel {
 		shapes
 			.filter((s) => s.selected)
 			.forEach((s) => (s.options.strokeColor = value));
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 		HistoryTools.record(shapes);
 	}
 
@@ -218,7 +218,7 @@ class PropertiesPanel {
 		shapes
 			.filter((s) => s.selected)
 			.forEach((s) => (s.options.strokeColor = value));
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 	}
 
 	static changeStroke(value) {
@@ -237,7 +237,7 @@ class PropertiesPanel {
 			.filter((s) => s.selected && s.text !== undefined)
 			.forEach((s) => s.setText(value));
 		HistoryTools.record(shapes);
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 	}
 
 	static resetColors() {
@@ -263,7 +263,7 @@ class PropertiesPanel {
 		shapes
 			.filter((s) => s.selected)
 			.forEach((s) => (s.options.strokeWidth = Number(value)));
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 	}
 
 	static reset() {

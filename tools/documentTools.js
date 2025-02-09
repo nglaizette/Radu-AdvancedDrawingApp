@@ -27,7 +27,7 @@ class DocumentTools {
 					const data = JSON.parse(e.target.result);
 					//shapes.splice(0, shapes.length);
 					shapes = loadShapes(data);
-					drawShapes(shapes);
+					viewport.drawShapes(shapes);
 					HistoryTools.record(shapes);
 				}
 				else if(extension === "png"){
@@ -56,7 +56,7 @@ class DocumentTools {
 				)
 			);
 			shapes.push(myImage);
-			drawShapes(shapes);
+			viewport.drawShapes(shapes);
 			HistoryTools.record(shapes);
 		};
 		img.src = e.target.result;

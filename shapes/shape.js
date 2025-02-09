@@ -130,42 +130,6 @@ class Shape{
 	}
 }
 
-function drawShapes(shapes) {
-	gizmos = shapes.filter((s)=> s.selected).map((s) => new Gizmo(s));
-
-	ctx.save();
-	hitTestingCtx.save();
-
-	clearCanvas();
-
-	hitTestingCtx.clearRect(-canvasProperties.width / 2, -canvasProperties.height / 2, canvasProperties.width, canvasProperties.height);
-	ctx.scale(viewport.zoom, viewport.zoom);
-	hitTestingCtx.scale(viewport.zoom, viewport.zoom);
-
-	ctx.translate(viewport.offset.x, viewport.offset.y);
-	hitTestingCtx.translate(viewport.offset.x, viewport.offset.y);
-
-	drawStage();
-	for(const shape of shapes){
-		shape.draw(ctx);
-	}
-
-	for(const gizmo of gizmos){
-		gizmo.draw(ctx)
-	}
-
-	for(const shape of shapes){
-		shape.draw(hitTestingCtx, true);
-	}
-
-	for(const gizmo of gizmos){
-		gizmo.draw(hitTestingCtx,  true);
-	}
-
-	ctx.restore();
-	hitTestingCtx.restore();
-}
-
 function loadShapes(data){
 	const loadShapes = [];
 	for(const shapeData of data){
@@ -189,10 +153,10 @@ function secondCornerMoveCallback(e, startPosition, currentShape) {
 			startPosition.x - sgnX * minDelta,
 			startPosition.y - sgnY * minDelta
 		);
-		drawShapes([...shapes, currentShape]);
+		viewport.drawShapes([...shapes, currentShape]);
 	} 
 	currentShape.setCorner2(secondCornerPositon);
-	drawShapes([...shapes, currentShape]);
+	viewport.drawShapes([...shapes, currentShape]);
 };
 
 function secondCornerUpCallback(e, currentShape, moveCallback, upCallback) {

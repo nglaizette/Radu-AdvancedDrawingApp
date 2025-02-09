@@ -2,7 +2,7 @@ class EditingTools {
 
 	static selectAll() {
 		shapes.forEach((s) => (s.selected = true));
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 	 }
 	
 	static copy() {
@@ -21,7 +21,7 @@ class EditingTools {
 			newShapes.forEach((s) => s.id = Shape.generateId());
 			shapes.push(...newShapes);
 	
-			drawShapes(shapes);
+			viewport.drawShapes(shapes);
 			HistoryTools.record(shapes);
 		};
 	}
@@ -43,6 +43,6 @@ class EditingTools {
 			HistoryTools.record(shapes);
 		}
 		PropertiesPanel.reset();
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 	}
 } 

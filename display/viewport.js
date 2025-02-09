@@ -8,6 +8,9 @@ class Viewport {
 		this.offset = Vector.zero();
 		this.zoomSteps = 0.05;
 
+		this.#clearCanvas();
+		this.#drawStage();
+
 		this.#addEventListeners();
 	}
 
@@ -29,9 +32,81 @@ class Viewport {
 			.subtract(this.offset);
 	}
 
+	drawShapes(shapes) {
+		gizmos = shapes.filter((s) => s.selected).map((s) => new Gizmo(s));
+
+		ctx.save();
+		hitTestingCtx.save();
+
+		this.#clearCanvas();
+
+		hitTestingCtx.clearRect(
+			-canvasProperties.width / 2,
+			-canvasProperties.height / 2,
+			canvasProperties.width,
+			canvasProperties.height
+		);
+		ctx.scale(viewport.zoom, viewport.zoom);
+		hitTestingCtx.scale(viewport.zoom, viewport.zoom);
+
+		ctx.translate(viewport.offset.x, viewport.offset.y);
+		hitTestingCtx.translate(viewport.offset.x, viewport.offset.y);
+
+		this.#drawStage();
+		for (const shape of shapes) {
+			shape.draw(ctx);
+		}
+
+		for (const gizmo of gizmos) {
+			gizmo.draw(ctx);
+		}
+
+		for (const shape of shapes) {
+			shape.draw(hitTestingCtx, true);
+		}
+
+		for (const gizmo of gizmos) {
+			gizmo.draw(hitTestingCtx, true);
+		}
+
+		ctx.restore();
+		hitTestingCtx.restore();
+	}
+
+	#clearCanvas() {
+		ctx.fillStyle = "gray";
+		ctx.fillRect(
+			-myCanvas.width / 2,
+			-myCanvas.height / 2,
+			myCanvas.width,
+			myCanvas.height
+		);
+
+		ctx.fillStyle = "white";
+		ctx.textAlign = "right";
+		ctx.fillText(
+			"Contributors: " + contributors.join(", "),
+			myCanvas.width / 2 - 10,
+			-myCanvas.height / 2 + 10
+		);
+	}
+
+	#drawStage() {
+		ctx.save();
+
+		ctx.fillStyle = "white";
+		ctx.fillRect(
+			stageProperties.left,
+			stageProperties.top,
+			stageProperties.width,
+			stageProperties.height
+		);
+
+		ctx.restore();
+	}
+
 	#addEventListeners() {
 		this.canvas.addEventListener("wheel", (e) => {
-			
 			e.preventDefault();
 			const dir = -Math.sign(e.deltaY);
 			//console.log(dir);

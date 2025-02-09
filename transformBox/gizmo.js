@@ -90,7 +90,7 @@ class Gizmo {
 						break;
 				}
 			}
-			drawShapes(shapes);
+			viewport.drawShapes(shapes);
 			PropertiesPanel.updateDisplay(selectedShapes);
 		};
 	

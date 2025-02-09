@@ -16,7 +16,7 @@ class ShapeTools {
 		}
 		
 		shapes.forEach((s) => (s.selected = false));
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 	
 		myCanvas.addEventListener('pointerdown', ShapeTools.tools[tool].class.addPointerDownListener);
 		const radioBtn =  document.getElementById(tool.toLowerCase() + "Radio");

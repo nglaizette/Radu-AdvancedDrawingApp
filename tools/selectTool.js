@@ -39,7 +39,7 @@ class SelectTool {
 			 let isDragging = false;
 	
 			//shape.setCenter(diff);
-			drawShapes(shapes);
+			viewport.drawShapes(shapes);
 			PropertiesPanel.updateDisplay(selectedShapes);
 	
 			const moveCallback = function(e){
@@ -58,9 +58,9 @@ class SelectTool {
 				selectedShapes.forEach((s, i) => {
 					s.setCenter(Vector.add(oldCenters[i], mouseDelta));
 				});
-				drawShapes(shapes);
+				viewport.drawShapes(shapes);
 				PropertiesPanel.updateDisplay(selectedShapes);
-				//drawShapes([...shapes, currentShape]);
+				//viewport.drawShapes([...shapes, currentShape]);
 			};
 		
 			const upCallback = function (e) {
@@ -69,7 +69,7 @@ class SelectTool {
 	
 				if (isClickingSelectedShape && !isDragging) {
 					shape.selected = false;
-					drawShapes(shapes);
+					viewport.drawShapes(shapes);
 				 }
 				PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
 	
@@ -84,7 +84,7 @@ class SelectTool {
 			SelectTool.selectShapeUnderRectangle(e);
 		}
 	
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 	}
 	
 	static selectShapeUnderRectangle(e) {
@@ -147,7 +147,7 @@ class SelectTool {
 	
 				rect.remove();
 				PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));
-				drawShapes(shapes);
+				viewport.drawShapes(shapes);
 			};
 		// adding event listeners to the rectangle to allow rectangle redraw when pointer moves into it
 		myCanvas.addEventListener('pointermove', moveCallback);

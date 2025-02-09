@@ -5,7 +5,7 @@ class TextTool {
 		const mousePosition = viewport.getAdjustedPosition(Vector.fromOffsets(e));
 		currentShape = new Text(mousePosition, PropertiesPanel.getValues());
 		shapes.push(currentShape);
-		drawShapes(shapes);
+		viewport.drawShapes(shapes);
 		HistoryTools.record(shapes);
 	}
 }

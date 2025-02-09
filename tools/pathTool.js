@@ -11,7 +11,7 @@ class PathTool {
 		const mousePosition = viewport.getAdjustedPosition(Vector.fromOffsets(e));
 
 			currentShape.addPoint(mousePosition);	
-			drawShapes([...shapes, currentShape]);
+			viewport.drawShapes([...shapes, currentShape]);
 		};
 	
 		const upCallback = function (e) {

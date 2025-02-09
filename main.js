@@ -35,9 +35,6 @@ const hitTestingCtx = hitTestCanvas.getContext("2d", {
 ctx.translate(canvasProperties.offset.x, canvasProperties.offset.y);
 hitTestingCtx.translate(canvasProperties.offset.x, canvasProperties.offset.y);
 
-clearCanvas();
-drawStage();
-
 let shapes = [];
 let gizmos = [];
 let currentShape = null;
@@ -64,35 +61,3 @@ const viewport = new Viewport(
 
 const propertiesPanel = new PropertiesPanel(propertiesHolder);
 const toolsPanel = new ToolsPanel(toolsHolder);
-
-function clearCanvas() {
-	ctx.fillStyle = "gray";
-	ctx.fillRect(
-		-myCanvas.width / 2,
-		-myCanvas.height / 2,
-		myCanvas.width,
-		myCanvas.height
-	);
-
-	ctx.fillStyle = "white";
-	ctx.textAlign = "right";
-	ctx.fillText(
-		"Contributors: " + contributors.join(", "),
-		myCanvas.width / 2 - 10,
-		-myCanvas.height / 2 + 10
-	);
-}
-
-function drawStage() {
-	ctx.save();
-
-	ctx.fillStyle = "white";
-	ctx.fillRect(
-		stageProperties.left,
-		stageProperties.top,
-		stageProperties.width,
-		stageProperties.height
-	);
-
-	ctx.restore();
-}

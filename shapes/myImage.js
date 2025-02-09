@@ -92,7 +92,7 @@ class MyImage extends Shape {
 		const moveCallback = function(e){
 			const mousePosition = new Vector(e.offsetX,e.offsetY);
 			currentShape.setCorner2(mousePosition);
-			drawShapes([...shapes, currentShape]);
+			viewport.drawShapes([...shapes, currentShape]);
 		};
 	
 		const upCallback = function (e) {

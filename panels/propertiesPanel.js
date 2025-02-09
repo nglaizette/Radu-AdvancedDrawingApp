@@ -1,5 +1,6 @@
 class PropertiesPanel {
-	constructor(holderDiv){
+
+	constructor(holderDiv) {
 		this.holderDiv = holderDiv;
 		this.holderDiv.innerHTML = "Properties";
 		this.holderDiv.appendChild(createDOMElement("br"));
@@ -8,34 +9,34 @@ class PropertiesPanel {
 				type: "number",
 				onchange: "PropertiesPanel.changeX(this.value)",
 				id: "xInput",
-			}),
+			})
 		);
 		this.holderDiv.appendChild(
 			createInputWithLabel("Y", {
 				type: "number",
 				onchange: "PropertiesPanel.changeY(this.value)",
 				id: "yInput",
-			}),
+			})
 		);
 		this.holderDiv.appendChild(
 			createInputWithLabel("Width", {
 				type: "number",
 				onchange: "PropertiesPanel.changeWidth(this.value)",
 				id: "widthInput",
-			}),
+			})
 		);
 		this.holderDiv.appendChild(
 			createInputWithLabel("Height", {
 				type: "number",
 				onchange: "PropertiesPanel.changeHeight(this.value)",
 				id: "heightInput",
-			}),
+			})
 		);
 		this.holderDiv.appendChild(
 			createInputWithLabel("Constrain", {
 				type: "checkbox",
-				id: "constrainDimensions"
-			}),
+				id: "constrainDimensions",
+			})
 		);
 		this.holderDiv.appendChild(
 			createDOMElement("input", {
@@ -44,8 +45,7 @@ class PropertiesPanel {
 				oninput: "PropertiesPanel.previewFillColor(this.value)",
 				title: "Fill Color",
 				type: "color",
-				value: "#ff0000",
-			}),
+			})
 		);
 		this.holderDiv.appendChild(
 			createDOMElement("input", {
@@ -54,7 +54,14 @@ class PropertiesPanel {
 				onchange: "PropertiesPanel.changeFill(this.checked)",
 				title: "Fill",
 				type: "checkbox",
-			}),
+			})
+		);
+		this.holderDiv.appendChild(
+			createDOMElement(
+				"button",
+				{ id: "resetBtn", onclick: "PropertiesPanel.resetColors()"},
+				"Reset"
+			)
 		);
 		this.holderDiv.appendChild(createDOMElement("br"));
 		this.holderDiv.appendChild(
@@ -64,8 +71,7 @@ class PropertiesPanel {
 				oninput: "PropertiesPanel.previewStrokeColor(this.value)",
 				title: "Stroke Color",
 				type: "color",
-				value: "#0000ff",
-			}),
+			})
 		);
 		this.holderDiv.appendChild(
 			createDOMElement("input", {
@@ -74,9 +80,15 @@ class PropertiesPanel {
 				onchange: "PropertiesPanel.changeStroke(this.checked)",
 				title: "Stroke",
 				type: "checkbox",
-			}),
+			})
 		);
-
+		this.holderDiv.appendChild(
+			createDOMElement(
+				"button",
+				{ id: "swaptBtn", onclick: "PropertiesPanel.swapColors()"},
+				"Swap"
+			)
+		);
 		this.holderDiv.appendChild(createDOMElement("br"));
 		this.holderDiv.appendChild(
 			createDOMElement("input", {
@@ -88,7 +100,7 @@ class PropertiesPanel {
 				title: "Stroke Width",
 				type: "range",
 				value: "5",
-			}),
+			})
 		);
 		this.holderDiv.appendChild(createDOMElement("br"));
 		this.holderDiv.appendChild(
@@ -98,27 +110,28 @@ class PropertiesPanel {
 				title: "Text",
 				type: "text",
 				value: "Enter text here",
-			}),
+			})
 		);
 		this.holderDiv.appendChild(createDOMElement("br"));
+		PropertiesPanel.resetColors();
 	}
 
 	static changeX(value) {
-		shapes.filter((s) => s.selected).forEach((s) => 
-			s.center.x = Number(value) + stageProperties.left
-		);
+		shapes
+			.filter((s) => s.selected)
+			.forEach((s) => (s.center.x = Number(value) + stageProperties.left));
 		drawShapes(shapes);
 		HistoryTools.record(shapes);
 	}
 
 	static changeY(value) {
-		shapes.filter((s) => s.selected).forEach((s) => 
-			s.center.y = Number(value) + stageProperties.top
-		);
+		shapes
+			.filter((s) => s.selected)
+			.forEach((s) => (s.center.y = Number(value) + stageProperties.top));
 		drawShapes(shapes);
 		HistoryTools.record(shapes);
 	}
-	
+
 	static changeWidth(value) {
 		const newWidth = Math.max(Number(value), 1);
 		let newHeight = 0;
@@ -129,22 +142,22 @@ class PropertiesPanel {
 				const currentWidth = s.size.width;
 				const currentHeight = s.size.height;
 				newHeight = currentHeight;
-				if(constrainDimensions.checked){
+				if (constrainDimensions.checked) {
 					const aspectRatio = currentWidth / currentHeight;
 					const constrainedHeight = newWidth / aspectRatio;
 					newHeight = constrainedHeight;
 				}
-				s.setSize(newWidth, newHeight)
+				s.setSize(newWidth, newHeight);
 			});
 		setValue(widthInput, Math.round(newWidth));
-		if(getValue(heightInput) != 0){
+		if (getValue(heightInput) != 0) {
 			setValue(heightInput, Math.round(newHeight));
 		}
 
 		HistoryTools.record(shapes);
 		drawShapes(shapes);
 	}
-	
+
 	static changeHeight(value) {
 		const newHeight = Math.max(Number(value), 1);
 		let newWidth = 0;
@@ -155,15 +168,15 @@ class PropertiesPanel {
 				const currentWidth = s.size.width;
 				const currentHeight = s.size.height;
 				newWidth = currentWidth;
-				if(constrainDimensions.checked){
+				if (constrainDimensions.checked) {
 					const aspectRatio = currentWidth / currentHeight;
-					const constrainedWidth= newHeight * aspectRatio;
+					const constrainedWidth = newHeight * aspectRatio;
 					newWidth = constrainedWidth;
 				}
-				s.setSize(newWidth, newHeight)
+				s.setSize(newWidth, newHeight);
 			});
 		setValue(heightInput, Math.round(newHeight));
-		if(getValue(widthInput) != 0){
+		if (getValue(widthInput) != 0) {
 			setValue(widthInput, Math.round(newWidth));
 		}
 
@@ -171,62 +184,89 @@ class PropertiesPanel {
 		drawShapes(shapes);
 	}
 
-	static previewFillColor(value){
+	static previewFillColor(value) {
 		//console.log(value);
-		shapes.filter(s=>s.selected).forEach(s=>s.options.fillColor=value);
+		shapes
+			.filter((s) => s.selected)
+			.forEach((s) => (s.options.fillColor = value));
 		drawShapes(shapes);
 	}
 
-	static changeFillColor(value){
+	static changeFillColor(value) {
 		PropertiesPanel.previewFillColor(value);
 		HistoryTools.record(shapes);
 	}
-	
-	static changeFill(value){
+
+	static changeFill(value) {
 		//console.log(value);
-		shapes.filter(s=>s.selected).forEach(s=>s.options.fill=value);
-		drawShapes(shapes);
-		HistoryTools.record(shapes);
-	}
-	
-	static changeStrokeColor(value){
-		//console.log(value);
-		shapes.filter(s=>s.selected).forEach(s=>s.options.strokeColor=value);
+		shapes.filter((s) => s.selected).forEach((s) => (s.options.fill = value));
 		drawShapes(shapes);
 		HistoryTools.record(shapes);
 	}
 
-	static previewStrokeColor(value){
+	static changeStrokeColor(value) {
 		//console.log(value);
-		shapes.filter(s=>s.selected).forEach(s=>s.options.strokeColor=value);
+		shapes
+			.filter((s) => s.selected)
+			.forEach((s) => (s.options.strokeColor = value));
+		drawShapes(shapes);
+		HistoryTools.record(shapes);
+	}
+
+	static previewStrokeColor(value) {
+		//console.log(value);
+		shapes
+			.filter((s) => s.selected)
+			.forEach((s) => (s.options.strokeColor = value));
 		drawShapes(shapes);
 	}
-	
-	static changeStroke(value){
+
+	static changeStroke(value) {
 		PropertiesPanel.previewStrokeColor(value);
 		HistoryTools.record(shapes);
 	}
-	
+
 	static changeStrokeWidth(value) {
 		PropertiesPanel.previewStrokeWidth(value);
 		HistoryTools.record(shapes);
 	}
 
-	static changeText(value){
+	static changeText(value) {
 		//console.log(value);
-		shapes.filter((s)=> s.selected && s.text !== undefined).forEach((s) => s.setText(value));
+		shapes
+			.filter((s) => s.selected && s.text !== undefined)
+			.forEach((s) => s.setText(value));
 		HistoryTools.record(shapes);
 		drawShapes(shapes);
 	}
 
+	static resetColors() {
+		fillColor.value = "#ffffff";
+		strokeColor.value = "#000000";
+		PropertiesPanel.changeFillColor(fillColor.value);
+		PropertiesPanel.changeStrokeColor(strokeColor.value);
+	}
+
+	static swapColors() {
+		const fillStyle = fillColor.value;
+		const strokeStyle = strokeColor.value;
+
+		fillColor.value = strokeStyle;
+		strokeColor.value = fillStyle;
+
+		PropertiesPanel.changeFillColor(fillColor.value);
+		PropertiesPanel.changeStrokeColor(strokeColor.value);
+	}
 
 	static previewStrokeWidth(value) {
 		//console.log(Number(value));
-		shapes.filter(s=>s.selected).forEach(s=>s.options.strokeWidth=Number(value));
+		shapes
+			.filter((s) => s.selected)
+			.forEach((s) => (s.options.strokeWidth = Number(value)));
 		drawShapes(shapes);
 	}
 
-	static reset(){
+	static reset() {
 		xInput.value = "";
 		yInput.value = "";
 		widthInput.value = "";
@@ -239,15 +279,15 @@ class PropertiesPanel {
 	}
 
 	static updateDisplay(selectedShapes) {
-		if(selectedShapes.length === 0) {
+		if (selectedShapes.length === 0) {
 			PropertiesPanel.reset();
 			return;
 		}
-	
+
 		let newProperties = null;
 
-		for(const shape of selectedShapes){
-			if(newProperties === null){
+		for (const shape of selectedShapes) {
+			if (newProperties === null) {
 				newProperties = {
 					x: shape.center.x - stageProperties.left,
 					y: shape.center.y - stageProperties.top,
@@ -258,54 +298,63 @@ class PropertiesPanel {
 					strokeColor: shape.options.strokeColor,
 					stroke: shape.options.stroke,
 					strokeWidth: shape.options.strokeWidth,
-					text: shape.text
+					text: shape.text,
 				};
 			} else {
-				if(newProperties.x !== shape.center.x - stageProperties.left){
+				if (newProperties.x !== shape.center.x - stageProperties.left) {
 					newProperties.x = null;
 				}
-				if(newProperties.y !== shape.center.y - stageProperties.top){
+				if (newProperties.y !== shape.center.y - stageProperties.top) {
 					newProperties.y = null;
 				}
-				if(newProperties.width !== shape.size.width){
+				if (newProperties.width !== shape.size.width) {
 					newProperties.width = null;
 				}
-				if(newProperties.height !== shape.size.height){
+				if (newProperties.height !== shape.size.height) {
 					newProperties.height = null;
 				}
-				if(newProperties.fillColor !== shape.options.fillColor){
+				if (newProperties.fillColor !== shape.options.fillColor) {
 					newProperties.fillColor = null;
 				}
-				if(newProperties.fill !== shape.options.fill){
+				if (newProperties.fill !== shape.options.fill) {
 					newProperties.fill = null;
 				}
-				if(newProperties.strokeColor !== shape.options.strokeColor){
+				if (newProperties.strokeColor !== shape.options.strokeColor) {
 					newProperties.strokeColor = null;
 				}
-				if(newProperties.stroke !== shape.options.stroke){
+				if (newProperties.stroke !== shape.options.stroke) {
 					newProperties.stroke = null;
 				}
-				if(newProperties.strokeWidth !== shape.options.strokeWidth){
+				if (newProperties.strokeWidth !== shape.options.strokeWidth) {
 					newProperties.strokeWidth = null;
 				}
-				if(newProperties.text !== shape.text){
+				if (newProperties.text !== shape.text) {
 					newProperties.text = null;
 				}
 			}
 		}
-		if(newProperties === null){
+		if (newProperties === null) {
 			return;
 		} else {
-			
 			xInput.value = newProperties.x ? Math.round(newProperties.x) : "";
 			yInput.value = newProperties.y ? Math.round(newProperties.y) : "";
-			widthInput.value = newProperties.width ? Math.round(newProperties.width) : "";
-			heightInput.value = newProperties.height ? Math.round(newProperties.height) : "";
-			fillColor.value = newProperties.fillColor ? newProperties.fillColor : "";
-			fill.checked = newProperties.fill ?newProperties.fill : false;
-			strokeColor.value = newProperties.strokeColor ? newProperties.strokeColor : "";
+			widthInput.value = newProperties.width
+				? Math.round(newProperties.width)
+				: "";
+			heightInput.value = newProperties.height
+				? Math.round(newProperties.height)
+				: "";
+			fillColor.value = newProperties.fillColor
+				? newProperties.fillColor
+				: "";
+			fill.checked = newProperties.fill ? newProperties.fill : false;
+			strokeColor.value = newProperties.strokeColor
+				? newProperties.strokeColor
+				: "";
 			stroke.checked = newProperties.stroke ? newProperties.stroke : false;
-			strokeWidth.value = newProperties.strokeWidth ? newProperties.strokeWidth : "";
+			strokeWidth.value = newProperties.strokeWidth
+				? newProperties.strokeWidth
+				: "";
 			text.value = newProperties.text ? newProperties.text : "";
 
 			const placeholderText = "Multiple values";

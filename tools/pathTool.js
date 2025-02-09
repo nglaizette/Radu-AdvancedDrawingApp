@@ -5,7 +5,7 @@ class PathTool {
 
 		const startPosition = viewport.getAdjustedPosition(Vector.fromOffsets(e));
 		
-		currentShape =  new Path(startPosition,getOptions());
+		currentShape =  new Path(startPosition,PropertiesPanel.getValues());
 	
 		const moveCallback = function(e){
 		const mousePosition = viewport.getAdjustedPosition(Vector.fromOffsets(e));

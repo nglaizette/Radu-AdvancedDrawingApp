@@ -372,6 +372,18 @@ class PropertiesPanel {
 			//strokeWidth.value = newProperties.strokeWidth?"":placeholderText;
 		}
 	}
+
+	static getValues() {
+		return {
+			fillColor: fillColor.value,
+			strokeColor: strokeColor.value,
+			fill: fill.checked,
+			stroke: stroke.checked,
+			strokeWidth: Number(strokeWidth.value),
+			lineCap: "round",
+			lineJoin: "round",
+		};
+	}
 }
 
 

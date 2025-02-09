@@ -65,18 +65,6 @@ const viewport = new Viewport(
 const propertiesPanel = new PropertiesPanel(propertiesHolder);
 const toolsPanel = new ToolsPanel(toolsHolder);
 
-function getOptions() {
-	return {
-		fillColor: fillColor.value,
-		strokeColor: strokeColor.value,
-		fill: fill.checked,
-		stroke: stroke.checked,
-		strokeWidth: Number(strokeWidth.value),
-		lineCap: "round",
-		lineJoin: "round",
-	};
-}
-
 function clearCanvas() {
 	ctx.fillStyle = "gray";
 	ctx.fillRect(

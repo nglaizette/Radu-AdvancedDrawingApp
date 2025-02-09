@@ -48,7 +48,7 @@ class DocumentTools {
 	static loadImage(e){
 		const img = new Image();
 		img.onload = () => {
-			const myImage = new MyImage(img, getOptions());
+			const myImage = new MyImage(img, PropertiesPanel.getValues());
 			myImage.setCenter(
 				new Vector(
 					stageProperties.left + stageProperties.width / 2,

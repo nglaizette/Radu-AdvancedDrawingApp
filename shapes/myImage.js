@@ -87,7 +87,7 @@ class MyImage extends Shape {
 
 	/*static addPointerDownListener(e){
 		const mousePosition = new Vector(e.offsetX,e.offsetY);
-		currentShape = new Rect(mousePosition, getOptions());
+		currentShape = new Rect(mousePosition, PropertiesPanel.getValues());
 	
 		const moveCallback = function(e){
 			const mousePosition = new Vector(e.offsetX,e.offsetY);

@@ -1,12 +1,34 @@
 class Viewport {
-	constructor(canvas, hitTestCanvas, canevasProperties, stageProperties) {
+	constructor(canvas, hitTestCanvas, stageProperties, showHitRegions) {
 		this.canvas = canvas;
 		this.hitTestCanvas = hitTestCanvas;
-		this.canevasProperties = canevasProperties;
 		this.stageProperties = stageProperties;
+		this.showHitRegions = showHitRegions;
 		this.zoom = 1;
 		this.offset = Vector.zero();
 		this.zoomSteps = 0.05;
+
+		if (!showHitRegions) {
+			hitTestCanvas.style.display = "none";
+		}
+
+		this.canvasProperties = {
+			width: showHitRegions ? window.innerWidth / 2 : window.innerWidth,
+			height: window.innerHeight,
+			center: Vector.zero(),
+		};
+		this.canvasProperties.offset = new Vector(
+			this.canvasProperties.width / 2,
+			this.canvasProperties.height / 2
+		);
+
+		this.stageProperties.left =  -this.stageProperties.width  / 2;
+		this.stageProperties.top  =  -this.stageProperties.height / 2;
+
+		this.canvas.width = this.canvasProperties.width;
+		this.canvas.height = this.canvasProperties.height;
+		this.hitTestCanvas.width = this.canvasProperties.width;
+		this.hitTestCanvas.height = this.canvasProperties.height;
 
 		this.#clearCanvas();
 		this.#drawStage();
@@ -20,14 +42,14 @@ class Viewport {
 
 	getAdjustedPositionOld(e) {
 		return new Vector(e.offsetX, e.offsetY)
-			.subtract(this.canevasProperties.offset)
+			.subtract(this.canvasProperties.offset)
 			.scale(1 / this.zoom)
 			.subtract(this.offset);
 	}
 
 	getAdjustedPosition(vector) {
 		return vector
-			.subtract(this.canevasProperties.offset)
+			.subtract(this.canvasProperties.offset)
 			.scale(1 / this.zoom)
 			.subtract(this.offset);
 	}
@@ -41,10 +63,10 @@ class Viewport {
 		this.#clearCanvas();
 
 		hitTestingCtx.clearRect(
-			-canvasProperties.width / 2,
-			-canvasProperties.height / 2,
-			canvasProperties.width,
-			canvasProperties.height
+			-this.canvasProperties.width / 2,
+			-this.canvasProperties.height / 2,
+			this.canvasProperties.width,
+			this.canvasProperties.height
 		);
 		ctx.scale(viewport.zoom, viewport.zoom);
 		hitTestingCtx.scale(viewport.zoom, viewport.zoom);

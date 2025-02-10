@@ -30,6 +30,20 @@ class Viewport {
 		this.hitTestCanvas.width = this.canvasProperties.width;
 		this.hitTestCanvas.height = this.canvasProperties.height;
 
+		this.ctx = this.canvas.getContext("2d");
+		this.hitTestingCtx = this.hitTestCanvas.getContext("2d", {
+			willReadFrequently: true,
+		});
+
+		this.ctx.translate(
+			this.canvasProperties.offset.x,
+			this.canvasProperties.offset.y
+		);
+		this.hitTestingCtx.translate(
+			this.canvasProperties.offset.x,
+			this.canvasProperties.offset.y
+		);
+
 		this.#clearCanvas();
 		this.#drawStage();
 
@@ -57,56 +71,56 @@ class Viewport {
 	drawShapes(shapes) {
 		gizmos = shapes.filter((s) => s.selected).map((s) => new Gizmo(s));
 
-		ctx.save();
-		hitTestingCtx.save();
+		this.ctx.save();
+		this.hitTestingCtx.save();
 
 		this.#clearCanvas();
 
-		hitTestingCtx.clearRect(
+		this.hitTestingCtx.clearRect(
 			-this.canvasProperties.width / 2,
 			-this.canvasProperties.height / 2,
 			this.canvasProperties.width,
 			this.canvasProperties.height
 		);
-		ctx.scale(viewport.zoom, viewport.zoom);
-		hitTestingCtx.scale(viewport.zoom, viewport.zoom);
+		this.ctx.scale(viewport.zoom, viewport.zoom);
+		this.hitTestingCtx.scale(viewport.zoom, viewport.zoom);
 
-		ctx.translate(viewport.offset.x, viewport.offset.y);
-		hitTestingCtx.translate(viewport.offset.x, viewport.offset.y);
+		this.ctx.translate(viewport.offset.x, viewport.offset.y);
+		this.hitTestingCtx.translate(viewport.offset.x, viewport.offset.y);
 
 		this.#drawStage();
 		for (const shape of shapes) {
-			shape.draw(ctx);
+			shape.draw(this.ctx);
 		}
 
 		for (const gizmo of gizmos) {
-			gizmo.draw(ctx);
+			gizmo.draw(this.ctx);
 		}
 
 		for (const shape of shapes) {
-			shape.draw(hitTestingCtx, true);
+			shape.draw(this.hitTestingCtx, true);
 		}
 
 		for (const gizmo of gizmos) {
-			gizmo.draw(hitTestingCtx, true);
+			gizmo.draw(this.hitTestingCtx, true);
 		}
 
-		ctx.restore();
-		hitTestingCtx.restore();
+		this.ctx.restore();
+		this.hitTestingCtx.restore();
 	}
 
 	#clearCanvas() {
-		ctx.fillStyle = "gray";
-		ctx.fillRect(
+		this.ctx.fillStyle = "gray";
+		this.ctx.fillRect(
 			-myCanvas.width / 2,
 			-myCanvas.height / 2,
 			myCanvas.width,
 			myCanvas.height
 		);
 
-		ctx.fillStyle = "white";
-		ctx.textAlign = "right";
-		ctx.fillText(
+		this.ctx.fillStyle = "white";
+		this.ctx.textAlign = "right";
+		this.ctx.fillText(
 			"Contributors: " + contributors.join(", "),
 			myCanvas.width / 2 - 10,
 			-myCanvas.height / 2 + 10
@@ -114,17 +128,17 @@ class Viewport {
 	}
 
 	#drawStage() {
-		ctx.save();
+		this.ctx.save();
 
-		ctx.fillStyle = "white";
-		ctx.fillRect(
-			stageProperties.left,
-			stageProperties.top,
-			stageProperties.width,
-			stageProperties.height
+		this.ctx.fillStyle = "white";
+		this.ctx.fillRect(
+			STAGE_PROPERTIES.left,
+			STAGE_PROPERTIES.top,
+			STAGE_PROPERTIES.width,
+			STAGE_PROPERTIES.height
 		);
 
-		ctx.restore();
+		this.ctx.restore();
 	}
 
 	#addEventListeners() {
@@ -134,7 +148,7 @@ class Viewport {
 			//console.log(dir);
 			this.zoom += dir * this.zoomSteps;
 			this.zoom = Math.max(this.zoomSteps, this.zoom);
-			drawShapes(shapes);
+			this.drawShapes(shapes);
 		});
 
 		this.canvas.addEventListener("pointerdown", (e) => {
@@ -146,7 +160,7 @@ class Viewport {
 					const scaleDiff = diff.scale(1 / this.zoom);
 					this.offset = Vector.add(this.offset, scaleDiff);
 					dragStart = dragEnd;
-					drawShapes(shapes);
+					this.drawShapes(shapes);
 				};
 
 				const upCallback = (e) => {

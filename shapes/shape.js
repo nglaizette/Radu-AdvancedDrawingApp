@@ -133,7 +133,7 @@ class Shape{
 function loadShapes(data){
 	const loadShapes = [];
 	for(const shapeData of data){
-		const shape = ShapeTools.tools[shapeData.type].shape.load(shapeData, stageProperties);
+		const shape = ShapeTools.tools[shapeData.type].shape.load(shapeData, STAGE_PROPERTIES);
 		loadShapes.push(shape);
 	}
 	return loadShapes;

@@ -119,7 +119,7 @@ class PropertiesPanel {
 	static changeX(value) {
 		shapes
 			.filter((s) => s.selected)
-			.forEach((s) => (s.center.x = Number(value) + stageProperties.left));
+			.forEach((s) => (s.center.x = Number(value) + STAGE_PROPERTIES.left));
 		viewport.drawShapes(shapes);
 		HistoryTools.record(shapes);
 	}
@@ -127,7 +127,7 @@ class PropertiesPanel {
 	static changeY(value) {
 		shapes
 			.filter((s) => s.selected)
-			.forEach((s) => (s.center.y = Number(value) + stageProperties.top));
+			.forEach((s) => (s.center.y = Number(value) + STAGE_PROPERTIES.top));
 		viewport.drawShapes(shapes);
 		HistoryTools.record(shapes);
 	}
@@ -289,8 +289,8 @@ class PropertiesPanel {
 		for (const shape of selectedShapes) {
 			if (newProperties === null) {
 				newProperties = {
-					x: shape.center.x - stageProperties.left,
-					y: shape.center.y - stageProperties.top,
+					x: shape.center.x - STAGE_PROPERTIES.left,
+					y: shape.center.y - STAGE_PROPERTIES.top,
 					width: shape.size.width,
 					height: shape.size.height,
 					fillColor: shape.options.fillColor,
@@ -301,10 +301,10 @@ class PropertiesPanel {
 					text: shape.text,
 				};
 			} else {
-				if (newProperties.x !== shape.center.x - stageProperties.left) {
+				if (newProperties.x !== shape.center.x - STAGE_PROPERTIES.left) {
 					newProperties.x = null;
 				}
-				if (newProperties.y !== shape.center.y - stageProperties.top) {
+				if (newProperties.y !== shape.center.y - STAGE_PROPERTIES.top) {
 					newProperties.y = null;
 				}
 				if (newProperties.width !== shape.size.width) {

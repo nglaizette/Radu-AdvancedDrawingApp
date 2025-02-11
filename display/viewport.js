@@ -5,7 +5,6 @@ class Viewport {
 		this.stageProperties = stageProperties;
 		this.showHitRegions = showHitRegions;
 		this.zoom = 1;
-		this.offset = Vector.zero();
 		this.zoomSteps = 0.05;
 
 		if (!showHitRegions) {
@@ -17,15 +16,16 @@ class Viewport {
 
 		this.canvas.width = showHitRegions ? window.innerWidth / 2 : window.innerWidth;
 		this.canvas.height = window.innerHeight;
-		this.defaultOffset = new Vector(
+
+		this.offset = Vector.zero();
+		this.center = Vector.zero();
+		this.zeroCenterOffset = new Vector(
 			this.canvas.width / 2,
 			this.canvas.height / 2
 		);
-		this.center = Vector.zero();
 
 		this.hitTestCanvas.width = showHitRegions ? window.innerWidth / 2 : window.innerWidth;
 		this.hitTestCanvas.height = window.innerHeight;
-
 
 		this.ctx = this.canvas.getContext("2d");
 		this.hitTestingCtx = this.hitTestCanvas.getContext("2d", {
@@ -33,12 +33,12 @@ class Viewport {
 		});
 
 		this.ctx.translate(
-			this.defaultOffset.x,
-			this.defaultOffset.y
+			this.zeroCenterOffset.x,
+			this.zeroCenterOffset.y
 		);
 		this.hitTestingCtx.translate(
-			this.defaultOffset.x,
-			this.defaultOffset.y
+			this.zeroCenterOffset.x,
+			this.zeroCenterOffset.y
 		);
 
 		this.#clearCanvas();
@@ -53,14 +53,14 @@ class Viewport {
 
 	getAdjustedPositionOld(e) {
 		return new Vector(e.offsetX, e.offsetY)
-			.subtract(this.defaultOffset)
+			.subtract(this.zeroCenterOffset)
 			.scale(1 / this.zoom)
 			.subtract(this.offset);
 	}
 
 	getAdjustedPosition(vector) {
 		return vector
-			.subtract(this.defaultOffset)
+			.subtract(this.zeroCenterOffset)
 			.scale(1 / this.zoom)
 			.subtract(this.offset);
 	}

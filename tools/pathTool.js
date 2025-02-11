@@ -15,8 +15,8 @@ class PathTool {
 		};
 	
 		const upCallback = function (e) {
-			myCanvas.removeEventListener('pointermove', moveCallback);
-			myCanvas.removeEventListener('pointerup', upCallback);
+			viewport.canvas.removeEventListener('pointermove', moveCallback);
+			viewport.canvas.removeEventListener('pointerup', upCallback);
 	
 			currentShape.recenter();
 			shapes.push(currentShape);
@@ -24,7 +24,7 @@ class PathTool {
 			HistoryTools.record(shapes);
 		}
 	
-		myCanvas.addEventListener('pointermove', moveCallback);
-		myCanvas.addEventListener('pointerup', upCallback);
+		viewport.canvas.addEventListener('pointermove', moveCallback);
+		viewport.canvas.addEventListener('pointerup', upCallback);
 	}
 }

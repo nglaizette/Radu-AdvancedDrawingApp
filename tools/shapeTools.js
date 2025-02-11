@@ -12,13 +12,13 @@ class ShapeTools {
 
 		for (const key in ShapeTools.tools) {
 			const tool = ShapeTools.tools[key];
-			myCanvas.removeEventListener('pointerdown', tool.class.addPointerDownListener)
+			viewport.canvas.removeEventListener('pointerdown', tool.class.addPointerDownListener)
 		}
 		
 		shapes.forEach((s) => (s.selected = false));
 		viewport.drawShapes(shapes);
 	
-		myCanvas.addEventListener('pointerdown', ShapeTools.tools[tool].class.addPointerDownListener);
+		viewport.canvas.addEventListener('pointerdown', ShapeTools.tools[tool].class.addPointerDownListener);
 		const radioBtn =  document.getElementById(tool.toLowerCase() + "Radio");
 		radioBtn.checked = true;
 	}

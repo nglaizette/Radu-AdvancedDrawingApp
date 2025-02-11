@@ -69,8 +69,8 @@ class SelectTool {
 			};
 
 			const upCallback = function (e) {
-				myCanvas.removeEventListener("pointermove", moveCallback);
-				myCanvas.removeEventListener("pointerup", upCallback);
+				viewport.canvas.removeEventListener("pointermove", moveCallback);
+				viewport.canvas.removeEventListener("pointerup", upCallback);
 
 				if (isClickingSelectedShape && !isDragging) {
 					shape.selected = false;
@@ -83,8 +83,8 @@ class SelectTool {
 				}
 			};
 
-			myCanvas.addEventListener("pointermove", moveCallback);
-			myCanvas.addEventListener("pointerup", upCallback);
+			viewport.canvas.addEventListener("pointermove", moveCallback);
+			viewport.canvas.addEventListener("pointerup", upCallback);
 		} else {
 			SelectTool.selectShapeUnderRectangle(e);
 		}
@@ -121,8 +121,8 @@ class SelectTool {
 		};
 
 		const upCallback = function (e) {
-			myCanvas.removeEventListener("pointermove", moveCallback);
-			myCanvas.removeEventListener("pointerup", upCallback);
+			viewport.canvas.removeEventListener("pointermove", moveCallback);
+			viewport.canvas.removeEventListener("pointerup", upCallback);
 			rect.removeEventListener("pointerup", upCallback);
 			rect.removeEventListener("pointermove", moveCallback);
 
@@ -158,8 +158,8 @@ class SelectTool {
 			viewport.drawShapes(shapes);
 		};
 		// adding event listeners to the rectangle to allow rectangle redraw when pointer moves into it
-		myCanvas.addEventListener("pointermove", moveCallback);
-		myCanvas.addEventListener("pointerup", upCallback);
+		viewport.canvas.addEventListener("pointermove", moveCallback);
+		viewport.canvas.addEventListener("pointerup", upCallback);
 		rect.addEventListener("pointermove", moveCallback);
 		rect.addEventListener("pointerup", upCallback);
 	}

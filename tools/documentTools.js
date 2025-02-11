@@ -78,7 +78,7 @@ class DocumentTools {
 		}
 		/* temporaire affichage d'une image 
 		tmpCtx.drawImage(
-			myCanvas,
+			viewport.canvas,
 			STAGE_PROPERTIES.left,
 			STAGE_PROPERTIES.top,
 			STAGE_PROPERTIES.width,

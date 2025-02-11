@@ -160,8 +160,8 @@ function secondCornerMoveCallback(e, startPosition, currentShape) {
 };
 
 function secondCornerUpCallback(e, currentShape, moveCallback, upCallback) {
-	myCanvas.removeEventListener('pointermove', moveCallback);
-	myCanvas.removeEventListener('pointerup', upCallback);
+	viewport.canvas.removeEventListener('pointermove', moveCallback);
+	viewport.canvas.removeEventListener('pointerup', upCallback);
 
 	currentShape.recenter();
 

@@ -109,18 +109,18 @@ class Viewport {
 	#clearCanvas() {
 		this.ctx.fillStyle = "gray";
 		this.ctx.fillRect(
-			-myCanvas.width / 2,
-			-myCanvas.height / 2,
-			myCanvas.width,
-			myCanvas.height
+			-this.canvas.width / 2,
+			-this.canvas.height / 2,
+			this.canvas.width,
+			this.canvas.height
 		);
 
 		this.ctx.fillStyle = "white";
 		this.ctx.textAlign = "right";
 		this.ctx.fillText(
 			"Contributors: " + contributors.join(", "),
-			myCanvas.width / 2 - 10,
-			-myCanvas.height / 2 + 10
+			this.canvas.width / 2 - 10,
+			-this.canvas.height / 2 + 10
 		);
 	}
 
@@ -161,8 +161,8 @@ class Viewport {
 				};
 
 				const upCallback = (e) => {
-					myCanvas.removeEventListener("pointermove", moveCallback);
-					myCanvas.removeEventListener("pointerup", upCallback);
+					this.canvas.removeEventListener("pointermove", moveCallback);
+					this.canvas.removeEventListener("pointerup", upCallback);
 				};
 
 				this.canvas.addEventListener("pointermove", moveCallback);

@@ -8,7 +8,7 @@ class EditingTools {
 	static copy() {
 		const selectedShapes = shapes.filter((s) => s.selected);
 		if(selectedShapes.length > 0){
-			const data = selectedShapes.map((s) => s.serialize(stageProperties));
+			const data = selectedShapes.map((s) => s.serialize());
 			//copyToClipboard(JSON.stringify(selectedShapes));
 			clipboard = JSON.stringify(data);
 		}

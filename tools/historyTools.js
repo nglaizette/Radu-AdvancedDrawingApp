@@ -29,7 +29,7 @@ class HistoryTools {
 	}
 
 	static record(shapes){
-		HistoryTools.undoStack.push(shapes.map((s) => s.serialize(stageProperties)));
+		HistoryTools.undoStack.push(shapes.map((s) => s.serialize()));
 		HistoryTools.redoStack.length = 0;
 	}
 }

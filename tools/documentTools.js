@@ -2,7 +2,7 @@ class DocumentTools {
 
 	static save() {
 		//console.log(shapes)
-		const data = JSON.stringify(shapes.map((s) => s.serialize(stageProperties)));
+		const data = JSON.stringify(shapes.map((s) => s.serialize()));
 		//console.log(data);
 	
 		//download(

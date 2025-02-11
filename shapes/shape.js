@@ -11,7 +11,7 @@ class Shape{
 		return Math.floor( 16777216 * Math.random());
 	}
 
-	serialize(stageProperties){
+	serialize(){
 		throw new Error("serialize method must be implemented");
 	}
 
@@ -133,7 +133,7 @@ class Shape{
 function loadShapes(data){
 	const loadShapes = [];
 	for(const shapeData of data){
-		const shape = ShapeTools.tools[shapeData.type].shape.load(shapeData, STAGE_PROPERTIES);
+		const shape = ShapeTools.tools[shapeData.type].shape.load(shapeData);
 		loadShapes.push(shape);
 	}
 	return loadShapes;

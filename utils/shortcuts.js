@@ -19,6 +19,18 @@ const shortcuts = [
 	{ control: false, key: "Backspace", action: EditingTools.delete },
 ];
 
+document.addEventListener("keydown", (e) => {
+	//console.log(e);
+	if (e.target instanceof HTMLInputElement) {
+		return;
+	}
+
+	if (isShortcut(e.ctrlKey, e.key)) {
+		executeShortcut(e.ctrlKey, e.key);
+		e.preventDefault();
+	}
+});
+
 function isShortcut(control, key) {
    return shortcuts.find((s) => s.key === key && s.control === control);
 }

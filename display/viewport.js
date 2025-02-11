@@ -12,23 +12,20 @@ class Viewport {
 			hitTestCanvas.style.display = "none";
 		}
 
-		this.canvasProperties = {
-			width: showHitRegions ? window.innerWidth / 2 : window.innerWidth,
-			height: window.innerHeight,
-			center: Vector.zero(),
-		};
-		this.canvasProperties.offset = new Vector(
-			this.canvasProperties.width / 2,
-			this.canvasProperties.height / 2
-		);
-
 		this.stageProperties.left =  -this.stageProperties.width  / 2;
 		this.stageProperties.top  =  -this.stageProperties.height / 2;
 
-		this.canvas.width = this.canvasProperties.width;
-		this.canvas.height = this.canvasProperties.height;
-		this.hitTestCanvas.width = this.canvasProperties.width;
-		this.hitTestCanvas.height = this.canvasProperties.height;
+		this.canvas.width = showHitRegions ? window.innerWidth / 2 : window.innerWidth;
+		this.canvas.height = window.innerHeight;
+		this.defaultOffset = new Vector(
+			this.canvas.width / 2,
+			this.canvas.height / 2
+		);
+		this.center = Vector.zero();
+
+		this.hitTestCanvas.width = showHitRegions ? window.innerWidth / 2 : window.innerWidth;
+		this.hitTestCanvas.height = window.innerHeight;
+
 
 		this.ctx = this.canvas.getContext("2d");
 		this.hitTestingCtx = this.hitTestCanvas.getContext("2d", {
@@ -36,12 +33,12 @@ class Viewport {
 		});
 
 		this.ctx.translate(
-			this.canvasProperties.offset.x,
-			this.canvasProperties.offset.y
+			this.defaultOffset.x,
+			this.defaultOffset.y
 		);
 		this.hitTestingCtx.translate(
-			this.canvasProperties.offset.x,
-			this.canvasProperties.offset.y
+			this.defaultOffset.x,
+			this.defaultOffset.y
 		);
 
 		this.#clearCanvas();
@@ -56,14 +53,14 @@ class Viewport {
 
 	getAdjustedPositionOld(e) {
 		return new Vector(e.offsetX, e.offsetY)
-			.subtract(this.canvasProperties.offset)
+			.subtract(this.defaultOffset)
 			.scale(1 / this.zoom)
 			.subtract(this.offset);
 	}
 
 	getAdjustedPosition(vector) {
 		return vector
-			.subtract(this.canvasProperties.offset)
+			.subtract(this.defaultOffset)
 			.scale(1 / this.zoom)
 			.subtract(this.offset);
 	}
@@ -77,16 +74,16 @@ class Viewport {
 		this.#clearCanvas();
 
 		this.hitTestingCtx.clearRect(
-			-this.canvasProperties.width / 2,
-			-this.canvasProperties.height / 2,
-			this.canvasProperties.width,
-			this.canvasProperties.height
+			-this.canvas.width / 2,
+			-this.canvas.height / 2,
+			this.canvas.width,
+			this.canvas.height
 		);
-		this.ctx.scale(viewport.zoom, viewport.zoom);
-		this.hitTestingCtx.scale(viewport.zoom, viewport.zoom);
+		this.ctx.scale(this.zoom, this.zoom);
+		this.hitTestingCtx.scale(this.zoom, this.zoom);
 
-		this.ctx.translate(viewport.offset.x, viewport.offset.y);
-		this.hitTestingCtx.translate(viewport.offset.x, viewport.offset.y);
+		this.ctx.translate(this.offset.x, this.offset.y);
+		this.hitTestingCtx.translate(this.offset.x, this.offset.y);
 
 		this.#drawStage();
 		for (const shape of shapes) {

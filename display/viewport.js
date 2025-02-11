@@ -1,41 +1,41 @@
 class Viewport {
-	constructor(canvas, hitTestCanvas, stageProperties, showHitRegions) {
-		this.canvas = canvas;
-		this.hitTestCanvas = hitTestCanvas;
-		this.stageProperties = stageProperties;
-		this.showHitRegions = showHitRegions;
-		this.zoom = 1;
-		this.zoomSteps = 0.05;
-
-		if (!showHitRegions) {
-			hitTestCanvas.style.display = "none";
-		}
-
-		this.stageProperties.left =  -this.stageProperties.width  / 2;
-		this.stageProperties.top  =  -this.stageProperties.height / 2;
-
-		this.canvas.width = showHitRegions ? window.innerWidth / 2 : window.innerWidth;
-		this.canvas.height = window.innerHeight;
-
-		this.offset = Vector.zero();
-		this.center = Vector.zero();
-		this.zeroCenterOffset = new Vector(
-			this.canvas.width / 2,
-			this.canvas.height / 2
-		);
-
-		this.hitTestCanvas.width = showHitRegions ? window.innerWidth / 2 : window.innerWidth;
-		this.hitTestCanvas.height = window.innerHeight;
+	constructor(canvasHolderDiv, stageProperties, showHitRegions) {
+		this.canvas = canvasHolderDiv.querySelector("canvas");
+		this.hitTestCanvas = document.createElement("canvas");
+		canvasHolderDiv.appendChild(this.hitTestCanvas);
 
 		this.ctx = this.canvas.getContext("2d");
 		this.hitTestingCtx = this.hitTestCanvas.getContext("2d", {
 			willReadFrequently: true,
 		});
 
-		this.ctx.translate(
-			this.zeroCenterOffset.x,
-			this.zeroCenterOffset.y
+		this.stageProperties = stageProperties;
+		this.stageProperties.left = -this.stageProperties.width / 2;
+		this.stageProperties.top = -this.stageProperties.height / 2;
+
+		this.showHitRegions = showHitRegions;
+		if (!showHitRegions) {
+			this.hitTestCanvas.style.display = "none";
+		}
+
+		this.canvas.width = showHitRegions
+			? window.innerWidth / 2
+			: window.innerWidth;
+		this.canvas.height = window.innerHeight;
+
+		this.hitTestCanvas.width = this.canvas.width;
+		this.hitTestCanvas.height = this.canvas.height;
+
+		this.zeroCenterOffset = new Vector(
+			this.canvas.width / 2,
+			this.canvas.height / 2
 		);
+		this.offset = Vector.zero();
+		this.center = Vector.zero();
+		this.zoom = 1;
+		this.zoomSteps = 0.05;
+
+		this.ctx.translate(this.zeroCenterOffset.x, this.zeroCenterOffset.y);
 		this.hitTestingCtx.translate(
 			this.zeroCenterOffset.x,
 			this.zeroCenterOffset.y

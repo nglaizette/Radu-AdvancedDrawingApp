@@ -7,8 +7,7 @@ const STAGE_PROPERTIES = {
 };
 
 const viewport = new Viewport(
-	myCanvas,
-	hitTestCanvas,
+	canvasHolder,
 	STAGE_PROPERTIES,
 	SHOW_HIT_REGION
 );

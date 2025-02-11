@@ -51,8 +51,8 @@ class DocumentTools {
 			const myImage = new MyImage(img, PropertiesPanel.getValues());
 			myImage.setCenter(
 				new Vector(
-					stageProperties.left + stageProperties.width / 2,
-					stageProperties.top + stageProperties.height / 2
+					STAGE_PROPERTIES.left + STAGE_PROPERTIES.width / 2,
+					STAGE_PROPERTIES.top + STAGE_PROPERTIES.height / 2
 				)
 			);
 			shapes.push(myImage);
@@ -66,10 +66,10 @@ class DocumentTools {
 		// saves canvas as an image
 	
 		const tmpCanvas = document.createElement("canvas");
-		tmpCanvas.width = stageProperties.width;
-		tmpCanvas.height = stageProperties.height;
+		tmpCanvas.width = STAGE_PROPERTIES.width;
+		tmpCanvas.height = STAGE_PROPERTIES.height;
 		const tmpCtx = tmpCanvas.getContext("2d");
-		tmpCtx.translate(-stageProperties.left, -stageProperties.top);
+		tmpCtx.translate(-STAGE_PROPERTIES.left, -STAGE_PROPERTIES.top);
 		for (const shape of shapes) {
 			const isSelected = shape.selected;
 			shape.selected = false;
@@ -79,14 +79,14 @@ class DocumentTools {
 		/* temporaire affichage d'une image 
 		tmpCtx.drawImage(
 			myCanvas,
-			stageProperties.left,
-			stageProperties.top,
-			stageProperties.width,
-			stageProperties.height,
+			STAGE_PROPERTIES.left,
+			STAGE_PROPERTIES.top,
+			STAGE_PROPERTIES.width,
+			STAGE_PROPERTIES.height,
 			0,
 			0,
-			stageProperties.width,
-			stageProperties.height
+			STAGE_PROPERTIES.width,
+			STAGE_PROPERTIES.height
 		);*/
 		tmpCanvas.toBlob((blob) => {
 			const a = document.createElement("a");

@@ -128,12 +128,8 @@ class Viewport {
 		this.ctx.save();
 
 		this.ctx.fillStyle = "white";
-		this.ctx.fillRect(
-			STAGE_PROPERTIES.left,
-			STAGE_PROPERTIES.top,
-			STAGE_PROPERTIES.width,
-			STAGE_PROPERTIES.height
-		);
+		const { left, top, width, height } = this.stageProperties;
+		this.ctx.fillRect(left, top, width, height);
 
 		this.ctx.restore();
 	}

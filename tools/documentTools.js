@@ -26,7 +26,7 @@ class DocumentTools {
 				if(extension === "json"){
 					const data = JSON.parse(e.target.result);
 					//shapes.splice(0, shapes.length);
-					shapes = loadShapes(data);
+					shapes = ShapeFactory.loadShapes(data);
 					viewport.drawShapes(shapes);
 					HistoryTools.record(shapes);
 				}

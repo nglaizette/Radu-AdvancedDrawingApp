@@ -103,20 +103,26 @@ class ToolsPanel {
 			createDOMElement("div", { id: "shapeToolsHeader" }, "Shape tools")
 		);
 
-		for (let key in ShapeTools.tools) {
-			if (!ShapeTools.tools[key].showButton) continue;
+		for (let tool of ShapeTools.tools) {
+			if (!tool.showButton) continue;
+
 			holderDiv.appendChild(
 				createInputWithLabel(
-					String(key).charAt(0).toUpperCase() + String(key).slice(1),
+					String(tool.name).charAt(0).toUpperCase() + String(tool.name).slice(1),
 					{
 						type: "radio",
-						id: key.toLowerCase() + "Radio",
+						id: tool.name.toLowerCase() + "Radio",
 						name: "shapeTools",
-						onchange: `ShapeTools.selectTool("${key}")`,
+						onchange: `ShapeTools.selectTool("${tool.name}")`,
 					}
 				)
 			);
 		}
-		ShapeTools.selectTool("Path");
+		const selectedTool = ShapeTools.selectTool("Path");
+
+		// Check the radio button for the selected tool
+		if(selectedTool){
+			document.getElementById(selectedTool.name.toLowerCase() + "Radio").checked = true;
+		}
 	}
 }

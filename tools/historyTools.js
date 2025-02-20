@@ -19,7 +19,7 @@ class HistoryTools {
 		}
 		HistoryTools.redoStack.push(HistoryTools.undoStack.pop());
 		if(HistoryTools.undoStack.length > 0){
-			shapes = loadShapes(HistoryTools.undoStack[HistoryTools.undoStack.length - 1]);
+			shapes = ShapeFactory.loadShapes(HistoryTools.undoStack[HistoryTools.undoStack.length - 1]);
 		}
 		else {
 			shapes.length = 0;

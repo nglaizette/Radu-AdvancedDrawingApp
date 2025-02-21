@@ -11,6 +11,9 @@ class ToolsPanel {
 
 		this.#addShapeTools(holderDiv);
 		holderDiv.appendChild(createDOMElement("hr"));
+
+		// add event listener for tool selection
+		Events.toolSelected.addEventListener("toolSelected", (e) => this.#selectToolComponent(e.detail));
 	}
 
 	#addDocumentTools(holderDiv) {
@@ -122,7 +125,11 @@ class ToolsPanel {
 
 		// Check the radio button for the selected tool
 		if(selectedTool){
-			document.getElementById(selectedTool.name.toLowerCase() + "Radio").checked = true;
+			this.#selectToolComponent(selectedTool);
 		}
+	}
+
+	#selectToolComponent(tool){
+		document.getElementById(tool.name.toLowerCase() + "Radio").checked = true;
 	}
 }

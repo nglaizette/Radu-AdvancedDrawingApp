@@ -6,7 +6,7 @@ class HistoryTools {
 	static redo() {
 		if(HistoryTools.redoStack.length > 0){
 			const data= HistoryTools.redoStack.pop();
-			shapes = loadShapes(data);
+			shapes = ShapeFactory.loadShapes(data);
 			viewport.drawShapes(shapes);
 			HistoryTools.undoStack.push(data);
 			PropertiesPanel.updateDisplay(shapes.filter((s) => s.selected));

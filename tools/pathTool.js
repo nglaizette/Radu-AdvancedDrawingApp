@@ -37,3 +37,5 @@ class PathTool {
 		viewport.canvas.removeEventListener("pointerdown", this.addPointerDownListener);
 	}
 }
+
+ShapeFactory.registerShape(Path, "Path");

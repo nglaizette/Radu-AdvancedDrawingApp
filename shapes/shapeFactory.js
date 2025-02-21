@@ -1,10 +1,9 @@
 class ShapeFactory {
 	static #available = {
-		Path: {shape: Path },
-		Rect: {shape: Rect },
-		Oval: {shape: Oval },
-		Text: {shape: Text },
-		MyImage: {shape: MyImage },
+	}
+
+	static registerShape(classType, typeName){
+		this.#available[typeName] = { shape: classType };
 	}
 
 	static loadShape(shapeData){

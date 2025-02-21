@@ -17,3 +17,5 @@ class TextTool {
 		viewport.canvas.removeEventListener("pointerdown", this.addPointerDownListener);
 	}
 }
+
+ShapeFactory.registerShape(Text, "Text");

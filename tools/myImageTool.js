@@ -11,3 +11,5 @@ class MyImageTool {
 		viewport.canvas.removeEventListener("pointerdown", this.addPointerDownListener);
 	}
 }
+
+ShapeFactory.registerShape(MyImage, "MyImage");

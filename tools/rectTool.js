@@ -23,3 +23,5 @@ class RectTool {
 		viewport.canvas.removeEventListener("pointerdown", this.addPointerDownListener);
 	}
 }
+
+ShapeFactory.registerShape(Rect, "Rect");

@@ -28,7 +28,6 @@ class ToolsPanel {
 				"Save"
 			)
 		);
-		holderDiv.appendChild(createDOMElement("br"));
 		holderDiv.appendChild(
 			createDOMElement(
 				"button",
@@ -36,7 +35,7 @@ class ToolsPanel {
 				"Load"
 			)
 		);
-		holderDiv.appendChild(createDOMElement("br"));
+
 		holderDiv.appendChild(
 			createDOMElement(
 				"button",
@@ -58,7 +57,7 @@ class ToolsPanel {
 				"Duplicate"
 			)
 		);
-		holderDiv.appendChild(createDOMElement("br"));
+
 		holderDiv.appendChild(
 			createDOMElement(
 				"button",
@@ -66,7 +65,7 @@ class ToolsPanel {
 				"Select All"
 			)
 		);
-		holderDiv.appendChild(createDOMElement("br"));
+	
 
 		holderDiv.appendChild(
 			createDOMElement(
@@ -75,7 +74,7 @@ class ToolsPanel {
 				"Delete"
 			)
 		);
-		holderDiv.appendChild(createDOMElement("br"));
+
 		//holderDiv.appendChild(createDOMElement("button", {id: "exportBtn", onclick: "DocumentTools.do_export()"}, "Export"));
 	}
 
@@ -91,7 +90,7 @@ class ToolsPanel {
 				"Undo"
 			)
 		);
-		holderDiv.appendChild(createDOMElement("br"));
+
 		holderDiv.appendChild(
 			createDOMElement(
 				"button",

@@ -15,6 +15,7 @@ class Oval extends Shape {
 		oval.center = Vector.load(data.center);
 		oval.size = data.size;
 		oval.selected = data.selected;
+		oval.rotation = data.rotation;
 		return oval;
 	}
 
@@ -25,7 +26,8 @@ class Oval extends Shape {
 			options: JSON.parse(JSON.stringify(this.options)),
 			center:this.center,
 			size: this.size,
-			selected: this.selected
+			selected: this.selected,
+			rotation: JSON.parse(JSON.stringify(this.rotation)),
 		};
 	}
 

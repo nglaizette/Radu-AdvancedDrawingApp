@@ -61,6 +61,13 @@ class PropertiesPanel {
 			})
 		);
 		transformSection.appendChild(
+			createInputWithLabel("Rotation", {
+				type: "number",
+				onchange: "PropertiesPanel.setRotation(this.value)",
+				id: "rotationInput",
+			})
+		);
+		transformSection.appendChild(
 			createInputWithLabel("Constrain", {
 				type: "checkbox",
 				id: "constrainDimensions",
@@ -211,6 +218,15 @@ class PropertiesPanel {
 		viewport.drawShapes(shapes);
 	}
 
+	static setRotation(value) {
+		
+		const newValue = value % 360;
+		shapes.filter((s) => s.selected).forEach((s) => (s.setRotation(newValue)));
+		setValue(rotationInput, newValue);
+		HistoryTools.record(shapes);
+		viewport.drawShapes(shapes);
+	}
+
 	static previewFillColor(value) {
 		//console.log(value);
 		shapes
@@ -296,6 +312,7 @@ class PropertiesPanel {
 	static reset() {
 		xInput.value = "";
 		yInput.value = "";
+		rotationInput.value = "";
 		widthInput.value = "";
 		heightInput.value = "";
 		text.value = "";
@@ -303,6 +320,7 @@ class PropertiesPanel {
 		yInput.placeholder = "";
 		widthInput.placeholder = "";
 		heightInput.placeholder = "";
+		rotationInput.placeholder = "";
 	}
 
 	static updateDisplay(selectedShapes) {
@@ -326,6 +344,7 @@ class PropertiesPanel {
 					stroke: shape.options.stroke,
 					strokeWidth: shape.options.strokeWidth,
 					text: shape.text,
+					rotationAngle: shape.rotation.angle,
 				};
 			} else {
 				if (newProperties.x !== shape.center.x - STAGE_PROPERTIES.left) {
@@ -358,6 +377,9 @@ class PropertiesPanel {
 				if (newProperties.text !== shape.text) {
 					newProperties.text = null;
 				}
+				if(newProperties.rotationAngle !== shape.rotation.angle){
+					newProperties.rotationAngle = null;
+				}
 			}
 		}
 		if (newProperties === null) {
@@ -383,6 +405,7 @@ class PropertiesPanel {
 				? newProperties.strokeWidth
 				: "";
 			text.value = newProperties.text ? newProperties.text : "";
+			rotationInput.value = newProperties.rotationAngle ?? '';
 
 			const placeholderText = "Multiple values";
 			xInput.placeholder = newProperties.x ? "" : placeholderText;
@@ -392,6 +415,7 @@ class PropertiesPanel {
 			heightInput.placeholder = newProperties.height ? "" : placeholderText;
 			setProperty(heightInput, "data-height", newProperties.height);
 			text.placeholder = newProperties.text ? "" : placeholderText;
+			rotationInput.placeholder = newProperties.rotationAngle ? "" : placeholderText;
 			//fillColor.placeholder = newProperties.fillColor?"":placeholderText;
 			//strokeColor.placeholder = newProperties.strokeColor?"":placeholderText;
 			//fill.checked = newProperties.fill?"":placeholderText;

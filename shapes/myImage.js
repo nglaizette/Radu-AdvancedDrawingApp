@@ -22,6 +22,7 @@ class MyImage extends Shape {
 		myImage.center = Vector.load(data.center);
 		myImage.size = data.size;
 		myImage.selected = data.selected;
+		myImage.rotation = data.rotation;
 		return myImage;
 	}
 
@@ -33,7 +34,8 @@ class MyImage extends Shape {
 			center: this.center,
 			size: this.size,
 			base64: this.base64,
-			selected: this.selected
+			selected: this.selected,
+			rotation: JSON.parse(JSON.stringify(this.rotation)),
 		};
 	}
 

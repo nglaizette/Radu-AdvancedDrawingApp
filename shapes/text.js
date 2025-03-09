@@ -24,6 +24,7 @@ class Text extends Shape {
 		text.size = data.size;
 		text.selected = data.selected;
 		text.text = data.text;
+		text.rotation = data.rotation;
 		return text;
 	}
 
@@ -35,7 +36,8 @@ class Text extends Shape {
 			center: this.center,
 			size: this.size,
 			text: this.text,
-			selected: this.selected
+			selected: this.selected,
+			rotation: JSON.parse(JSON.stringify(this.rotation)),
 		};
 	}
 

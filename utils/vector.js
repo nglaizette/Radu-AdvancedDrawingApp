@@ -40,6 +40,10 @@ class Vector{
 		return new Vector(Math.max(this.x, v.x), Math.max(this.y, v.y));
 	}
 
+	dot(v){
+		return this.x * v.x + this.y * v.y;
+	}
+
 	static midVector(vectors) {
 		const minX = Math.min(...vectors.map((p) => p.x));
 		const maxX = Math.max(...vectors.map((p) => p.x));
@@ -73,6 +77,10 @@ class Vector{
 		return v1.max(v2);
 	}
 
+	static dot(v1, v2) {
+		return v1.dot(v2);
+	}
+
 	static topLeft(vectors) {
 		let topLeft = vectors[0];
 		for(const vector of vectors) {
@@ -88,7 +96,7 @@ class Vector{
 		}
 		return bottomRight;
 	}
-
+	
 	rotateByCenterPoint(center, rotation){
 		const cos = Math.cos(-rotation.angle * Math.PI / 180);
 		const sin = Math.sin(-rotation.angle * Math.PI / 180);

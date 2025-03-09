@@ -109,3 +109,18 @@ function getValue(element){
 function setValue(element, value){
 	element.value = value;
 }
+
+function distance(p1, p2){
+	return p1.subtract(p2).magnitude();
+}
+
+function getAngleBetweenVector(p1, p2) {
+	return Math.acos((p1.dot(p2)) / (p1.magnitude() * p2.magnitude()));
+}
+
+function getSignedAngleBetweenVectors(p1, p2) {
+	/*const angle = getAngleBetweenVector(p1, p2);
+	const crossProduct = p1.x * p2.y - p1.y * p2.x;
+	return crossProduct > 0 ? angle : -angle;*/
+	return Math.atan2(p1.y, p1.x) - Math.atan2(p2.y, p2.x);
+}

@@ -14,7 +14,7 @@ class Gizmo {
 		const topRight = this.box.topRight.rotateByCenterPoint(this.center, this.rotation);
 		const bottomLeft = this.box.bottomLeft.rotateByCenterPoint(this.center, this.rotation);
 		const bottomRight = this.box.bottomRight.rotateByCenterPoint(this.center, this.rotation);
-		const rotationPoint = Vector.midVector([this.box.topLeft, this.box.bottomRight]).subtract(
+		const rotationPoint = Vector.midVector([this.box.topLeft, this.box.topRight]).subtract(
 			new Vector(0, 2 * Handle.size)).rotateByCenterPoint(this.center, this.rotation);
 		
 
@@ -61,6 +61,8 @@ class Gizmo {
 		const oldBoxes = selectedShapes.map((s) =>
 			BoundingBox.fromPoints(s.getPoints().map((p) => p.add(this.center)))
 		);
+		const oldRotations = selectedShapes.map((s) => s.rotation.angle * Math.PI / 180);
+
 		let mouseDelta = null;
 		let isDragging = false;
 		const moveCallback = (e) => {
@@ -125,9 +127,19 @@ class Gizmo {
 			for (let i = 0; i < selectedShapes.length; i++) {
 				const shape = selectedShapes[i];
 				const oldBox = oldBoxes[i];
-
+				const oldRotation = oldRotations[i];
 				if(handle.type === Handle.ROTATE){
-					shape.rotateBy(0);
+					const fixedStart = viewport.getAdjustedPosition(startPosition);
+					const fixedMouse = viewport.getAdjustedPosition(mousePosition);
+
+					// vector centered at the bounding box's center
+					const v1 = Vector.subtract(fixedStart, oldBox.center);
+					const v2 = Vector.subtract(fixedMouse, oldBox.center);
+					const angle = getSignedAngleBetweenVectors(v1, v2);
+					const combinedAngle = oldRotation + angle;
+					console.log('combinedAngle', combinedAngle);
+					shape.setRotation((combinedAngle * 180) / Math.PI);
+
 				} else {
 					shape.changeSize(oldBox.width, oldBox.height, ratio.x, ratio.y);
 				}

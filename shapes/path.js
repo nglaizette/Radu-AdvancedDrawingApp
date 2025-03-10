@@ -43,7 +43,16 @@ class Path extends Shape {
 
 	setWidth(width){
 		const size = getSize(this.points);
-		const flip = Math.sign(width) !== Math.sign(this.size.width) ? -1 : 1;
+		let flip = 1;
+
+		if (Gizmo.shouldTrackFlip){
+			if (Gizmo.canFlip.x) {
+				Gizmo.canFlip.x = false;
+				flip = Math.sign(width) !== Math.sign(this.size.width) ? -1 : 1;
+			} else {
+				flip = Math.sign(width) !== Math.sign(this.size.width) ? -1 : 1;
+			}
+		}
 		const eps = 0.0001;
 		if (size.width == 0) {
 		   console.error("Size 0 problem!");
@@ -58,7 +67,16 @@ class Path extends Shape {
 
 	setHeight(height){
 		const size = getSize(this.points);
-		const flip = Math.sign(height) !== Math.sign(this.size.height) ? -1 : 1;
+		let flip = 1;
+
+		if(Gizmo.shouldTrackFlip){
+			if (Gizmo.canFlip.y) {
+				Gizmo.canFlip.y = false;
+				flip = Math.sign(height) !== Math.sign(this.size.height) ? -1 : 1;
+			} else {
+				flip = Math.sign(height) !== Math.sign(this.size.height) ? -1 : 1;
+			}
+		}
 		const eps = 0.0001;
 		if (size.height == 0) {
 		   console.error("Size 0 problem!");

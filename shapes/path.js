@@ -12,7 +12,7 @@ class Path extends Shape {
 		path.size = data.size;
 		path.selected = data.selected;
 		path.points = data.points.map( (p) => Vector.load(p) );
-		path.rotation = data.rotation;
+		path.rotation = data.rotation??0;
 		return path;
 	}
 
@@ -25,7 +25,7 @@ class Path extends Shape {
 			size: this.size,
 			selected: this.selected,
 			points: this.points,
-			rotation: JSON.parse(JSON.stringify(this.rotation)),
+			rotation: this.rotation,
 		};
 	}
 

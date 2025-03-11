@@ -67,7 +67,7 @@ class Gizmo {
 		const oldBoxes = selectedShapes.map((s) =>
 			BoundingBox.fromPoints(s.getPoints().map((p) => p.add(this.center)))
 		);
-		const oldRotations = selectedShapes.map((s) => s.rotation.angle * Math.PI / 180);
+		const oldRotations = selectedShapes.map((s) => s.rotation * Math.PI / 180);
 
 		let mouseDelta = null;
 		let isDragging = false;
@@ -186,9 +186,9 @@ class Gizmo {
 		ctx.save();
 		ctx.beginPath();
 
-		if (this.rotation?.angle && this.center) {
+		if ( this.center) {
 			ctx.translate(this.center.x, this.center.y);
-			ctx.rotate(-this.rotation.angle * Math.PI / 180);
+			ctx.rotate(-this.rotation * Math.PI / 180);
 			ctx.translate(-this.center.x, -this.center.y);
 		}
 		ctx.rect(
@@ -197,9 +197,9 @@ class Gizmo {
 			this.box.width,
 			this.box.height
 		);
-		if (this.rotation?.angle && this.center) {
+		if ( this.center) {
 			ctx.translate(this.center.x, this.center.y);
-			ctx.rotate(this.rotation.angle * Math.PI / 180);
+			ctx.rotate(this.rotation * Math.PI / 180);
 			ctx.translate(-this.center.x, -this.center.y);
 		}
 		ctx.strokeStyle = "white";

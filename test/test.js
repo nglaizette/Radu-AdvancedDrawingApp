@@ -1,8 +1,8 @@
 const notDrawable = ["Image", "Select", "Text"]
 
 function beforeEach(){
-	shape = [];
-	gizmos = [];
+	viewport.shape = [];
+	viewport.gizmos = [];
 	currentShape = null;
 	clipboard = null;
 	clearViewPort(viewport);
@@ -106,7 +106,7 @@ function getHitRGBSum(id){
 }
 
 function setCurrentTool(tool) {
-	ShapeTools.selectTool(tool);
+	CanvasTools.selectTool(tool);
 }
 
 function dispatchMouseEventOnCanvas(type, clientX, clientY) {
@@ -156,13 +156,13 @@ function simulatePointerDownPointerMovePointerUp(startX, startY, endX, endY) {
 
 function TestAllShapeCanBeDrawn() {
 	try {
-		for (const shapeTool of ShapeTools.tools){
+		for (const shapeTool of CanvasTools.tools){
 			beforeEach();
 			if(!notDrawable.includes(shapeTool.name)) {
 				const startPoint = new Vector(RandomCoordinatesGenerator.getRandomXCanvasPoint(), RandomCoordinatesGenerator.getRandomYCanvasPoint());
 				const endPoint = new Vector(RandomCoordinatesGenerator.getRandomXCanvasPoint(), RandomCoordinatesGenerator.getRandomYCanvasPoint());
 				simulateShapeDraw(shapeTool.name, startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-				const mid = Vector.midVector([startPoint, endPoint]);
+				const mid = Vector.mid([startPoint, endPoint]);
 				const shape = getShapeAtPoint(mid.x, mid.y);
 				if(shape?.constructor.name !== shapeTool.name) {
 					failed(TestAllShapeCanBeDrawn, "failed to draw " + shapeTool.name);
@@ -178,14 +178,14 @@ function TestAllShapeCanBeDrawn() {
 
 function TestAllShapeCanBeDeconsted() {
 	try {
-		for (const shapeTool of ShapeTools.tools) {
+		for (const shapeTool of CanvasTools.tools) {
 			beforeEach()
 			if (!notDrawable.includes(shapeTool.name)) {
 				const startPoint = new Vector(RandomCoordinatesGenerator.getRandomXCanvasPoint(), RandomCoordinatesGenerator.getRandomYCanvasPoint());
 				const endPoint = new Vector(RandomCoordinatesGenerator.getRandomXCanvasPoint(), RandomCoordinatesGenerator.getRandomYCanvasPoint());
 				simulateShapeDraw(shapeTool.name, startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 				assert(shapes.length === 1, `failed to draw ${shapeTool.name}: shapes length should be 1 after draw`);
-				const mid =  Vector.midVector([startPoint, endPoint]);
+				const mid =  Vector.mid([startPoint, endPoint]);
 				simulateShapeDeconste(mid.x, mid.y, mid.x, mid.y);
 				assert(shapes.length === 0, `failed to deconste ${shapeTool.name}: shapes length should be 0 after deconste, shape.length is: ${shapes.length}`);
 				sucess(TestAllShapesCanBeDeconsted, `deconsted ${shapeTool.name} successfully`);
@@ -198,14 +198,14 @@ function TestAllShapeCanBeDeconsted() {
 
 function TestAllShapesCanBeCopyAndPasted() {
 	try {
-		for (const shapeTool of ShapeTools.tools) {
+		for (const shapeTool of CanvasTools.tools) {
 			beforeEach();
 			if (!notDrawable.includes(shapeTool.name)){
 				const startPoint = new Vector(RandomCoordinatesGenerator.getRandomXCanvasPoint(), RandomCoordinatesGenerator.getRandomYCanvasPoint());
 				const endPoint = new Vector(RandomCoordinatesGenerator.getRandomXCanvasPoint(), RandomCoordinatesGenerator.getRandomYCanvasPoint());
 				simulateShapeDraw(shapeTool.name, start.x, start.y, endPoint.x, endPoint.y);
 				assert(shape.length === 1 , `failed to draw ${shapeTool.name}: shapes length should be 1 after draw`);
-				const mid =  Vector.midVector([startPoint, endPoint]);
+				const mid =  Vector.mid([startPoint, endPoint]);
 				simulateShapeCopyAndPaste(mid.x, mid.y, mid.x, mid.y);
 				assert(shapes.length === 2, `copy-pasting ${shapeTool.name}: shapes length should be x2 after copy and paste, shape.length is ${shapes.length}`);
 				success(TeshAllShapesCanBeCopyAndPasted, `copy pasted ${shapeTool.name} successfully`);
@@ -218,7 +218,7 @@ function TestAllShapesCanBeCopyAndPasted() {
 
 function TestRectangleSelect() {
 	try {
-		for(const shapeTool of ShapeTools.tools) {
+		for(const shapeTool of CanvasTools.tools) {
 			beforeEach();
 			if(!notDrawable.includes(shapeTool.name)) {
 				const startPoint = new Vector(RandomCoordinatesGenerator.getRandomXCanvasPoint(), RandomCoordinatesGenerator.getRandomYCanvasPoint());
@@ -243,13 +243,13 @@ function TestRectangleSelect() {
 
 function TestShapeMove() {
 	try {
-		for(const shapeTool of ShapeTools.tools) {
+		for(const shapeTool of CanvasTools.tools) {
 			beforeEach();
 			if (!notDrawable.includes(shapeTool.name)) {
 				const startPoint = new Vector(RandomCoordinatesGenerator.getRandomXCanvasPoint(), RandomCoordinatesGenerator.getRandomYCanvasPoint());
 				const endPoint = new Vector(RandomCoordinatesGenerator.getRandomXCanvasPoint(), RandomCoordinatesGenerator.getRandomYCanvasPoint());
 				simulateShapeDraw(shapeTool.name, startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-				const mid = Vector.midVector([startPoint, endPoint]);
+				const mid = Vector.mid([startPoint, endPoint]);
 				mid.x = Math.round(mid.x);
 				mid.y = Math.round(mid.y);
 				const shape = getShapeAtPoint(mid.x, mid.y);
@@ -407,7 +407,7 @@ function displayNotTested() {
 }
 
 function drawAllShapes() {
-	for (const shapeTool of ShapeTools.name) {
+	for (const shapeTool of CanvasTools.name) {
 		if (!notDrawable.includes(shapeTool.name)) {
 			const startPoint = new Vector(RandomCoordinatesGenerator.getRandomXCanvasPoint(), RandomCoordinatesGenerator.getRandomYCanvasPoint());
 			const endPoint = new Vector(RandomCoordinatesGenerator.getRandomXCanvasPoint(), RandomCoordinatesGenerator.getRandomYCanvasPoint());

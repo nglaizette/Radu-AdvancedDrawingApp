@@ -4,7 +4,7 @@
 	--border-width: 1px;
 	--border-radius: 3px;
 	--outline-width: calc(1rem / 16 * 3);
-	--menu-height: 32px;
+	--menu-height: 20px;/*32px*/
 
 	--bg-color: #f7f7f7;
 	--bg-panel: #f7f7f7;
@@ -16,6 +16,9 @@
 	--text-color: #000;
 
 	--toolbar-width: 70px;
+	--input-width: 110px;
+	--input-medium-with: 40px;
+	--input-small-width: 20px;
 }
 
 /* Dark mode if the user's system prefers it */
@@ -78,6 +81,16 @@ select {
 	border: var(--border-width) solid var(--bg-input);
 	border-radius: var(--border-radius);
 	transition: border 0.5s;
+	width: var(--input-width);
+}
+
+input[type="color"],
+input[type="checkbox"]{
+	width: var(--input-medium-with);
+}
+
+input[type="radio"]{
+	width: var(--input-small-width);
 }
 
 input,
@@ -182,46 +195,27 @@ textarea {
 }
 
 #toolsHolder {
-	width: 5rem;
+	width: var(--toolbar-width);/*5rem;*/
 	display: inline-flex;
 	flex-flow: column wrap;
 	border-radius: 4px;
+	overflow: hidden;
 }
-
 #propertiesHolder {
+	width: 200px;
 	right: 0px;
 	background-color: var(--bg-canvas);
 }
 
-#menuBar {
+.menu-container {
 	height: var(--menu-height);
-	position: relative;
-	overflow: hidden;
-	white-space: nowrap;
-	display: flex;
-	justify-content: space-between;
-	background-color: var(--bg-color);
-}
-
-#menuBar .menu-container {
 	right: 0;
-	padding: 4px;
 	position: relative;
 	z-index: 1;
 }
 
-.menu-container .menu-item {
-	display: inline-block;
-	padding: 2px 5px 3px 5px;
-	border: 0;
-	border-radius: 0;
-	color: var(--text-color);
-	text-align: center;
-	white-space: nowrap;
-}
-
-.menu-container .menu-item:hover {
-	background-color: var(--bg-button-hover);
+#strokeWidth {
+	width : var(--input-medium-with);
 }
 
 #contributorsContainer {
@@ -241,9 +235,7 @@ textarea {
 	animation: scroll-left 20s linear normal;
 	width: 100%;
 }
-#contribution:hover {
-	animation-play-state: paused;
-}
+
 @keyframes scroll-left {
 	0% {
 		transform: translateX(100%);

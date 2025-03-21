@@ -1,7 +1,6 @@
 class Text extends Shape {
 	constructor(center, options){
 		super(options);
-
 		this.center = center;
 
 		// unify later with other shapes
@@ -13,7 +12,7 @@ class Text extends Shape {
 			dilatation: 10 // for hit test
 		};
 
-		this.setText("Enter Text Here");
+		this.setText("Enter Text Here", false);
 	}
 
 	static load(data){
@@ -59,11 +58,11 @@ class Text extends Shape {
 		//this.corner2 = points[1];
 	}
 
-	setWidth(width){
+	_setWidth(width){
 		// do nothing
 	}
 
-	setHeight(height){
+	_setHeight(height){
 		// do nothing
 	}
 
@@ -73,8 +72,7 @@ class Text extends Shape {
 		}
 	}
 
-	
-	setText(value) {
+	setText(value, save = true) {
 		this.text = value;
 		//WARNING, potential memory leaks!
 		const tmpCanvas= document.createElement("canvas");
@@ -83,8 +81,10 @@ class Text extends Shape {
 		const metrics = tmpCtx.measureText(this.text);
 		this.size = {};
 		this.size.width = metrics.width;
-		//console.log(this.properties);
 		this.size.height = this.properties.fontSize;
+		viewport.dispatchEvent(
+			new CustomEvent("textChanged", {detail: {shape: this, save}})
+		);
 	}
 
 	draw(ctx, isHitRegion = false) {
@@ -123,3 +123,5 @@ class Text extends Shape {
 		}
 	}
 }
+
+ShapeFactory.registerShape(Text, "Text");

@@ -1,18 +1,21 @@
 class Path extends Shape {
-	constructor(startPoint, options){
+	constructor(startPoint, options) {
 		super(options);
 		this.points = [startPoint];
 	}
 
 	static load(data){
 		const path = new Path();
-		path.id = data.id;
-		path.options = JSON.parse(JSON.stringify(data.options));
+		path.id = data.id
+
 		path.center = Vector.load(data.center);
 		path.size = data.size;
-		path.selected = data.selected;
-		path.points = data.points.map( (p) => Vector.load(p) );
+		path.options = JSON.parse(JSON.stringify(data.options));
+
+		path.points = data.points.map( (p) => Vector.load(p));
 		path.rotation = data.rotation??0;
+		path.selected = data.selected;
+
 		return path;
 	}
 
@@ -20,12 +23,12 @@ class Path extends Shape {
 		return {
 			type: 'Path',
 			id: this.id,
-			options: JSON.parse(JSON.stringify(this.options)),
 			center: this.center,
-			size: this.size,
-			selected: this.selected,
-			points: this.points,
+			size: JSON.parse(JSON.stringify(this.size)),
+			points: JSON.parse(JSON.stringify(this.points)),
+			options: JSON.parse(JSON.stringify(this.options)),
 			rotation: this.rotation,
+			selected: this.selected,
 		};
 	}
 
@@ -41,7 +44,7 @@ class Path extends Shape {
 		this.points = points;
 	}
 
-	setWidth(width){
+	_setWidth(width){
 		const size = getSize(this.points);
 		let flip = 1;
 
@@ -65,7 +68,7 @@ class Path extends Shape {
 		this.size.width = width ;
 	}
 
-	setHeight(height){
+	_setHeight(height){
 		const size = getSize(this.points);
 		let flip = 1;
 
@@ -104,3 +107,5 @@ class Path extends Shape {
 		}
 	}
 }
+
+ShapeFactory.registerShape(Path, "Path");

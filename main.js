@@ -1,8 +1,5 @@
 const SHOW_HIT_REGION = false;
 const RECTANGULAR_SELECTION_MODE = "intersection"; //"intersection" or "containment"
-const featureFlags = {
-	'ROTATE_HANDLE' : true, // Need to find angle for this to work
-}
 
 const STAGE_PROPERTIES = {
 	width: 600,
@@ -15,8 +12,6 @@ const viewport = new Viewport(
 	SHOW_HIT_REGION
 );
 
-let shapes = [];
-let gizmos = [];
 let currentShape = null;
 let clipboard = null;
 

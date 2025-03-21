@@ -44,12 +44,24 @@ class Vector{
 		return this.x * v.x + this.y * v.y;
 	}
 
-	static midVector(vectors) {
+	direction() {
+		return Math.atan2(this.y, this.x);
+	}
+
+	toPolar() {
+		return {dir: this.direction(), mag: this.magnitude() };
+	}
+
+	toXY({dir, mag}) {
+		this.x = mag * Math.cos(dir);
+		this.y = mag * Math.sin(dir);
+	}
+
+	static mid(vectors) {
 		const minX = Math.min(...vectors.map((p) => p.x));
 		const maxX = Math.max(...vectors.map((p) => p.x));
 		const minY = Math.min(...vectors.map((p) => p.y));
 		const maxY = Math.max(...vectors.map((p) => p.y));
-	
 		return new Vector(minX + (maxX - minX) / 2, minY + (maxY - minY)/ 2);
 	}
 
@@ -89,9 +101,9 @@ class Vector{
 		return topLeft;
 	}
 
-	static multiMax(vectors) {
+	static bottomRight(vectors){
 		let bottomRight = vectors[0];
-		for(const vector of vectors) {
+		for(const vector of vectors){
 			bottomRight = bottomRight.max(vector);
 		}
 		return bottomRight;

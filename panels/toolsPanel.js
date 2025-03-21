@@ -9,11 +9,11 @@ class ToolsPanel {
 		this.#addHistoryTools(holderDiv);
 		holderDiv.appendChild(createDOMElement("hr"));
 
-		this.#addShapeTools(holderDiv);
+		this.#addCanvasTools(holderDiv);
 		holderDiv.appendChild(createDOMElement("hr"));
 
 		// add event listener for tool selection
-		Events.toolSelected.addEventListener("toolSelected", (e) => this.#selectToolComponent(e.detail));
+		viewport.addEventListener("toolSelected", (e) => this.#selectToolComponent(e.detail));
 	}
 
 	#addDocumentTools(holderDiv) {
@@ -100,12 +100,12 @@ class ToolsPanel {
 		);
 	}
 
-	#addShapeTools(holderDiv) {
+	#addCanvasTools(holderDiv) {
 		holderDiv.appendChild(
 			createDOMElement("div", { id: "shapeToolsHeader" }, "Shape tools")
 		);
 
-		for (let tool of ShapeTools.tools) {
+		for (let tool of CanvasTools.tools) {
 			if (!tool.showButton) continue;
 
 			holderDiv.appendChild(
@@ -114,13 +114,13 @@ class ToolsPanel {
 					{
 						type: "radio",
 						id: tool.name.toLowerCase() + "Radio",
-						name: "shapeTools",
-						onchange: `ShapeTools.selectTool("${tool.name}")`,
+						name: "CanvasTools",
+						onchange: `CanvasTools.selectTool("${tool.name}")`,
 					}
 				)
 			);
 		}
-		const selectedTool = ShapeTools.selectTool("Path");
+		const selectedTool = CanvasTools.selectTool("Path");
 
 		// Check the radio button for the selected tool
 		if(selectedTool){

@@ -1,6 +1,5 @@
 class ShapeFactory {
-	static #available = {
-	}
+	static #available = {};
 
 	static registerShape(classType, typeName){
 		this.#available[typeName] = { shape: classType };
@@ -9,6 +8,7 @@ class ShapeFactory {
 	static loadShape(shapeData){
 		const chosenClass = this.#available[shapeData.type].shape;
 		const shape = chosenClass.load(shapeData);
+		
 		return shape;
 	}
 
@@ -18,6 +18,7 @@ class ShapeFactory {
 			const shape = this.loadShape(shapeData, STAGE_PROPERTIES);
 			loadedShapes.push(shape);
 		}
+
 		return loadedShapes;
 	}
 }

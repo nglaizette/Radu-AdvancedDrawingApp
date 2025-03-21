@@ -1,21 +1,26 @@
 class Rect extends Shape {
-	constructor(corner1, options){
+	constructor(center, size, options){
 		super(options);
 
-		// Todo: take out corner1 and corner2 to the
-		// Drawing tool itself (it will need its own object)
-		this.corner1 =  corner1;
-		this.corner2 =  corner1;
+		this.center = center;
+		this.size = size;
+		this.options = options
+
+		this.rotation = 0;
 	}
 
 	static load(data){
 		const rect = new Rect();
 		rect.id = data.id;
-		rect.options = JSON.parse(JSON.stringify(data.options));
+
 		rect.center = Vector.load(data.center);
 		rect.size = data.size;
-		rect.selected = data.selected;
+		rect.options = JSON.parse(JSON.stringify(data.options));
+
 		rect.rotation = data.rotation?? 0;
+
+		rect.selected = data.selected;
+
 		return rect;
 	}
 
@@ -23,16 +28,12 @@ class Rect extends Shape {
 		return {
 			type: 'Rect',
 			id: this.id,
-			options: JSON.parse(JSON.stringify(this.options)),
 			center: this.center,
-			size: this.size,
-			selected: this.selected,
+			size: JSON.parse(JSON.stringify(this.size)),
+			options: JSON.parse(JSON.stringify(this.options)),
 			rotation: this.rotation,
+			selected: this.selected,
 		};
-	}
-
-	setCorner2(corner2){
-		this.corner2 = corner2;
 	}
 
 	getPoints() {
@@ -42,9 +43,10 @@ class Rect extends Shape {
 				new Vector( -this.size.width/2, this.size.height/2),
 				new Vector( this.size.width/2, this.size.height/2),
 				new Vector( this.size.width/2, -this.size.height/2),
-			]
-		}
+			];
+		} 
 		return [this.corner1,this.corner2];
+
 	}
 
 	setPoints(points) {
@@ -52,11 +54,11 @@ class Rect extends Shape {
 		//this.corner2 = points[1];
 	}
 
-	setWidth(width){
+	_setWidth(width){
 		this.size.width = width;
 	}
 
-	setHeight(height){
+	_setHeight(height){
 		this.size.height = height;
 	}
 
@@ -86,3 +88,5 @@ class Rect extends Shape {
 		}
 	}
 }
+
+ShapeFactory.registerShape(Rect, "Rect");

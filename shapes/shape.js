@@ -1,9 +1,10 @@
 class Shape{
 	constructor(options){
+		// never deliberately called
 		this.id = Shape.generateId();
-		this.options = options;
 		this.center = null;
 		this.size = null;
+		this.options = options;
 		this.rotation = 0;
 		this.selected = false;
 	}
@@ -16,94 +17,86 @@ class Shape{
 		throw new Error("serialize method must be implemented");
 	}
 
-	setCenter(center){
-		this.center = center;
+	select(save = true) {
+		this.selected = true;
+		viewport.dispatchEvent(
+			new CustomEvent("shapeSelected", {
+				detail: {shape: this, save},
+			})
+		);
 	}
 
-	setWidth(width){
+	unselect(save = true ){
+		this.selected = false;
+		viewport.dispatchEvent(
+			new CustomEvent("shapeUnselected", {
+				detail: { shape: this, save},
+			})
+		);
+	}
+
+	setCenter(center, save = true){
+		this.center = center;
+		viewport.dispatchEvent(
+			new CustomEvent("positionChanged", {
+				detail: {shape: this, postion: center, save},
+			})
+		);
+	}
+
+	setSize(width, height, save = true){
+		this._setWidth(width);
+		this._setHeight(height);
+		viewport.dispatchEvent(
+			new CustomEvent("sizeChanged", {
+				detail: { shape: this, size: {width, height}, save},
+			})
+		)
+	}
+
+	_setWidth(width){
 		throw new Error("setWidth method must be implemented");
 	}
 
-	setHeight(height){
+	_setHeight(height){
 		throw new Error("setHeight method must be implemented");
 	}
 
-	setSize(width, height){
-		this.setHeight(height);
-		this.setWidth(width);
-	}
-
-	setRotation(angle){
-		
+	setRotation(angle, save = true){
 		this.rotation = angle;
-		this.rotation %= 360;
+		viewport.dispatchEvent(
+			new CustomEvent("rotationChanged", {
+				detail: {sahpe: this, rotation: angle, save},
+			})
+		)
 	}
 
-	rotateBy(angle){
-		this.rotation += angle;
-		this.rotation %= 360;
-	}
-
-	rotateCanvas(ctx) {
-
-		if (this.center){
-			ctx.translate(this.center.x, this.center.y);
-			ctx.rotate(-(this.rotation * Math.PI / 180));
-			ctx.translate(-this.center.x, -this.center.y);
+	setOptions(options, save = true){
+		for(const key in options){
+			if (this.options.hawOwnProperty(key)) {
+				this.options[key] = options[key];
+			}
 		}
+		viewport.dispatchEvent(
+			new CustomEvent("optionsChanged", {derail: {shape: this, save}})
+		)
 	}
 
-	resetCanvasRotation(ctx){
-		if (this.center){
-			ctx.translate(this.center.x, this.center.y);
-			ctx.rotate(this.rotation * Math.PI / 180);
-			ctx.translate(-this.center.x, -this.center.y);
-		}
+	changeSize(prevWidth, prevHeight, ratioWidth, ratioHeight) {
+		this.setSize(prevWidth * ratioWidth, prevHeight * ratioHeight, false);
 	}
 
-	changeWidth(width, ratio) {
-		this.setWidth(width * ratio);
-	}
-
-	changeHeight(height, ratio) {
-		this.setHeight(height * ratio);
-	}
-
-	changeSize(width, height, ratioWidth, ratioHeight) {
-		this.setSize(width * ratioWidth, height * ratioHeight);
-	}
-
-	recenter() {
+	recenter(){
 		const points = this.getPoints();
-		this.center = Vector.midVector(points);
+		this.center = Vector.mid(points);
 		this.size = getSize(points);
 		for(const point of points){
-			const newPoint=Vector.subtract(point, this.center);
+			const newPoint = Vector.subtract(point, this.center);
 			point.x = newPoint.x;
 			point.y = newPoint.y;
 		}
 		this.setPoints(points);
 	}
-
-	/*drawGizmo(ctx){
-
-		const center = this.center;
-
-		const points = this.getPoints();
-		const box = BoundingBox.fromPoints(points.map((p) => p.add(center)))
-
-		ctx.save();
-		ctx.beginPath();
-		ctx.rect(box.topLeft.x , box.topLeft.y, box.width, box.height);
-		ctx.strokeStyle = "orange";
-		ctx.lineWidth=3;
-		ctx.setLineDash([5, 5]);
-		ctx.stroke();
-		ctx.beginPath();
-		ctx.arc(center.x, center.y, 5, 0, 2 * Math.PI);
-		ctx.stroke();
-		ctx.restore();
-	}*/
 
 	static getHitRGB(id) {
 		const red = (id & 0xFF0000) >> 16;
@@ -113,15 +106,14 @@ class Shape{
 	}
 
 	applyHitRegionStyle(ctx, dilation = 10){
-
 		const rgb = Shape.getHitRGB(this.id);
 		ctx.lineCap = this.options.lineCap;
 		ctx.lineJoin = this.options.lineJoin;
-
 		ctx.fillStyle = rgb;
 		ctx.strokeStyle = rgb;
 		ctx.lineWidth = this.options.strokeWidth + dilation;
-		// pour la sélection des chemins sans remplissage
+		// always doing a fill because of the poll during the live stream
+		// most people seem to prefer selecting an object with no fill, when clicking on it
 		//if(this.options.fill){
 		ctx.fill();
 		//}
@@ -129,7 +121,7 @@ class Shape{
 			ctx.stroke();
 		}
 	}
-
+	
 	applyStyle(ctx) {
 		ctx.save();
 		ctx.strokeStyle = this.options.strokeColor;
@@ -154,11 +146,15 @@ class Shape{
 		throw new Error("setPoints method must be implemented");
 	}
 
+	drawHitRegion(ctx) {
+		throw new Error("drawhitregion must be implemented");
+	}
+
 	draw(ctx){
 		throw new Error("draw method must be implemented");
 	}
 }
-
+/*
 function secondCornerMoveCallback(e, startPosition, currentShape) {
 	
 	const mousePosition = viewport.getAdjustedPosition(Vector.fromOffsets(e));
@@ -187,4 +183,4 @@ function secondCornerUpCallback(e, currentShape, moveCallback, upCallback) {
 		shapes.push(currentShape);
 		HistoryTools.record(shapes);
 	}
-};
+};*/

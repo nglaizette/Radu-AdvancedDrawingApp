@@ -1,21 +1,22 @@
 class Oval extends Shape {
-	constructor(corner1, options){
+	constructor(center, size, options){
 		super(options);
 
-		// Todo: take out corner1 and corner2 to the
-		// Drawing tool itself (it will need its own object)
-		this.corner1 =  corner1;
-		this.corner2 =  corner1;
+		this.center = center;
+		this.size = size;
+		this.options = options;
+
+		this.rotation = 0;
 	}
 
 	static load (data){
 		const oval = new Oval();
 		oval.id = data.id;
-		oval.options = JSON.parse(JSON.stringify(data.options));
 		oval.center = Vector.load(data.center);
 		oval.size = data.size;
-		oval.selected = data.selected;
+		oval.options = JSON.parse(JSON.stringify(data.options));
 		oval.rotation = data.rotation??0;
+		oval.selected = data.selected;
 		return oval;
 	}
 
@@ -23,16 +24,12 @@ class Oval extends Shape {
 		return {
 			type: 'Oval',
 			id: this.id,
-			options: JSON.parse(JSON.stringify(this.options)),
 			center:this.center,
-			size: this.size,
-			selected: this.selected,
+			size:  JSON.parse(JSON.stringify(this.size)),
+			options: JSON.parse(JSON.stringify(this.options)),
 			rotation: this.rotation,
+			selected: this.selected,
 		};
-	}
-
-	setCorner2(corner2){
-		this.corner2 = corner2;
 	}
 
 	getPoints() {
@@ -50,16 +47,11 @@ class Oval extends Shape {
 		];
 	}
 
-	setPoints(points) {
-		//this.corner1 = points[0];
-		//this.corner2 = points[1];
-	}
-
-	setWidth(width){
+	_setWidth(width){
 		this.size.width = width;
 	}
 
-	setHeight(height){
+	_setHeight(height){
 		this.size.height = height;
 	}
 
@@ -91,3 +83,5 @@ class Oval extends Shape {
 		}
 	}
 }
+
+ShapeFactory.registerShape(Oval, "Oval");
